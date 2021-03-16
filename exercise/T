@@ -1,0 +1,12 @@
+c=$[$a+$b]
+echo c = $c
+echo save c to ./file1
+echo $c>file1
+echo sace b to ./file2
+echo $b>file2
+echo save a to ./file1
+echo $a>file1
+echo save file1 file2 file3 to file4
+cat file1>file4
+cat file2>file4\ncat file3>file4
+echo save file4 to ./result

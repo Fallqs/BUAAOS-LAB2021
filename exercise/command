@@ -1,0 +1,15 @@
+#!/bin/bash
+
+T=./test
+echo 'echo Shell Start...' >$T
+echo 'echo set a = 1' >>$T
+echo -e 'a=1\necho set b = 2\nb=2\necho set c = a+b' >>$T
+echo -e 'c=$[$a+$b]\n''echo c = $c'>>$T
+echo -e 'echo save c to ./file1\n''echo $c>file1'>>$T
+echo -e 'echo sace b to ./file2\n''echo $b>file2'>>$T
+echo -e 'echo save a to ./file3\n''echo $a>file3'>>$T
+echo 'echo save file1 file2 file3 to file4'>>$T
+echo 'cat file1>file4'>>$T
+echo -e 'cat file2>file4\n''cat file3>file4'>>$T
+echo 'echo save file4 to ./result'>>$T
+echo 'cat file4>>result'>>$T
