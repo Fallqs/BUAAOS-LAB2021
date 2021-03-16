@@ -9,4 +9,5 @@ mfibo: ./code/fibo.o ./code/main.o
 .PHONY:clean
 clean: 
 	@cd ./code && make clean
-	#rm ./code/*.o
+	#rm ./code/main.o
+	rm fibo

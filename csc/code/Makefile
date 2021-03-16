@@ -7,4 +7,4 @@ $(tgs): $(lib)
 	#$(OP) -I ../include -c fibo.c
 	#$(OP) -I ../include -c main.c
 clean:
-	rm $(target)
+	rm main.o
