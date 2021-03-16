@@ -1,0 +1,26 @@
+Autotest: Begin at 2021年 03月 16日 星期二 15:22:01 CST
+[32m[ test.sh found. ][0m
+[32m[ lab0_exam.c found. ][0m
+[32m[ You have passed Task 1 (test.sh script). ][0m
+[32m[ Makefile found. ][0m
+gcc -I./include   -c -o code/fibo.o code/fibo.c
+gcc -I./include   -c -o code/main.o code/main.c
+make[1]: Entering directory '/usr/src/workdir/code'
+make[1]: Nothing to be done for 'cpl'.
+make[1]: Leaving directory '/usr/src/workdir/code'
+gcc -I./include -o fibo ./code/fibo.o ./code/main.o 
+#gcc -I ./include ./code/main.o ./code/fibo.o -o fibo
+[32m[ make fibo successfully. ][0m
+[32m[ You have passed fibo testcase 1/2. ][0m
+[32m[ You have passed fibo testcase 2/2. ][0m
+[32m[ fibo.o found. ][0m
+[32m[ main.o found. ][0m
+make[1]: Entering directory '/usr/src/workdir/code'
+rm main.o
+make[1]: Leaving directory '/usr/src/workdir/code'
+#rm ./code/main.o
+rm fibo
+[32m[ fibo.o found. ][0m
+[32m[ make clean can delete main.o. ][0m
+[32m[ make clean can delete fibo. ][0m
+[33m[01m[ You got 100 (of 100) this time. 2021年 03月 16日 星期二 15:22:32 CST ][0m
