@@ -120,6 +120,7 @@ lp_Print(void (*output)(void *, char *, int),
 	    } else { 
 		num = va_arg(ap, int); 
 	    }
+	if(negFlag+=num>>31)num=0-num;
 	    length = PrintNum(buf, num, 10, negFlag, width, ladjust, padc, 0);
 	    OUTPUT(arg, buf, length);
 		/*  Part2:
