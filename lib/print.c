@@ -78,7 +78,7 @@ lp_Print(void (*output)(void *, char *, int),
 	{ 
 	    /* scan for the next '%' */
 	    /* flush the string found so far */
-		OUT(arg,fmt,s-fmt);
+		OUTPUT(arg,fmt,s-fmt);
 		fmt=s;
 		break;
 	    /* check "are we hitting the end?" */
@@ -120,7 +120,6 @@ lp_Print(void (*output)(void *, char *, int),
 	    } else { 
 		num = va_arg(ap, int); 
 	    }
-	    if(num<0)num=-num,negFlag=1;
 	    length = PrintNum(buf, num, 10, negFlag, width, ladjust, padc, 0);
 	    OUTPUT(arg, buf, length);
 		/*  Part2:
