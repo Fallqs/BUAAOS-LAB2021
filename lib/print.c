@@ -26,6 +26,15 @@ static const char theFatalMsg[] = "fatal error in lp_Print!";
 /* -*-
  * A low level printf() function.
  */
+
+void rd(int *ans,char *fmt ){
+	*ans=0;char c=*fmt;
+	while(IsDigit(c)){
+		*ans=(*ans<<3)+(*ans<<1)+(c^48);
+		c=*(++fmt);
+	}
+}
+
 void
 lp_Print(void (*output)(void *, char *, int), 
 	 void * arg,
@@ -65,19 +74,28 @@ lp_Print(void (*output)(void *, char *, int),
     for(;;) {
 
         /* Part1: your code here */
-
+	for(s=fmt;;++s)if(*s=='%'||*s=='\0')
 	{ 
 	    /* scan for the next '%' */
 	    /* flush the string found so far */
-
+		OUT(arg,fmt,s-fmt);
+		fmt=s;
+		break;
 	    /* check "are we hitting the end?" */
 	}
+	if(*s=='\0')break;
 
 	
 	/* we found a '%' */
-	
-	/* check for long */
+	padc=' ';
+	if(*(++fmt)=='-')ladjust=1,++fmt;
+	else if(*fmt=='0')padc='0',++fmt;
 
+	rd(width,fmt);
+	if(*fmt=='.')rd(prec,++fmt);
+
+	/* check for long */
+	if(*fmt=='l')longFlag=1,++fmt;
 	/* check for other prefixes */
 
 	/* check format flag */
@@ -102,7 +120,9 @@ lp_Print(void (*output)(void *, char *, int),
 	    } else { 
 		num = va_arg(ap, int); 
 	    }
-	    
+	    if(num<0)num=-num,negFlag=1;
+	    length = PrintNum(buf, num, 10, negFlag, width, ladjust, padc, 0);
+	    OUTPUT(arg, buf, length);
 		/*  Part2:
 			your code here.
 			Refer to other part (case 'b',case 'o' etc.) and func PrintNum to complete this part.
