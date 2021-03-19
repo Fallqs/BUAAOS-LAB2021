@@ -27,12 +27,13 @@ static const char theFatalMsg[] = "fatal error in lp_Print!";
  * A low level printf() function.
  */
 
-void rd(int *ans,char *fmt ){
+char* rd(int *ans,char *fmt ){
 	*ans=0;char c=*fmt;
 	while(IsDigit(c)){
 		*ans=(*ans<<3)+(*ans<<1)+(c^48);
 		c=*(++fmt);
 	}
+	return fmt;
 }
 
 void
@@ -83,21 +84,20 @@ lp_Print(void (*output)(void *, char *, int),
 		break;
 	    /* check "are we hitting the end?" */
 	}
-	if(*s=='\0')break;
+	if(*s==0)break;
 
-	
+	padc=' ';ladjust=0;
 	/* we found a '%' */
-	padc=' ';
 	if(*(++fmt)=='-')ladjust=1,++fmt;
 	else if(*fmt=='0')padc='0',++fmt;
 
-	rd(width,fmt);
-	if(*fmt=='.')rd(prec,++fmt);
+	fmt=rd(&width,fmt);
+	if(*fmt=='.')fmt=rd(&prec,++fmt);
 
 	/* check for long */
 	if(*fmt=='l')longFlag=1,++fmt;
 	/* check for other prefixes */
-
+	
 	/* check format flag */
 	
 

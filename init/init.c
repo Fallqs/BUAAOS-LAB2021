@@ -10,7 +10,6 @@ void mips_init()
 {
 	printf("init.c:\tmips_init() is called\n");
 
-
 	//for your degree,don't delete these.
 	//------------|
 	#ifdef FTEST
