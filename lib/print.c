@@ -35,6 +35,10 @@ char* rd(int *ans,char *fmt ){
 	}
 	return fmt;
 }
+#define RD(ans, fmt){\
+	ans = 0;\
+	while(IsDigit(*fmt)){ ans = (ans<<3) + (ans<<1) + ((*(fmt++))^48); }\
+}
 
 void
 lp_Print(void (*output)(void *, char *, int), 
@@ -91,8 +95,12 @@ lp_Print(void (*output)(void *, char *, int),
 	if(*(++fmt)=='-')ladjust=1,++fmt;
 	else if(*fmt=='0')padc='0',++fmt;
 
-	fmt=rd(&width,fmt);
-	if(*fmt=='.')fmt=rd(&prec,++fmt);
+	//fmt=rd(&width,fmt);
+	RD(width,fmt);
+	if(*fmt=='.'){
+		++fmt;
+		RD(prec,fmt);//fmt=rd(&prec,++fmt);
+	}
 
 	/* check for long */
 	if(*fmt=='l')longFlag=1,++fmt;
