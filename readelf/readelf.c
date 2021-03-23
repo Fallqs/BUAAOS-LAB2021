@@ -50,7 +50,7 @@ Elf32_Half rv(Elf32_Half x){
 	return ans;
 }
 Elf32_Addr rev(Elf32_Addr x){
-	Elf32_Half ans=0;
+	Elf32_Addr ans=0;
 	int i=0;for(;i<4;++i)
 		{ans=(ans<<8)|(x&255);x>>=8;}
 	return ans;
