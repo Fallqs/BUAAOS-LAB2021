@@ -26,14 +26,17 @@ objects :=$(objects) $(test_dir)/*.o
 endif
 
 
-.PHONY: all $(modules) clean
+.PHONY: all $(modules) clean run test
 
 all: $(modules) vmlinux
 
 vmlinux: $(modules)
 	$(LD) -o $(vmlinux_elf) -N -T $(link_script) $(objects)
 #	tips: add instruction here for your running
-#	/OSLAB/gxemul -E testmips -C R3000 -M 64 ./gxemul/vmlinux
+test: vmlinux
+	/OSLAB/gxemul -E testmips -C R3000 -M 64 -V $(vmlinux_elf)
+run: vmlinux
+	/OSLAB/gxemul -E testmips -C R3000 -M 64 $(vmlinux_elf)
 
 $(modules): 
 	$(MAKE) --directory=$@
