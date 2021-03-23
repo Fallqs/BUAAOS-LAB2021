@@ -45,10 +45,16 @@ int is_elf_format(u_char *binary)
 */
 Elf32_Half rv(Elf32_Half x){
 	Elf32_Half ans=0;
-	while(x){ans=(ans<<1)|(x&1);x>>=1;}
+	int i=0;for(;i<2;++i)
+		{ans=(ans<<8)|(x&255);x>>=8;}
 	return ans;
 }
-
+Elf32_Addr rev(Elf32_Addr x){
+	Elf32_Half ans=0;
+	int i=0;for(;i<4;++i)
+		{ans=(ans<<8)|(x&255);x>>=8;}
+	return ans;
+}
 int readelf(u_char *binary, int size)
 {
         Elf32_Ehdr *ehdr = (Elf32_Ehdr *)binary;
@@ -84,7 +90,7 @@ int readelf(u_char *binary, int size)
         // hint: section number starts at 0.
 	Elf32_Word i=0;
 	while(i < sh_entry_count) {
-		if(typ==2)printf("%d:0x%x\n",i++,rv(((Elf32_Shdr *)ptr_sh_table)->sh_addr));
+		if(typ==2)printf("%d:0x%x\n",i++,rev(((Elf32_Shdr *)ptr_sh_table)->sh_addr));
 		else if(typ==1)printf("%d:0x%x,0x%x\n",i++,((Elf32_Phdr *)ptr_sh_table)->p_filesz,((Elf32_Phdr *)ptr_sh_table)->p_memsz);
 		ptr_sh_table+=sh_entry_size;
 	}	
