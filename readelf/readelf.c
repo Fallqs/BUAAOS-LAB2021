@@ -43,6 +43,12 @@ int is_elf_format(u_char *binary)
 /*
     Exercise 1.2. Please complete func "readelf". 
 */
+Elf32_Half rv(Elf32_Half x){
+	Elf32_Half ans=0;
+	while(x){ans=(ans<<1)|(x&1);x>>=1;}
+	return ans;
+}
+
 int readelf(u_char *binary, int size)
 {
         Elf32_Ehdr *ehdr = (Elf32_Ehdr *)binary;
@@ -62,15 +68,24 @@ int readelf(u_char *binary, int size)
                 return 0;
         }
 
+	int typ = ehdr->e_ident[5];//1->low, 2->high
+
         // get section table addr, section header number and section header size.
-	ptr_sh_table = binary + ehdr->e_shoff;
-	sh_entry_size = ehdr->e_shentsize;
-	sh_entry_count = ehdr->e_shnum;
+	if(typ==2){
+		ptr_sh_table = binary + rv(ehdr->e_shoff);//high->section , low->segment
+		sh_entry_size = rv(ehdr->e_shentsize);
+		sh_entry_count = rv(ehdr->e_shnum);
+	}else if(typ==1){
+		ptr_sh_table = binary + ehdr->e_phoff;
+		sh_entry_size = ehdr->e_phentsize;
+		sh_entry_count = ehdr->e_phnum;
+	}
         // for each section header, output section number and section addr. 
         // hint: section number starts at 0.
 	Elf32_Word i=0;
 	while(i < sh_entry_count) {
-		printf("%d:0x%x\n",i++,((Elf32_Shdr *)ptr_sh_table)->sh_addr);
+		if(typ==2)printf("%d:0x%x\n",i++,rv(((Elf32_Shdr *)ptr_sh_table)->sh_addr));
+		else if(typ==1)printf("%d:0x%x,0x%x\n",i++,((Elf32_Phdr *)ptr_sh_table)->p_filesz,((Elf32_Phdr *)ptr_sh_table)->p_memsz);
 		ptr_sh_table+=sh_entry_size;
 	}	
 
