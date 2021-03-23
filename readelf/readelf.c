@@ -78,7 +78,7 @@ int readelf(u_char *binary, int size)
 
         // get section table addr, section header number and section header size.
 	if(typ==2){
-		ptr_sh_table = binary + rv(ehdr->e_shoff);//high->section , low->segment
+		ptr_sh_table = binary + rev(ehdr->e_shoff);//high->section , low->segment
 		sh_entry_size = rv(ehdr->e_shentsize);
 		sh_entry_count = rv(ehdr->e_shnum);
 	}else if(typ==1){
@@ -86,7 +86,8 @@ int readelf(u_char *binary, int size)
 		sh_entry_size = ehdr->e_phentsize;
 		sh_entry_count = ehdr->e_phnum;
 	}
-        // for each section header, output section number and section addr. 
+        //printf("%d,%d,%d\n",ptr_sh_table-binary,sh_entry_size,sh_entry_count);
+	// for each section header, output section number and section addr. 
         // hint: section number starts at 0.
 	Elf32_Word i=0;
 	while(i < sh_entry_count) {
