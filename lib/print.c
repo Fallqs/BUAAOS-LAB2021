@@ -201,7 +201,7 @@ lp_Print(void (*output)(void *, char *, int),
 	    break;
 	
 	case 'T':
-	    length = PrintChar(buf, '{', 1, ladjust);
+	    length = PrintChar(buf, '{', 1, 0);
 	    OUTPUT(arg, buf, length);
 	    
 	    if(stypeid==1){
@@ -209,19 +209,19 @@ lp_Print(void (*output)(void *, char *, int),
 		num = ms1->a;
 		length = PrintNum(buf, num, 10, negFlag, width, ladjust, padc, 0);
 		OUTPUT(arg, buf, length);
-		length = PrintChar(buf, ',', 1, ladjust);
+		length = PrintChar(buf, ',', 1, 0);
 	   	OUTPUT(arg, buf, length);
 
 		c = ms1->b;
 	   	length = PrintChar(buf, c, width, ladjust);
 		OUTPUT(arg, buf, length);
-		length = PrintChar(buf, ',', 1, ladjust);
+		length = PrintChar(buf, ',', 1, 0);
 	   	OUTPUT(arg, buf, length);
 
 		c = ms1->c;
 		length = PrintChar(buf, c, width, ladjust);
 		OUTPUT(arg, buf, length);
-		length = PrintChar(buf, ',', 1, ladjust);
+		length = PrintChar(buf, ',', 1, 0);
 	   	OUTPUT(arg, buf, length);
 
 		num = ms1->d;
@@ -234,7 +234,7 @@ lp_Print(void (*output)(void *, char *, int),
 		length = PrintNum(buf, num, 10, negFlag, width, ladjust, padc, 0);
 		OUTPUT(arg, buf, length);
 		for(sc=0;sc < ms2->siz;++sc){
-			length = PrintChar(buf, ',', 1, ladjust);
+			length = PrintChar(buf, ',', 1, 0);
 	   		OUTPUT(arg, buf, length);
 			num = ms2->c[sc];
 			length = PrintNum(buf, num, 10, negFlag, width, ladjust, padc, 0);
@@ -243,7 +243,7 @@ lp_Print(void (*output)(void *, char *, int),
 
 	    }
 
-	    length = PrintChar(buf, '}', 1, ladjust);
+	    length = PrintChar(buf, '}', 1, 0);
 	    OUTPUT(arg, buf, length);
 	    break;
 
