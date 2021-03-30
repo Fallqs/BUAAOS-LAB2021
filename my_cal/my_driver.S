@@ -7,9 +7,10 @@ LEAF(_my_getchar)
 	.set	mips2      /*.set is used to instruct how the assembler works and control the order of instructions */
 	.set	reorder
 
-	lb a0,0x00(zero)
-	beq a0,zero,_my_getchar
+	lb v0,0x00(zero)
+	beq v0,zero,_my_getchar
 	nop
+	or a0, v0,zero
 	jal _my_putchar
 	nop
 END(_my_getchar)
