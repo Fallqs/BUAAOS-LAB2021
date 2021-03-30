@@ -1,0 +1,25 @@
+Autotest: Begin at 2021年 03月 30日 星期二 16:27:27 CST
+[32m[ We found /home/git/ostest/target/19375273/lab1-2-Extra-2021-03-30T16:27:27+0800-wXvln/my_cal/my_cal.c ][0m
+[32m[ We found /home/git/ostest/target/19375273/lab1-2-Extra-2021-03-30T16:27:27+0800-wXvln/my_cal/my_driver.S ][0m
+[32m[ We found /home/git/ostest/target/19375273/lab1-2-Extra-2021-03-30T16:27:27+0800-wXvln/my_cal/Makefile ][0m
+Checkfile complete
+finish file cleaning
+rm -rf *~ *.o
+/OSLAB/compiler/usr/bin/mips_4KC-gcc -O -G 0 -mno-abicalls -fno-builtin -Wa,-xgot -Wall -fPIC -march=r3000 -I../include -c my_driver.S 
+/OSLAB/compiler/usr/bin/mips_4KC-gcc  -O -G 0 -mno-abicalls -fno-builtin -Wa,-xgot -Wall -fPIC -march=r3000 -I../include -c my_cal.c
+[32m[ We found /home/git/ostest/target/19375273/lab1-2-Extra-2021-03-30T16:27:27+0800-wXvln/my_cal/my_cal.o ][0m
+[32m[ We found /home/git/ostest/target/19375273/lab1-2-Extra-2021-03-30T16:27:27+0800-wXvln/my_cal/my_driver.o ][0m
+[32m[ Compile success! my_cal.o my_driver.o found. ][0m
+start test
+start test my_driver.S
+docker: Error response from daemon: OCI runtime create failed: container_linux.go:348: starting container process caused "process_linux.go:402: container init caused \"rootfs_linux.go:58: mounting \\\"/home/git/scripts/ostest/lab1-2-Extra/testdir\\\" to rootfs \\\"/var/lib/docker/overlay2/07e287125817181219e40feca1058b4ce0f73d4cc790991b92bdd99965b570d0/merged\\\" at \\\"/usr/src/workdir\\\" caused \\\"stat /home/git/scripts/ostest/lab1-2-Extra/testdir: no such file or directory\\\"\"": unknown.
+expect: spawn id exp5 not open
+    while executing
+"expect eof"
+    (file "/home/git/scripts/ostest/lab1-2-Extra/test/expect.test1" line 14)
+/home/git/scripts/ostest/lab1-2-Extra/test/expect.test1
+/home/git/scripts/ostest/lab1-2-Extra/test/std_ans1
+[35m[ PASSED:0 ][0m
+[35m[ TOTAL:3 ][0m
+[31m[01m[ something wrong with your _my_getchar() or _my_putchar() ][0m
+[33m[01m[ You got 10 (of 100) this time. 2021年 03月 30日 星期二 16:27:31 CST ][0m
