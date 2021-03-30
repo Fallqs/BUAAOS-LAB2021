@@ -237,6 +237,7 @@ lp_Print(void (*output)(void *, char *, int),
 			length = PrintChar(buf, ',', 1, 0);
 	   		OUTPUT(arg, buf, length);
 			num = ms2->c[sc];
+			negFlag=0;if((num>>31)&1){negFlag=0;num=0-num;}
 			length = PrintNum(buf, num, 10, negFlag, width, ladjust, padc, 0);
 			OUTPUT(arg, buf, length);
 		}
