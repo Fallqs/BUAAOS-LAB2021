@@ -103,6 +103,7 @@ lp_Print(void (*output)(void *, char *, int),
 	}
 
 	/* check for long */
+	longFlag=0;
 	if(*fmt=='l')longFlag=1,++fmt;
 	/* check for other prefixes */
 	
