@@ -11,11 +11,11 @@
 
 #include <printf.h>
 #include <pmap.h>
-
+//struct{int s;char b,c;int d;}st2={5,'a','x',9};
 int main()
 {
 	printf("main.c:\tmain is start ...\n");
-
+//	printf("%04$1T\n",&st2);
 	mips_init();
 	panic("main is over is error!");
 

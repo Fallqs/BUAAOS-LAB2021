@@ -39,7 +39,8 @@ char* rd(int *ans,char *fmt ){
 	ans = 0;\
 	while(IsDigit(*fmt)){ ans = (ans<<3) + (ans<<1) + ((*(fmt++))^48); }\
 }
-
+typedef struct{int a;char b;char c;int d;} MY_s1;
+typedef struct{int siz;int *c;} MY_s2;
 void
 lp_Print(void (*output)(void *, char *, int), 
 	 void * arg,
@@ -71,6 +72,11 @@ lp_Print(void (*output)(void *, char *, int),
     char padc;
 
     int length;
+    int stypeid;
+    int sind;
+    MY_s1 *ms1;
+    MY_s2 *ms2;
+    int sc;
 
     /*
         Exercise 1.5. Please fill in two parts in this file.
@@ -108,7 +114,7 @@ lp_Print(void (*output)(void *, char *, int),
 	/* check for other prefixes */
 	
 	/* check format flag */
-	
+	if(*fmt=='$'){stypeid= *(++fmt)=='1'?1:2;++fmt; }
 
 	negFlag = 0;
 	switch (*fmt) {
@@ -191,6 +197,53 @@ lp_Print(void (*output)(void *, char *, int),
 	 case 's':
 	    s = (char*)va_arg(ap, char *);
 	    length = PrintString(buf, s, width, ladjust);
+	    OUTPUT(arg, buf, length);
+	    break;
+	
+	case 'T':
+	    length = PrintChar(buf, '{', 1, ladjust);
+	    OUTPUT(arg, buf, length);
+	    
+	    if(stypeid==1){
+		ms1 = (MY_s1*)va_arg(ap, MY_s1*);
+		num = ms1->a;
+		length = PrintNum(buf, num, 10, negFlag, width, ladjust, padc, 0);
+		OUTPUT(arg, buf, length);
+		length = PrintChar(buf, ',', 1, ladjust);
+	   	OUTPUT(arg, buf, length);
+
+		c = ms1->b;
+	   	length = PrintChar(buf, c, width, ladjust);
+		OUTPUT(arg, buf, length);
+		length = PrintChar(buf, ',', 1, ladjust);
+	   	OUTPUT(arg, buf, length);
+
+		c = ms1->c;
+		length = PrintChar(buf, c, width, ladjust);
+		OUTPUT(arg, buf, length);
+		length = PrintChar(buf, ',', 1, ladjust);
+	   	OUTPUT(arg, buf, length);
+
+		num = ms1->d;
+		length = PrintNum(buf, num, 10, negFlag, width, ladjust, padc, 0);
+		OUTPUT(arg, buf, length);
+
+	    }else{
+		ms2 = (MY_s2*)va_arg(ap, MY_s2*);
+		num = ms2->siz;
+		length = PrintNum(buf, num, 10, negFlag, width, ladjust, padc, 0);
+		OUTPUT(arg, buf, length);
+		for(sc=0;sc < ms2->siz;++sc){
+			length = PrintChar(buf, ',', 1, ladjust);
+	   		OUTPUT(arg, buf, length);
+			num = ms2->c[sc];
+			length = PrintNum(buf, num, 10, negFlag, width, ladjust, padc, 0);
+			OUTPUT(arg, buf, length);
+		}
+
+	    }
+
+	    length = PrintChar(buf, '}', 1, ladjust);
 	    OUTPUT(arg, buf, length);
 	    break;
 
