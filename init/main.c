@@ -18,7 +18,7 @@ int main()
 	printf("main.c:\tmain is start ...\n");
 	printf("blabla%$1Tblla\n",&st1);
 	st2.s=4;
-	st2.c[0]=-1;st2.c[1]=-2;st2.c[2]=-3;st2.c[3]=-4;
+	st2.c[0]=1;st2.c[1]=2;st2.c[2]=-3;st2.c[3]=-4;
 	printf("qaq%04$2Tqaq\n",&st2);
 	mips_init();
 	panic("main is over is error!");

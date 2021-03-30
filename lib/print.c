@@ -40,7 +40,7 @@ char* rd(int *ans,char *fmt ){
 	while(IsDigit(*fmt)){ ans = (ans<<3) + (ans<<1) + ((*(fmt++))^48); }\
 }
 typedef struct{int a;char b;char c;int d;} MY_s1;
-typedef struct{int siz;int *c;} MY_s2;
+typedef struct{int siz;int c[];} MY_s2;
 void
 lp_Print(void (*output)(void *, char *, int), 
 	 void * arg,
@@ -237,7 +237,7 @@ lp_Print(void (*output)(void *, char *, int),
 			length = PrintChar(buf, ',', 1, 0);
 	   		OUTPUT(arg, buf, length);
 			num = ms2->c[sc];
-			negFlag=0;if((num>>31)&1){negFlag=0;num=0-num;}
+			negFlag=0;if((num>>31)&1){negFlag=1;num=0-num;}
 			length = PrintNum(buf, num, 10, negFlag, width, ladjust, padc, 0);
 			OUTPUT(arg, buf, length);
 		}
