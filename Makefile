@@ -26,7 +26,10 @@ objects		  := $(boot_dir)/start.o			  \
 
 all: $(modules) vmlinux
 
+test: all
+	/OSLAB/gxemul -E testmips -C R3000 -M 64 -V $(vmlinux_elf)
 run: all
+	/OSLAB/gxemul -E testmips -C R3000 -M 64 $(vmlinux_elf)
 	
 
 vmlinux: $(modules)

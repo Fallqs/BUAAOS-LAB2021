@@ -152,15 +152,18 @@
  */
 #define LIST_INSERT_TAIL(head, elm, field) do{							\
 		if(LIST_FIRST((head)) == NULL){							\
+			LIST_NEXT((elm), field) = NULL;						\
 			LIST_FIRST((head)) = (elm);						\
 			(elm)->field.le_prev = &LIST_FIRST((head));				\
 		} else {									\
-			LIST_FOREACH( LIST_NEXT((elm), field), head, field )			\
+			LIST_FOREACH( LIST_NEXT((elm), field), head, field ) {			\
 				if( LIST_NEXT(LIST_NEXT((elm), field), field) == NULL ) {	\
 					LIST_NEXT(LIST_NEXT((elm), field), field) = (elm);	\
 					(elm)->field.le_prev = &LIST_NEXT(LIST_NEXT((elm), field), field);	\
-					LIST_NEXT((elm), field) = NULL;				\
+					break;							\
 				}								\
+			}									\
+			LIST_NEXT((elm), field) = NULL;						\
 		}										\
 	} while (0)
 /* finish your code here. */
