@@ -26,6 +26,9 @@ objects		  := $(boot_dir)/start.o			  \
 
 all: $(modules) vmlinux
 
+run: all
+	
+
 vmlinux: $(modules)
 	$(LD) -o $(vmlinux_elf) -N -T $(link_script) $(objects)
 
