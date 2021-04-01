@@ -26,8 +26,11 @@ void mips_detect_memory()
 {
     /* Step 1: Initialize basemem.
      * (When use real computer, CMOS tells us how many kilobytes there are). */
-
+	basemem = 0x4000000;
+	extmem = 0x0;
+	maxpa = basemem;
     // Step 2: Calculate corresponding npage value.
+	npage = basemem >> 12;
 
     printf("Physical memory: %dK available, ", (int)(maxpa / 1024));
     printf("base = %dK, extended = %dK\n", (int)(basemem / 1024),
@@ -60,19 +63,19 @@ static void *alloc(u_int n, u_int align, int clear)
 
     /* Step 3: Increase `freemem` to record allocation. */
     freemem = freemem + n;
-
-    /* Step 4: Clear allocated chunk if parameter `clear` is set. */
-    if (clear) {
-        bzero((void *)alloced_mem, n);
-    }
-
+    
     // We're out of memory, PANIC !!
     if (PADDR(freemem) >= maxpa) {
         panic("out of memorty\n");
         return (void *)-E_NO_MEM;
     }
 
-    /* Step 5: return allocated chunk. */
+    /* Step 4: Clear allocated chunk if parameter `clear` is set. */
+    if (clear) {
+        bzero((void *)alloced_mem, n);
+    }
+
+       /* Step 5: return allocated chunk. */
     return (void *)alloced_mem;
 }
 
@@ -174,16 +177,20 @@ page_init(void)
 {
     /* Step 1: Initialize page_free_list. */
     /* Hint: Use macro `LIST_INIT` defined in include/queue.h. */
-
+	LIST_INIT(&page_free_list);
 
     /* Step 2: Align `freemem` up to multiple of BY2PG. */
-
+	ROUND(freemem, BY2PG);
 
     /* Step 3: Mark all memory blow `freemem` as used(set `pp_ref`
      * filed to 1) */
-
+	u_long i;for(i=0;i<PADDR(freemem)/BY2PG;++i)pages[i].pp_ref = 1;
 
     /* Step 4: Mark the other memory as free. */
+	struct Page *pi; for(pi=pages+i;i<npage;++i,++pi){
+		pi->pp_ref = 0;
+		LIST_INSERT_HEAD(&page_free_list, pi, pp_link);
+	}
 }
 
 /*Overview:
