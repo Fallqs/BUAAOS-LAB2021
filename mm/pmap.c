@@ -256,7 +256,7 @@ page_alloc2(struct Page **pp)
      * Hint: use `bzero`. */
     bzero(page2kva(*pp),BY2PG);
 
-    printf("page number is %x, start from pa %x\n",page2ppn(*pp),page2pa(*pp));
+    //printf("page number is %x, start from pa %x\n",page2ppn(*pp),page2pa(*pp));
 
     return 0;
 
