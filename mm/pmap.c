@@ -19,7 +19,7 @@ static u_long freemem;
 static struct Page_list page_free_list;	/* Free list of physical pages */
 
 void get_page_status(int pa){
-	page *pg = pa2page(pa);
+	struct Page *pg = pa2page(pa);
 	int st = 1 + (pg->pp_ref==0);
 	if(st==2)st+=(*(pg)->pp_link.le_prev == (pg));
 	printf("times:%d, page status:%d\n",pg->pp_ref,st);
