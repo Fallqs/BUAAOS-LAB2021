@@ -1,0 +1,100 @@
+Autotest: Begin at 2021年 04月 06日 星期二 14:39:41 CST
+Begin build at 2021年 04月 06日 星期二 14:39:42 CST
+Cleanning the project.................
+
+for d in boot drivers init lib mm;	\
+		do					\
+			make --directory=$d clean; \
+		done; \
+	rm -rf *.o *~ gxemul/vmlinux
+make[1]: Entering directory `/usr/src/workdir/boot'
+rm -rf *~ *.o
+make[1]: Leaving directory `/usr/src/workdir/boot'
+make[1]: Entering directory `/usr/src/workdir/drivers'
+for d in gxconsole; \
+		do				\
+			make --directory=$d clean; \
+		done
+make[2]: Entering directory `/usr/src/workdir/drivers/gxconsole'
+rm -rf *.o *~
+make[2]: Leaving directory `/usr/src/workdir/drivers/gxconsole'
+make[1]: Leaving directory `/usr/src/workdir/drivers'
+make[1]: Entering directory `/usr/src/workdir/init'
+rm -rf *~ *.o
+make[1]: Leaving directory `/usr/src/workdir/init'
+make[1]: Entering directory `/usr/src/workdir/lib'
+rm -rf *~ *.o
+make[1]: Leaving directory `/usr/src/workdir/lib'
+make[1]: Entering directory `/usr/src/workdir/mm'
+rm -rf *~ *.o
+make[1]: Leaving directory `/usr/src/workdir/mm'
+
+Building the project..................
+
+make --directory=boot
+make[1]: Entering directory `/usr/src/workdir/boot'
+/OSLAB/compiler/usr/bin/mips_4KC-gcc -O -G 0 -mno-abicalls -fno-builtin -Wa,-xgot -Wall -fPIC -march=r3000 -I../include/ -c start.S 
+make[1]: Leaving directory `/usr/src/workdir/boot'
+make --directory=drivers
+make[1]: Entering directory `/usr/src/workdir/drivers'
+make --directory=gxconsole
+make[2]: Entering directory `/usr/src/workdir/drivers/gxconsole'
+/OSLAB/compiler/usr/bin/mips_4KC-gcc -O -G 0 -mno-abicalls -fno-builtin -Wa,-xgot -Wall -fPIC -march=r3000   -c -o console.o console.c
+make[2]: Leaving directory `/usr/src/workdir/drivers/gxconsole'
+make[1]: Leaving directory `/usr/src/workdir/drivers'
+make --directory=init
+make[1]: Entering directory `/usr/src/workdir/init'
+/OSLAB/compiler/usr/bin/mips_4KC-gcc -O -G 0 -mno-abicalls -fno-builtin -Wa,-xgot -Wall -fPIC -march=r3000 -I../include -c init.c
+init.c: In function 'mips_init':
+init.c:9: warning: unused variable 'pp2'
+init.c:9: warning: unused variable 'pp1'
+init.c:9: warning: unused variable 'pp0'
+/OSLAB/compiler/usr/bin/mips_4KC-gcc -O -G 0 -mno-abicalls -fno-builtin -Wa,-xgot -Wall -fPIC -march=r3000 -I../include -c main.c
+make[1]: Leaving directory `/usr/src/workdir/init'
+make --directory=lib
+make[1]: Entering directory `/usr/src/workdir/lib'
+/OSLAB/compiler/usr/bin/mips_4KC-gcc -O -G 0 -mno-abicalls -fno-builtin -Wa,-xgot -Wall -fPIC -march=r3000 -I./ -I../ -I../include/ -c print.c
+/OSLAB/compiler/usr/bin/mips_4KC-gcc -O -G 0 -mno-abicalls -fno-builtin -Wa,-xgot -Wall -fPIC -march=r3000 -I./ -I../ -I../include/ -c printf.c
+/OSLAB/compiler/usr/bin/mips_4KC-gcc -O -G 0 -mno-abicalls -fno-builtin -Wa,-xgot -Wall -fPIC -march=r3000 -I./ -I../ -I../include/ -c env.c
+/OSLAB/compiler/usr/bin/mips_4KC-gcc -O -G 0 -mno-abicalls -fno-builtin -Wa,-xgot -Wall -fPIC -march=r3000 -I./ -I../ -I../include/ -c genex.S
+genex.S: Assembler messages:
+genex.S:53: Warning: .ent or .aent not in text section.
+genex.S:69: Warning: .end not in text section
+genex.S:75: Warning: .ent or .aent not in text section.
+genex.S:76: Warning: .end not in text section
+genex.S:80: Warning: .ent or .aent not in text section.
+genex.S:146: Warning: .end not in text section
+genex.S:150: Warning: .ent or .aent not in text section.
+genex.S:150: Warning: .end not in text section
+genex.S:151: Warning: .ent or .aent not in text section.
+genex.S:151: Warning: .end not in text section
+make[1]: Leaving directory `/usr/src/workdir/lib'
+make --directory=mm
+make[1]: Entering directory `/usr/src/workdir/mm'
+/OSLAB/compiler/usr/bin/mips_4KC-gcc -O -G 0 -mno-abicalls -fno-builtin -Wa,-xgot -Wall -fPIC -march=r3000 -I./ -I../ -I../include/ -c pmap.c
+pmap.c: In function 'get_page_status':
+pmap.c:22: error: 'page' undeclared (first use in this function)
+pmap.c:22: error: (Each undeclared identifier is reported only once
+pmap.c:22: error: for each function it appears in.)
+pmap.c:22: error: 'pg' undeclared (first use in this function)
+pmap.c: In function 'boot_pgdir_walk':
+pmap.c:97: warning: unused variable 'pgtable_entry'
+pmap.c: In function 'boot_map_segment':
+pmap.c:130: warning: unused variable 'va_temp'
+pmap.c: In function 'page_alloc':
+pmap.c:238: warning: passing argument 1 of 'bzero' makes pointer from integer without a cast
+pmap.c:229: warning: unused variable 'ppage_temp'
+pmap.c: In function 'page_alloc2':
+pmap.c:255: warning: passing argument 1 of 'bzero' makes pointer from integer without a cast
+pmap.c:246: warning: unused variable 'ppage_temp'
+pmap.c: In function 'pgdir_walk':
+pmap.c:317: warning: return makes integer from pointer without a cast
+pmap.c:302: warning: unused variable 'pgtable'
+make[1]: Leaving directory `/usr/src/workdir/mm'
+make[1]: *** [pmap.o] Error 1
+make: *** [mm] Error 2
+Compile Error!
+
+End build at 2021年 04月 06日 星期二 14:39:46 CST
+[31m[01m[ There is something wrong with your vmlinx. ][0m
+[33m[01m[ You got 0 (of 100) this time. 2021年 04月 06日 星期二 14:39:46 CST ][0m
