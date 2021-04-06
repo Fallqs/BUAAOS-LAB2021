@@ -20,7 +20,7 @@ static struct Page_list page_free_list;	/* Free list of physical pages */
 
 void get_page_status(int pa){
 	struct Page *pg = pa2page(pa);
-	int st = (pg->pp_ref!=0)?1: (*(pg)->pp_link.le_prev != (pg)) ? 2:3;
+	int st = (*(pg)->pp_link.le_prev == (pg)) ? 3: (pa->pp_ref==0)?2:1;
 	printf("times:%d, page status:%d\n",pg->pp_ref,st);
 }
 
@@ -256,7 +256,7 @@ page_alloc2(struct Page **pp)
      * Hint: use `bzero`. */
     bzero(page2kva(*pp),BY2PG);
 
-    //printf("page number is %x, start from pa %x\n",page2ppn(*pp),page2pa(*pp));
+    printf("page number is %x, start from pa %x\n",page2ppn(*pp),page2pa(*pp));
 
     return 0;
 
