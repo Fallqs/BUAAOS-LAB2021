@@ -17,7 +17,7 @@ struct Page *pages;
 static u_long freemem;
 
 static struct Page_list page_free_list;	/* Free list of physical pages */
-
+int bitmap[200000];
 
 /* Overview:
  	Initialize basemem and npage.
@@ -194,13 +194,19 @@ page_init(void)
 
     /* Step 3: Mark all memory blow `freemem` as used(set `pp_ref`
      * filed to 1) */
-	u_long i;for(i=0;i<PADDR(freemem)/BY2PG;++i)pages[i].pp_ref = 1;
-
+	u_long i;
+	for(i=0;i<131072;++i)bitmap[i]=0;
+	for(i=0;i<PADDR(freemem)/BY2PG;++i){
+	pages[i].pp_ref = 1;
+		bitmap[i>>5]|=(1<<(i%32));
+	}
     /* Step 4: Mark the other memory as free. */
 	struct Page *pi; for(pi=pages+i;i<npage;++i,++pi){
 		pi->pp_ref = 0;
 		LIST_INSERT_HEAD(&page_free_list, pi, pp_link);
 	}
+
+	printf("page bitmap size is %x\n",131072);
 }
 
 /*Overview:
@@ -224,6 +230,7 @@ page_alloc(struct Page **pp)
 
     /* Step 1: Get a page from free memory. If fails, return the error code.*/
     if(LIST_EMPTY(&page_free_list))return -E_NO_MEM;
+    
     *pp = LIST_FIRST(&page_free_list);
     LIST_REMOVE(*pp, pp_link);
 
