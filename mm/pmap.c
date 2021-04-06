@@ -13,6 +13,8 @@ u_long extmem;           /* Amount of extended memory(in bytes) */
 
 Pde *boot_pgdir;
 
+unsigned int page_bitmap[331072];
+
 struct Page *pages;
 static u_long freemem;
 
@@ -205,15 +207,20 @@ page_init(void)
 
     /* Step 3: Mark all memory blow `freemem` as used(set `pp_ref`
      * filed to 1) */
-	u_long i;for(i=0;i<PADDR(freemem)/BY2PG;++i)pages[i].pp_ref = 1;
-//	get_page_status(page2pa(pages));
+	u_long i;
+	for(i=0;i<131072;++i)bit_map[i]=0;
+	for(i=0;i<PADDR(freemem)/BY2PG;++i){
+		pages[i].pp_ref = 1;
+		page_bitmap[i>>5]|=(1L<<(i%32));
+	}//	get_page_status(page2pa(pages));
 
     /* Step 4: Mark the other memory as free. */
 	struct Page *pi; for(pi=pages+i;i<npage;++i,++pi){
 		pi->pp_ref = 0;
 		LIST_INSERT_HEAD(&page_free_list, pi, pp_link);
 	}
-	//get_page_status(page2pa(pi-1));
+
+	printf("page bitmap size if %x\n",131072);
 }
 
 /*Overview:
@@ -237,7 +244,10 @@ page_alloc(struct Page **pp)
 
     /* Step 1: Get a page from free memory. If fails, return the error code.*/
     if(LIST_EMPTY(&page_free_list))return -E_NO_MEM;
-    *pp = LIST_FIRST(&page_free_list);
+    int i;for(i=0;i<npage;++i)if(page_bitmap[i>>5] & (1<<(i%32))){
+    	*pp=pages+i;break;
+    }
+    //*pp = LIST_FIRST(&page_free_list);
     LIST_REMOVE(*pp, pp_link);
 
     /* Step 2: Initialize this page.
