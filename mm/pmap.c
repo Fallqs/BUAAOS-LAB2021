@@ -20,8 +20,7 @@ static struct Page_list page_free_list;	/* Free list of physical pages */
 
 void get_page_status(int pa){
 	struct Page *pg = pa2page(pa);
-	int st = 1 + (pg->pp_ref==0);
-	if(st==2)st+=(*(pg)->pp_link.le_prev == (pg));
+	int st = (pg->pp_ref!=0)?1: (*(pg)->pp_link.le_prev != (pg)) ? 2:3;
 	printf("times:%d, page status:%d\n",pg->pp_ref,st);
 }
 
@@ -201,12 +200,14 @@ page_init(void)
     /* Step 3: Mark all memory blow `freemem` as used(set `pp_ref`
      * filed to 1) */
 	u_long i;for(i=0;i<PADDR(freemem)/BY2PG;++i)pages[i].pp_ref = 1;
+	//get_page_status(page2pa(pages));
 
     /* Step 4: Mark the other memory as free. */
 	struct Page *pi; for(pi=pages+i;i<npage;++i,++pi){
 		pi->pp_ref = 0;
 		LIST_INSERT_HEAD(&page_free_list, pi, pp_link);
 	}
+	//get_page_status(page2pa(pi-1));
 }
 
 /*Overview:
@@ -249,7 +250,8 @@ page_alloc2(struct Page **pp)
     if(LIST_EMPTY(&page_free_list))return -E_NO_MEM;
     *pp = LIST_FIRST(&page_free_list);
     LIST_REMOVE(*pp, pp_link);
-
+	
+    //get_page_status(page2pa(*pp));
     /* Step 2: Initialize this page.
      * Hint: use `bzero`. */
     bzero(page2kva(*pp),BY2PG);
@@ -488,7 +490,7 @@ physical_memory_manage_check(void)
     // free pp0
     page_free(pp0);
     printf("The number in address temp is %d\n",*temp);
-
+	
     // alloc again
     assert(page_alloc(&pp0) == 0);
     assert(pp0);
