@@ -18,6 +18,12 @@ static u_long freemem;
 
 static struct Page_list page_free_list;	/* Free list of physical pages */
 
+void get_page_status(int pa){
+	page *pg = pa2page(pa);
+	int st = 1 + (pg->pp_ref==0);
+	if(st==2)st+=(*(pg)->pp_link.le_prev == (pg));
+	printf("times:%d, page status:%d\n",pg->pp_ref,st);
+}
 
 /* Overview:
  	Initialize basemem and npage.
@@ -230,6 +236,26 @@ page_alloc(struct Page **pp)
     /* Step 2: Initialize this page.
      * Hint: use `bzero`. */
     bzero(page2kva(*pp),BY2PG);
+    return 0;
+
+}
+
+int
+page_alloc2(struct Page **pp)
+{
+    struct Page *ppage_temp;
+
+    /* Step 1: Get a page from free memory. If fails, return the error code.*/
+    if(LIST_EMPTY(&page_free_list))return -E_NO_MEM;
+    *pp = LIST_FIRST(&page_free_list);
+    LIST_REMOVE(*pp, pp_link);
+
+    /* Step 2: Initialize this page.
+     * Hint: use `bzero`. */
+    bzero(page2kva(*pp),BY2PG);
+
+    printf("page number is %x, start from pa %x\n",page2ppn(*pp),page2pa(*pp));
+
     return 0;
 
 }
