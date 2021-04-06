@@ -20,8 +20,14 @@ static struct Page_list page_free_list;	/* Free list of physical pages */
 
 void get_page_status(int pa){
 	struct Page *pg = pa2page(pa);
-	int st = (*(pg)->pp_link.le_prev == (pg)) ? 3: (pa->pp_ref==0)?2:1;
-	printf("times:%d, page status:%d\n",pg->pp_ref,st);
+	//int st = (*(pg)->pp_link.le_prev == (pg)) ? 3: (pg->pp_ref==0)?2:1;
+	static int ii=0;++ii;
+	int st=0;
+	if(pg->pp_ref!=0)st=1;
+	else if(*(pg)->pp_link.le_prev==(pg))st=3;
+	else st=2;
+	printf("times:%d, page status:%d\n",ii,st);
+	//printf("xxx%d\n",st);
 }
 
 /* Overview:
@@ -200,7 +206,7 @@ page_init(void)
     /* Step 3: Mark all memory blow `freemem` as used(set `pp_ref`
      * filed to 1) */
 	u_long i;for(i=0;i<PADDR(freemem)/BY2PG;++i)pages[i].pp_ref = 1;
-	//get_page_status(page2pa(pages));
+//	get_page_status(page2pa(pages));
 
     /* Step 4: Mark the other memory as free. */
 	struct Page *pi; for(pi=pages+i;i<npage;++i,++pi){
