@@ -667,7 +667,7 @@ void pageout(int va, int context)
 u_long cal_page(int func, u_long va, int n, Pde *pgdir){
 	if(func==0){
 	//	return 0;
-		return 42;
+		return 39;
 	}else if(func==1){
 		//return -1;
 		va = va&(0xffc00000);
