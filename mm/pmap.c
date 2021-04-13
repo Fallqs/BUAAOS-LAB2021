@@ -664,3 +664,16 @@ void pageout(int va, int context)
     printf("pageout:\t@@@___0x%x___@@@  ins a page \n", va);
 }
 
+int count_page(Pde *pgdir, int *cnt){
+	int i=0,j=0,siz = 16*1024;for(;i<siz;++i)cnt[i]=0;
+	for(i=0;i<1024;++i){
+		if(pgdir[i]&PTE_V==0)continue;
+		cnt[pgdir[i]>>12]++;
+		Pte *pt = (Pte*)KADDR(PTE_ADDR(pgdir[i]));
+		for(j=0;j<1024;++j){
+			if(pt[j]&PTE_V==0)continue;
+			cnt[pt[i]>>12]++;
+		}
+	}
+	return siz;
+}
