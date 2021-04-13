@@ -16,6 +16,10 @@ int main()
 {
 	printf("main.c:\tmain is start ...\n");
 
+	printf("f0: %d\n",cal_page(0,0,0,0));
+	printf("f1: %x\n",cal_page(1,0x7fcef000,0,0));
+	printf("f2: %x\n",cal_page(2,0x7fdff000,1,0));
+
 	mips_init();
 	panic("main is over is error!");
 
