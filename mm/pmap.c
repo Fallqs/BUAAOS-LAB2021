@@ -286,7 +286,7 @@ pgdir_walk(Pde *pgdir, u_long va, int create, Pte **ppte)
     if(!((*pgdir_entryp) & PTE_V) ){
     	if(create){
 	    if(page_alloc(&ppage) == -E_NO_MEM)return -E_NO_MEM;
-	    ++ppage->pp_ref;//////////////////////////////////////
+	    ++ppage->pp_ref;//////////////////////////////////////////////////////////////
 	    *pgdir_entryp = (page2pa(ppage)) | PTE_V | PTE_R;
 	} else return *ppte = NULL;
     }
@@ -664,3 +664,19 @@ void pageout(int va, int context)
     printf("pageout:\t@@@___0x%x___@@@  ins a page \n", va);
 }
 
+u_long cal_page(int func, u_long va, int n, Pde *pgdir){
+	if(func==0){
+		return 42;
+	}else if(func==1){
+		va = va&(0xffc00000);
+		return va + (va>>10);
+	}else if(func==2){
+		va = va&0xffc00000;
+		return va + (n<<12);
+	}else{
+		u_long ind = va&0x003ff000;
+		u_long ppn = va&0xfffff000;
+		*(pgdir+(ind>>12)) = ppn | PTE_V | PTE_R;
+		return 0;
+	}
+}
