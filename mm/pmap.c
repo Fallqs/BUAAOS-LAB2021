@@ -668,12 +668,15 @@ u_long cal_page(int func, u_long va, int n, Pde *pgdir){
 	if(func==0){
 		return 42;
 	}else if(func==1){
+		return -1;
 		va = va&(0xffc00000);
 		return va + (va>>10);
 	}else if(func==2){
+		return -1;
 		va = va&0xffc00000;
 		return va + (n<<12);
 	}else{
+		return 0;
 		u_long ind = va&0x003ff000;
 		u_long ppn = va&0xfffff000;
 		*(pgdir+(ind>>12)) = ppn | PTE_V | PTE_R;
