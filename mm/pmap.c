@@ -667,7 +667,7 @@ void pageout(int va, int context)
 int count_page(Pde *pgdir, int *cnt){
 	int i=0,j=0,siz = 16*1024;for(;i<siz;++i)cnt[i]=0;
 	++cnt[PADDR(pgdir)>>12];
-	Pte *pt = (Pte*)(addr&0xffc00000);
+	Pte *pt //= (Pte*)(addr&0xffc00000);
 	for(i=0;i<1024;++i){
 		if(pgdir[i]&PTE_V==0)continue;
 		cnt[pgdir[i]>>12]++;
