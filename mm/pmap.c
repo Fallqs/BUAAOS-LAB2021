@@ -670,7 +670,7 @@ int count_page(Pde *pgdir, int *cnt){
 	Pte *pt = (Pte*)(addr&0xffc00000);
 	for(i=0;i<1024*1024;++i){
 		//if(pt[i]&PTE_V==0)continue;
-		cnt[pt[i]>>12]++;
+		//cnt[pt[i]>>12]++;
 	}
 	return siz;
 }
