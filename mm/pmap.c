@@ -672,5 +672,5 @@ int count_page(Pde *pgdir, int *cnt){
 		if(pt[i]&PTE_V==0)continue;
 		cnt[pt[i]>>12]++;
 	}
-	return siz;
+	return siz+1;
 }
