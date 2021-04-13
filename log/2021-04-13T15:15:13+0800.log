@@ -1,0 +1,59 @@
+Autotest: Begin at 2021年 04月 13日 星期二 15:15:13 CST
+Begin build at 2021年 04月 13日 星期二 15:15:15 CST
+Cleanning the project.................
+
+for d in mm  boot drivers init lib ;	\
+		do					\
+			make --directory=$d clean; \
+		done; \
+	rm -rf *.o *~ gxemul/vmlinux
+make[1]: Entering directory `/usr/src/workdir/mm'
+rm -rf *~ *.o
+make[1]: Leaving directory `/usr/src/workdir/mm'
+make[1]: Entering directory `/usr/src/workdir/boot'
+rm -rf *~ *.o
+make[1]: Leaving directory `/usr/src/workdir/boot'
+make[1]: Entering directory `/usr/src/workdir/drivers'
+for d in gxconsole; \
+		do				\
+			make --directory=$d clean; \
+		done
+make[2]: Entering directory `/usr/src/workdir/drivers/gxconsole'
+rm -rf *.o *~
+make[2]: Leaving directory `/usr/src/workdir/drivers/gxconsole'
+make[1]: Leaving directory `/usr/src/workdir/drivers'
+make[1]: Entering directory `/usr/src/workdir/init'
+rm -rf *~ *.o
+make[1]: Leaving directory `/usr/src/workdir/init'
+make[1]: Entering directory `/usr/src/workdir/lib'
+rm -rf *~ *.o
+make[1]: Leaving directory `/usr/src/workdir/lib'
+
+Building the project..................
+
+make --directory=mm
+make[1]: Entering directory `/usr/src/workdir/mm'
+/OSLAB/compiler/usr/bin/mips_4KC-gcc -O -G 0 -mno-abicalls -fno-builtin -Wa,-xgot -Wall -fPIC -march=r3000 -I./ -I../ -I../include/ -c pmap.c
+pmap.c:58:1: error: invalid suffix "G" on integer constant
+pmap.c: In function 'alloc':
+pmap.c:59: error: parse error before 'freemem'
+pmap.c: In function 'boot_pgdir_walk':
+pmap.c:91: warning: unused variable 'pgtable_entry'
+pmap.c: In function 'boot_map_segment':
+pmap.c:124: warning: unused variable 'va_temp'
+pmap.c: In function 'page_alloc':
+pmap.c:232: warning: passing argument 1 of 'bzero' makes pointer from integer without a cast
+pmap.c:223: warning: unused variable 'ppage_temp'
+pmap.c: In function 'pgdir_walk':
+pmap.c:291: warning: return makes integer from pointer without a cast
+pmap.c:276: warning: unused variable 'pgtable'
+pmap.c: In function 'cal_page':
+pmap.c:678: warning: unused variable 'ppn'
+make[1]: *** [pmap.o] Error 1
+make[1]: Leaving directory `/usr/src/workdir/mm'
+make: *** [mm] Error 2
+Compile Error!
+
+End build at 2021年 04月 13日 星期二 15:15:18 CST
+[31m[01m[ There is something wrong with your vmlinx. ][0m
+[33m[01m[ You got 0 (of 100) this time. 2021年 04月 13日 星期二 15:15:18 CST ][0m
