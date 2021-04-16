@@ -25,6 +25,12 @@ objects		  := $(boot_dir)/start.o			  \
 
 all: $(modules) vmlinux
 
+run: all
+	gxemul -E testmips -C R3000 -M 64 vmlinux
+
+test: all
+	gxemul -E testmips -C R3000 -M 64 -V vmlinux
+
 vmlinux: $(modules)
 	$(LD) -o $(vmlinux_elf) -N -T $(link_script) $(objects)
 
