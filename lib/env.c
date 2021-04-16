@@ -60,6 +60,8 @@ int envid2env(u_int envid, struct Env **penv, int checkperm)
     struct Env *e;
     /* Hint: If envid is zero, return curenv.*/
     /*Step 1: Assign value to e using envid. */
+    if(!envid)return *penv = curenv, 0;
+    e = envs + ENVX(envid);
 
 
 
@@ -75,8 +77,8 @@ int envid2env(u_int envid, struct Env **penv, int checkperm)
      *     or an immediate child of curenv.
      *     If not, error! */
     /*     Step 2: Make a check according to checkperm. */
-
-
+    if(checkperm && e != curenv && e->env_parent_id != curenv->env_id)
+	    return *penv = NULL, -E_BAD_ENV;
 
 
     *penv = e;
@@ -97,6 +99,7 @@ env_init(void)
 {
     int i;
     /*Step 1: Initial env_free_list. */
+    LIST_INIT(&env_free_list);
 
 
     /*Step 2: Traverse the elements of 'envs' array,
@@ -104,6 +107,10 @@ env_init(void)
      * Choose the correct loop order to finish the insertion.
      * Make sure, after the insertion, the order of envs in the list
      * should be the same as it in the envs array. */
+    for(i=NENV-1;~i;--i){
+	    envs[i].env_status = ENV_FREE;
+	    LIST_INSERT_HEAD(&env_free_list, &envs[i], env_link);
+    }
 
 
 }
@@ -127,17 +134,17 @@ env_setup_vm(struct Env *e)
     /* Step 1: Allocate a page for the page directory
      * using a function you completed in the lab2 and add its pp_ref.
      * pgdir is the page directory of Env e, assign value for it. */
-    if (      ) {
+    if ( (r = page_alloc(&p)) != 0 ) {
         panic("env_setup_vm - page alloc error\n");
         return r;
     }
 
+    p->pp_ref++;
+    pgdir = (Pde*) page2kva(p);
 
 
     /*Step 2: Zero pgdir's field before UTOP. */
-
-
-
+    for(i=0;i<PDX(UTOP);++i) pgdir[i]=0;
 
 
     /*Step 3: Copy kernel's boot_pgdir to pgdir. */
@@ -148,7 +155,11 @@ env_setup_vm(struct Env *e)
      *  See ./include/mmu.h for layout.
      *  Can you use boot_pgdir as a template?
      */
+    for(i = PDX(UTOP); i<PTE2PT; ++i)
+	    if( i!=PDX(UVPT) ) pgdir[i] = boot_pgdir[i];
 
+    e->env_pgdir = pgdir;
+    e->env_cr3 = PADDR(pgdir);
 
     // UVPT maps the env's own page table, with read-only permission.
     e->env_pgdir[PDX(UVPT)]  = e->env_cr3 | PTE_V;
@@ -182,22 +193,33 @@ env_alloc(struct Env **new, u_int parent_id)
     struct Env *e;
 
     /*Step 1: Get a new Env from env_free_list*/
+    if(LIST_EMPTY(&env_free_list)) return *new = NULL, -E_NO_FREE_ENV;
 
+    e = LIST_FIRST(&env_free_list);
 
     /*Step 2: Call certain function(has been completed just now) to init kernel memory layout for this new Env.
      *The function mainly maps the kernel address to this new Env address. */
-
+    env_setup_vm(e);
 
     /*Step 3: Initialize every field of new Env with appropriate values.*/
+    e->env_id = mkenvid(e);
+    e->env_status = ENV_RUNNABLE;
+    e->env_parent_id = parent_id;
+    e->env_runs = 0;
 
 
     /*Step 4: Focus on initializing the sp register and cp0_status of env_tf field, located at this new Env. */
     e->env_tf.cp0_status = 0x10001004;
+    e->env_tf.regs[29] = USTACKTOP;
 
 
     /*Step 5: Remove the new Env from env_free_list. */
+    LIST_REMOVE(e, env_link);
+    LIST_INSERT_HEAD(&env_sched_list[0], e, env_sched_link);
 
 
+    *new = e;
+    return 0;
 }
 
 /* Overview:
@@ -229,11 +251,20 @@ static int load_icode_mapper(u_long va, u_int32_t sgsize,
     /*Step 1: load all content of bin into memory. */
     for (i = 0; i < bin_size; i += BY2PG) {
         /* Hint: You should alloc a new page. */
+	if(page_alloc(&p))return -E_NO_MEM;
+	if(!i) bcopy((void*)bin, (void*)page2kva(p)+offset,
+			(BY2PG - offset < bin_size)? (BY2PG - offset):bin_size);
+	else bcopy((void*)bin + i - offset, (void*)page2kva(p),
+			(BY2PG < bin_size -i + offset)? BY2PG:(bin_size - i + offset));
+	if( page_insert(env->env_pgdir, p, va+i, PTE_V|PTE_R) )
+		return -E_NO_MEM;
     }
     /*Step 2: alloc pages to reach `sgsize` when `bin_size` < `sgsize`.
     * hint: variable `i` has the value of `bin_size` now! */
     while (i < sgsize) {
-
+	if(page_alloc(&p))return -E_NO_MEM;
+	if( page_insert(env->env_pgdir, p, va+i, PTE_V|PTE_R) )return -E_NO_MEM;
+	i+=BY2PG;
 
     }
     return 0;
@@ -266,13 +297,18 @@ load_icode(struct Env *e, u_char *binary, u_int size)
     u_long perm;
 
     /*Step 1: alloc a page. */
+    if(page_alloc(&p))return;
 
 
     /*Step 2: Use appropriate perm to set initial stack for new Env. */
     /*Hint: Should the user-stack be writable? */
+    page_insert(e->env_pgdir, p, USTACKTOP - BY2PG, PTE_V | PTE_R);
 
 
     /*Step 3:load the binary using elf loader. */
+    if( load_elf(binary, size, &entry_point, e, load_icode_mapper) ) return;
+    e->env_status = ENV_RUNNABLE;
+    LIST_INSERT_HEAD(&env_sched_list[0], e, env_sched_link);
 
 
     /*Step 4:Set CPU's PC register as appropriate value. */
@@ -294,11 +330,14 @@ env_create_priority(u_char *binary, int size, int priority)
 {
         struct Env *e;
     /*Step 1: Use env_alloc to alloc a new env. */
+	if( env_alloc(&e,0) ) return;
 
     /*Step 2: assign priority to the new env. */
+	e->env_pri = priority;
 
     /*Step 3: Use load_icode() to load the named elf binary,
       and insert it into env_sched_list using LIST_INSERT_HEAD. */
+	load_icode(e, binary, size);
 
 }
 /* Overview:
@@ -311,7 +350,8 @@ env_create_priority(u_char *binary, int size, int priority)
 void
 env_create(u_char *binary, int size)
 {
-     /*Step 1: Use env_create_priority to alloc a new env with priority 1 */
+    /*Step 1: Use env_create_priority to alloc a new env with priority 1 */
+    env_create_priority(binary, size, 1);
 
 }
 
@@ -399,12 +439,18 @@ env_run(struct Env *e)
     /*Step 1: save register state of curenv. */
     /* Hint: if there is an environment running, you should do
     *  switch the context and save the registers. You can imitate env_destroy() 's behaviors.*/
+    if(curenv){
+	    struct Trapframe *old = (struct Trapframe*)(TIMESTACK - sizeof(struct Trapframe));
+	    bcopy( old, &(curenv->env_tf), sizeof(struct Trapframe) );
+	    curenv->env_tf.pc = curenv->env_tf.cp0_epc;
+    }
 
 
     /*Step 2: Set 'curenv' to the new environment. */
-
+    curenv = e;
 
     /*Step 3: Use lcontext() to switch to its address space. */
+    lcontext(e->env_pgdir);
 
 
     /*Step 4: Use env_pop_tf() to restore the environment's
@@ -413,6 +459,7 @@ env_run(struct Env *e)
      * Hint: You should use GET_ENV_ASID there. Think why?
      * (read <see mips run linux>, page 135-144)
      */
+     env_pop_tf(&(e->env_tf), GET_ENV_ASID(e->env_id));
 
 }
 void env_check()
