@@ -101,6 +101,9 @@ env_init(void)
     /*Step 1: Initial env_free_list. */
     LIST_INIT(&env_free_list);
 
+    LIST_INIT(&env_sched_list[0]);
+    LIST_INIT(&env_sched_list[1]);
+
 
     /*Step 2: Traverse the elements of 'envs' array,
      * set their status as free and insert them into the env_free_list.
@@ -215,7 +218,6 @@ env_alloc(struct Env **new, u_int parent_id)
 
     /*Step 5: Remove the new Env from env_free_list. */
     LIST_REMOVE(e, env_link);
-    LIST_INSERT_HEAD(&env_sched_list[0], e, env_sched_link);
 
 
     *new = e;
@@ -308,7 +310,13 @@ load_icode(struct Env *e, u_char *binary, u_int size)
     /*Step 3:load the binary using elf loader. */
     if( load_elf(binary, size, &entry_point, e, load_icode_mapper) ) return;
     e->env_status = ENV_RUNNABLE;
+    
+    //printf("first = %x\n", (u_long)LIST_FIRST(&env_sched_list[0]));
+    //printf("BF:This = %x, listNxt = %x\n", (u_long)e ,(u_long)LIST_NEXT(e,env_sched_link));
+    
     LIST_INSERT_HEAD(&env_sched_list[0], e, env_sched_link);
+
+    //printf("AF:This = %x, listNxt = %x\n", (u_long)e ,(u_long)LIST_NEXT(e,env_sched_link));
 
 
     /*Step 4:Set CPU's PC register as appropriate value. */
@@ -439,6 +447,8 @@ env_run(struct Env *e)
     /*Step 1: save register state of curenv. */
     /* Hint: if there is an environment running, you should do
     *  switch the context and save the registers. You can imitate env_destroy() 's behaviors.*/
+    if(e==NULL)return;
+
     if(curenv){
 	    struct Trapframe *old = (struct Trapframe*)(TIMESTACK - sizeof(struct Trapframe));
 	    bcopy( old, &(curenv->env_tf), sizeof(struct Trapframe) );
