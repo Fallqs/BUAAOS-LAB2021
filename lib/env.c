@@ -246,23 +246,33 @@ static int load_icode_mapper(u_long va, u_int32_t sgsize,
 {
     struct Env *env = (struct Env *)user_data;
     struct Page *p = NULL;
-    u_long i;
+    u_long i=0;
     int r;
     u_long offset = va - ROUNDDOWN(va, BY2PG);
 
+    if(offset){
+	    if(page_lookup(env->env_pgdir, va+i, NULL) == 0){
+		  if(page_alloc(&p) || page_insert(env->env_pgdir, p, va+i, PTE_V|PTE_R) )return -E_NO_MEM;
+	    }
+	    bzero((void*)(page2kva(p) + offset), MIN(sgsize - i, BY2PG - offset));
+	    bcopy((void*)bin, (void*)page2kva(p)+offset,
+			(BY2PG - offset < bin_size)? (BY2PG - offset):bin_size);
+	    i += BY2PG;
+    }
+
     /*Step 1: load all content of bin into memory. */
-    for (i = 0; i < bin_size; i += BY2PG) {
+    for ( ; i < bin_size; i += BY2PG) {
         /* Hint: You should alloc a new page. */
-	if(page_alloc(&p))return -E_NO_MEM;
+	if(page_alloc(&p) || page_insert(env->env_pgdir, p, va+i, PTE_V|PTE_R) )return -E_NO_MEM;
+	
 	if(!i) bcopy((void*)bin, (void*)page2kva(p)+offset,
 			(BY2PG - offset < bin_size)? (BY2PG - offset):bin_size);
 	else bcopy((void*)bin + i - offset, (void*)page2kva(p),
 			(BY2PG < bin_size -i + offset)? BY2PG:(bin_size - i + offset));
-	if( page_insert(env->env_pgdir, p, va+i, PTE_V|PTE_R) )
-		return -E_NO_MEM;
     }
     /*Step 2: alloc pages to reach `sgsize` when `bin_size` < `sgsize`.
     * hint: variable `i` has the value of `bin_size` now! */
+  
     while (i < sgsize) {
 	if(page_alloc(&p))return -E_NO_MEM;
 	if( page_insert(env->env_pgdir, p, va+i, PTE_V|PTE_R) )return -E_NO_MEM;
