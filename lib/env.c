@@ -50,6 +50,7 @@ void FREE(struct Env *e){
                 page_remove(e->env_pgdir, (pdeno << PDSHIFT) | (pteno << PGSHIFT));
             }
         /* Hint: free the page table itself. */
+
         e->env_pgdir[pdeno] = 0;
         page_decref(pa2page(pa));
     }
@@ -61,7 +62,7 @@ void FREE(struct Env *e){
     /* Hint: return the environment to the free list. */
     e->env_status = ENV_FREE;
     LIST_INSERT_HEAD(&env_free_list, e, env_link);
-    LIST_REMOVE(e, env_sched_link);
+   // LIST_REMOVE(e, env_sched_link);
 
 }
 
@@ -69,7 +70,6 @@ void lab3_kill(u_int env_id){
     struct Env *e =  envs + ENVX(env_id);
 
     FREE(e);
-    
     struct Env *fa = e->fa;
     if(e==fa->tl)fa->tl = e->br;
     if(e==fa->hd)fa->hd = e->bl;
@@ -80,10 +80,9 @@ void lab3_kill(u_int env_id){
     struct Env *i = e->tl;
     for(;i;i=i->br)i->fa = fa;
 
-    fa->hd->br = e->tl;
-    e->tl->bl = fa->hd;
-    fa->hd = e->hd;
-    
+    if(fa->hd)fa->hd->br = e->tl;
+    if(e->tl)e->tl->bl = fa->hd;
+    if(e->hd)fa->hd = e->hd;
     e->fa=NULL;
     e->hd=NULL;
     e->tl=NULL;

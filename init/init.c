@@ -24,6 +24,12 @@ void mips_init()
 	ENV_CREATE_PRIORITY(user_B, 1);
 	ENV_CREATE_PRIORITY(user_A, 2);
 
+	struct Env * e = LIST_FIRST(&env_sched_list[0]);
+	int id = fork(e);
+	printf("fork\n");
+	lab3_kill(id);
+	printf("kill\n");
+
 	
 	trap_init();
 	kclock_init();
