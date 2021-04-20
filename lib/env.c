@@ -28,17 +28,48 @@ extern char *KERNEL_SP;
  * Post-Condition:
  *  return e's envid on success.
  */
-void lab3_kill(u_int env_id){
-    struct Env *e =  envs + ENVX(env_id);
+void FREE(struct Env *e){
+    Pte *pt;
+    u_int pdeno, pteno, pa;
 
+    /* Hint: Note the environment's demise.*/
+    //printf("[%08x] free env %08x\n", curenv ? curenv->env_id : 0, e->env_id);
+
+    /* Hint: Flush all mapped pages in the user portion of the address space */
+    for (pdeno = 0; pdeno < PDX(UTOP); pdeno++) {
+        /* Hint: only look at mapped page tables. */
+        if (!(e->env_pgdir[pdeno] & PTE_V)) {
+            continue;
+        }
+        /* Hint: find the pa and va of the page table. */
+        pa = PTE_ADDR(e->env_pgdir[pdeno]);
+        pt = (Pte *)KADDR(pa);
+        /* Hint: Unmap all PTEs in this page table. */
+        for (pteno = 0; pteno <= PTX(~0); pteno++)
+            if (pt[pteno] & PTE_V) {
+                page_remove(e->env_pgdir, (pdeno << PDSHIFT) | (pteno << PGSHIFT));
+            }
+        /* Hint: free the page table itself. */
+        e->env_pgdir[pdeno] = 0;
+        page_decref(pa2page(pa));
+    }
+    /* Hint: free the page directory. */
+    pa = e->env_cr3;
     e->env_pgdir = 0;
     e->env_cr3 = 0;
-    //page_decref(pa2page(pa));
+    page_decref(pa2page(pa));
     /* Hint: return the environment to the free list. */
     e->env_status = ENV_FREE;
     LIST_INSERT_HEAD(&env_free_list, e, env_link);
     LIST_REMOVE(e, env_sched_link);
 
+}
+
+void lab3_kill(u_int env_id){
+    struct Env *e =  envs + ENVX(env_id);
+
+    FREE(e);
+    
     struct Env *fa = e->fa;
     if(e==fa->tl)fa->tl = e->br;
     if(e==fa->hd)fa->hd = e->bl;

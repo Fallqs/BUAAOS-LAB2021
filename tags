@@ -226,6 +226,7 @@ Elf32_Xword	readelf/kerelf.h	/^typedef uint64_t Elf32_Xword;$/;"	t
 Env	include/env.h	/^struct Env {$/;"	s
 FEXPORT	include/asm/asm.h	43;"	d
 FILE2BLK	include/fs.h	37;"	d
+FREE	lib/env.c	/^void FREE(struct Env *e){$/;"	f
 FSREQ_CLOSE	include/fs.h	59;"	d
 FSREQ_DIRTY	include/fs.h	60;"	d
 FSREQ_MAP	include/fs.h	57;"	d
