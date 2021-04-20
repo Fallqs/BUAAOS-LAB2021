@@ -40,6 +40,11 @@ void lab3_kill(u_int env_id){
     LIST_REMOVE(e, env_sched_link);
 
     struct Env *fa = e->fa;
+    if(e==fa->tl)fa->tl = e->br;
+    if(e==fa->hd)fa->hd = e->bl;
+    if(e->bl)e->bl->br = e->br;
+    if(e->br)e->br->bl = e->bl;
+
     while(fa->fa)fa=fa->fa;
     struct Env *i = e->tl;
     for(;i;i=i->br)i->fa = fa;
