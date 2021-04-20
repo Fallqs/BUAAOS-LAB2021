@@ -28,6 +28,29 @@ extern char *KERNEL_SP;
  * Post-Condition:
  *  return e's envid on success.
  */
+void lab3_kill(u_int env_id){
+    struct Env *e =  envs + ENVX(env_id);
+
+    e->env_pgdir = 0;
+    e->env_cr3 = 0;
+    //page_decref(pa2page(pa));
+    /* Hint: return the environment to the free list. */
+    e->env_status = ENV_FREE;
+    LIST_INSERT_HEAD(&env_free_list, e, env_link);
+    LIST_REMOVE(e, env_sched_link);
+
+    struct Env *fa = e->fa;
+    fa->hd->br = e->tl;
+    e->tl->bl = fa->hd;
+    fa->hd = e->hd;
+    
+    e->fa=NULL;
+    e->hd=NULL;
+    e->tl=NULL;
+    e->bl=NULL;
+    e->br=NULL;
+}
+
 int DFS(struct Env * e){
 	struct Env *i=e->hd;
 	int ans=1;
