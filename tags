@@ -168,9 +168,9 @@ ELFMAG3	readelf/kerelf.h	94;"	d
 END	include/asm-mips3k/asm.h	35;"	d
 END	include/asm/asm.h	35;"	d
 ENVX	include/env.h	13;"	d
-ENV_CREATE	include/env.h	76;"	d
-ENV_CREATE2	include/env.h	64;"	d
-ENV_CREATE_PRIORITY	include/env.h	69;"	d
+ENV_CREATE	include/env.h	77;"	d
+ENV_CREATE2	include/env.h	65;"	d
+ENV_CREATE_PRIORITY	include/env.h	70;"	d
 ENV_FREE	include/env.h	17;"	d
 ENV_NOT_RUNNABLE	include/env.h	19;"	d
 ENV_RUNNABLE	include/env.h	18;"	d
@@ -586,6 +586,7 @@ f_pad	include/fs.h	/^	u_char f_pad[256-MAXNAMELEN-4-4-NDIRECT*4-4-4];$/;"	m	stru
 f_size	include/fs.h	/^	u_int f_size;			\/\/ file size in bytes$/;"	m	struct:File
 f_type	include/fs.h	/^	u_int f_type;			\/\/ file type$/;"	m	struct:File
 fault_va	lib/traps.c	/^        u_int fault_va;$/;"	m	struct:pgfault_trap_frame	file:
+fork	lib/env.c	/^u_int fork(struct Env *e){$/;"	f
 fp	include/asm-mips3k/regdef.h	46;"	d
 fp	include/asm/regdef.h	46;"	d
 freemem	mm/pmap.c	/^static u_long freemem;$/;"	v	file:
