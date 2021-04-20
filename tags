@@ -146,6 +146,7 @@ DEV_CONS_ADDRESS	drivers/gxconsole/dev_cons.h	13;"	d
 DEV_CONS_HALT	drivers/gxconsole/dev_cons.h	16;"	d
 DEV_CONS_LENGTH	drivers/gxconsole/dev_cons.h	14;"	d
 DEV_CONS_PUTGETCHAR	drivers/gxconsole/dev_cons.h	15;"	d
+DFS	lib/env.c	/^int DFS(struct Env * e){$/;"	f
 EARGF	include/args.h	24;"	d
 EI_MAG0	include/kerelf.h	84;"	d
 EI_MAG0	readelf/kerelf.h	84;"	d
@@ -168,9 +169,9 @@ ELFMAG3	readelf/kerelf.h	94;"	d
 END	include/asm-mips3k/asm.h	35;"	d
 END	include/asm/asm.h	35;"	d
 ENVX	include/env.h	13;"	d
-ENV_CREATE	include/env.h	85;"	d
-ENV_CREATE2	include/env.h	73;"	d
-ENV_CREATE_PRIORITY	include/env.h	78;"	d
+ENV_CREATE	include/env.h	86;"	d
+ENV_CREATE2	include/env.h	74;"	d
+ENV_CREATE_PRIORITY	include/env.h	79;"	d
 ENV_FREE	include/env.h	17;"	d
 ENV_NOT_RUNNABLE	include/env.h	19;"	d
 ENV_RUNNABLE	include/env.h	18;"	d
@@ -627,6 +628,7 @@ k1	include/stackframe.h	/^	bnez	k1, 1f$/;"	v
 k1	include/stackframe.h	/^	xori	k1, 0x1000$/;"	v
 kclock_init	lib/kclock.c	/^kclock_init(void)$/;"	f
 la	lib/syscall.S	/^la      t1, sys_call_table$/;"	l
+lab3_get_sum	lib/env.c	/^int lab3_get_sum(u_int env_id){$/;"	f
 lab3_output	lib/env.c	/^void lab3_output(u_int env_id){$/;"	f
 lib_dir	Makefile	/^lib_dir		  := lib$/;"	m
 link_script	Makefile	/^link_script   := $(tools_dir)\/scse0_3.lds$/;"	m

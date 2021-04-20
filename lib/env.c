@@ -28,6 +28,19 @@ extern char *KERNEL_SP;
  * Post-Condition:
  *  return e's envid on success.
  */
+int DFS(struct Env * e){
+	struct Env *i=e->hd;
+	int ans=1;
+	for(;i;i=i->bl){
+		ans+=DFS(i);
+	}
+	return ans;
+}
+int lab3_get_sum(u_int env_id){
+	struct Env *e = envs + ENVX(env_id);
+	return DFS(e);
+}
+
 void lab3_output(u_int env_id){
 	struct Env *e = envs + ENVX(env_id);
 	
