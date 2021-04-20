@@ -28,6 +28,17 @@ extern char *KERNEL_SP;
  * Post-Condition:
  *  return e's envid on success.
  */
+void lab3_output(u_int env_id){
+	struct Env *e = envs + ENVX(env_id);
+	
+	int a = e->fa ? e->fa->env_id:0;
+	int b = e->tl ? e->tl->env_id:0;
+	int c = e->bl ? e->bl->env_id:0;
+	int d = e->br ? e->br->env_id:0;
+
+	printf("%08x %08x %08x %08x\n", a, b, c, d);
+}
+
 u_int fork(struct Env *e){
 	struct Env *ch;
 	env_alloc(&ch, e->env_id);
@@ -35,6 +46,12 @@ u_int fork(struct Env *e){
 	ch->env_pgdir = e->env_pgdir;
 	ch->env_cr3 = e->env_cr3;
 	ch->env_pri = e->env_pri;
+
+	if(e->hd!=NULL){ e->hd->br = ch; ch->bl = e->hd; }
+	e->hd = ch;
+	ch->fa = e;
+	if(e->tl==NULL)e->tl = ch;
+
 	return ch->env_id;
 }
 

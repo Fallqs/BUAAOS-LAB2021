@@ -168,9 +168,9 @@ ELFMAG3	readelf/kerelf.h	94;"	d
 END	include/asm-mips3k/asm.h	35;"	d
 END	include/asm/asm.h	35;"	d
 ENVX	include/env.h	13;"	d
-ENV_CREATE	include/env.h	77;"	d
-ENV_CREATE2	include/env.h	65;"	d
-ENV_CREATE_PRIORITY	include/env.h	70;"	d
+ENV_CREATE	include/env.h	85;"	d
+ENV_CREATE2	include/env.h	73;"	d
+ENV_CREATE_PRIORITY	include/env.h	78;"	d
 ENV_FREE	include/env.h	17;"	d
 ENV_NOT_RUNNABLE	include/env.h	19;"	d
 ENV_RUNNABLE	include/env.h	18;"	d
@@ -496,11 +496,13 @@ binary_user_A_size	init/code_a.c	/^unsigned int binary_user_A_size = 5298;$/;"	v
 binary_user_A_start	init/code_a.c	/^unsigned char binary_user_A_start[] = {$/;"	v
 binary_user_B_size	init/code_b.c	/^unsigned int binary_user_B_size = 5298;$/;"	v
 binary_user_B_start	init/code_b.c	/^unsigned char binary_user_B_start[] = {$/;"	v
+bl	include/env.h	/^	struct Env * bl;$/;"	m	struct:Env	typeref:struct:Env::Env
 bnez	lib/genex.S	/^bnez	t1, timer_irq$/;"	l
 boot_dir	Makefile	/^boot_dir	  := boot$/;"	m
 boot_map_segment	mm/pmap.c	/^void boot_map_segment(Pde *pgdir, u_long va, u_long size, u_long pa, int perm)$/;"	f
 boot_pgdir	mm/pmap.c	/^Pde *boot_pgdir;$/;"	v
 boot_pgdir_walk	mm/pmap.c	/^static Pte *boot_pgdir_walk(Pde *pgdir, u_long va, int create)$/;"	f	file:
+br	include/env.h	/^	struct Env * br;$/;"	m	struct:Env	typeref:struct:Env::Env
 bzero	init/init.c	/^void bzero(void *b, size_t len)$/;"	f
 cp0_badvaddr	include/trap.h	/^	unsigned long cp0_badvaddr;$/;"	m	struct:Trapframe
 cp0_cause	include/trap.h	/^	unsigned long cp0_cause;$/;"	m	struct:Trapframe
@@ -585,6 +587,7 @@ f_name	include/fs.h	/^	u_char f_name[MAXNAMELEN];	\/\/ filename$/;"	m	struct:Fil
 f_pad	include/fs.h	/^	u_char f_pad[256-MAXNAMELEN-4-4-NDIRECT*4-4-4];$/;"	m	struct:File
 f_size	include/fs.h	/^	u_int f_size;			\/\/ file size in bytes$/;"	m	struct:File
 f_type	include/fs.h	/^	u_int f_type;			\/\/ file type$/;"	m	struct:File
+fa	include/env.h	/^	struct Env * fa;$/;"	m	struct:Env	typeref:struct:Env::Env
 fault_va	lib/traps.c	/^        u_int fault_va;$/;"	m	struct:pgfault_trap_frame	file:
 fork	lib/env.c	/^u_int fork(struct Env *e){$/;"	f
 fp	include/asm-mips3k/regdef.h	46;"	d
@@ -593,6 +596,7 @@ freemem	mm/pmap.c	/^static u_long freemem;$/;"	v	file:
 gp	include/asm-mips3k/regdef.h	44;"	d
 gp	include/asm/regdef.h	44;"	d
 halt	drivers/gxconsole/console.c	/^void halt(void)$/;"	f
+hd	include/env.h	/^	struct Env * hd;$/;"	m	struct:Env	typeref:struct:Env::Env
 hi	include/trap.h	/^	unsigned long hi;$/;"	m	struct:Trapframe
 illegal_syscall	lib/syscall.S	/^illegal_syscall: j illegal_syscall$/;"	l
 init_dir	Makefile	/^init_dir	  := init$/;"	m
@@ -623,6 +627,7 @@ k1	include/stackframe.h	/^	bnez	k1, 1f$/;"	v
 k1	include/stackframe.h	/^	xori	k1, 0x1000$/;"	v
 kclock_init	lib/kclock.c	/^kclock_init(void)$/;"	f
 la	lib/syscall.S	/^la      t1, sys_call_table$/;"	l
+lab3_output	lib/env.c	/^void lab3_output(u_int env_id){$/;"	f
 lib_dir	Makefile	/^lib_dir		  := lib$/;"	m
 link_script	Makefile	/^link_script   := $(tools_dir)\/scse0_3.lds$/;"	m
 lo	include/trap.h	/^	unsigned long lo;$/;"	m	struct:Trapframe
@@ -828,6 +833,7 @@ t9	include/asm-mips3k/regdef.h	40;"	d
 t9	include/asm/regdef.h	40;"	d
 theFatalMsg	lib/print.c	/^static const char theFatalMsg[] = "fatal error in lp_Print!";$/;"	v	file:
 timer_irq	lib/genex.S	/^timer_irq:$/;"	l
+tl	include/env.h	/^	struct Env * tl;$/;"	m	struct:Env	typeref:struct:Env::Env
 tlb_invalidate	mm/pmap.c	/^tlb_invalidate(Pde *pgdir, u_long va)$/;"	f
 tlbra	boot/start.S	/^tlbra:$/;"	l
 tools_dir	Makefile	/^tools_dir	  := tools$/;"	m
