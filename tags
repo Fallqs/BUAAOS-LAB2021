@@ -168,9 +168,9 @@ ELFMAG3	readelf/kerelf.h	94;"	d
 END	include/asm-mips3k/asm.h	35;"	d
 END	include/asm/asm.h	35;"	d
 ENVX	include/env.h	13;"	d
-ENV_CREATE	include/env.h	77;"	d
-ENV_CREATE2	include/env.h	65;"	d
-ENV_CREATE_PRIORITY	include/env.h	70;"	d
+ENV_CREATE	include/env.h	78;"	d
+ENV_CREATE2	include/env.h	66;"	d
+ENV_CREATE_PRIORITY	include/env.h	71;"	d
 ENV_FREE	include/env.h	17;"	d
 ENV_NOT_RUNNABLE	include/env.h	19;"	d
 ENV_RUNNABLE	include/env.h	18;"	d
@@ -236,6 +236,8 @@ FS_MAGIC	include/fs.h	46;"	d
 FTYPE_DIR	include/fs.h	41;"	d
 FTYPE_REG	include/fs.h	40;"	d
 FUNC1	lib/sched.c	/^int FUNC1(struct Env *e){$/;"	f
+FUNC2	lib/sched.c	/^int FUNC2(struct Env *e){$/;"	f
+FUNC3	lib/sched.c	/^int FUNC3(struct Env *e){$/;"	f
 File	include/fs.h	/^struct File {$/;"	s
 Fsreq_close	include/fs.h	/^struct Fsreq_close {$/;"	s
 Fsreq_dirty	include/fs.h	/^struct Fsreq_dirty {$/;"	s
@@ -309,7 +311,7 @@ PF_X	readelf/kerelf.h	143;"	d
 PGSHIFT	include/mmu.h	18;"	d
 PHYSADDR_OFFSET	drivers/gxconsole/console.c	13;"	d	file:
 PPN	include/mmu.h	25;"	d
-PRI	lib/sched.c	/^int PRI(struct Env *e){return e->env_pri&255;}$/;"	f
+PRI	lib/sched.c	/^int PRI(struct Env *e){$/;"	f
 PTE2PT	include/mmu.h	29;"	d
 PTE_ADDR	include/mmu.h	22;"	d
 PTE_COW	include/mmu.h	39;"	d
@@ -751,6 +753,7 @@ s7	include/asm-mips3k/regdef.h	38;"	d
 s7	include/asm/regdef.h	38;"	d
 s8	include/asm-mips3k/regdef.h	47;"	d
 s8	include/asm/regdef.h	47;"	d
+sFUNC3	lib/sched.c	/^void sFUNC3(struct Env *e, int x){$/;"	f
 sPRI	lib/sched.c	/^void sPRI(struct Env *e, int x){$/;"	f
 s_magic	include/fs.h	/^	u_int s_magic;		\/\/ Magic number: FS_MAGIC$/;"	m	struct:Super
 s_nblocks	include/fs.h	/^	u_int s_nblocks;	\/\/ Total number of blocks on disk$/;"	m	struct:Super
@@ -777,6 +780,7 @@ sp	include/stackframe.h	/^	bltz	sp, 2f$/;"	v
 sp	include/stackframe.h	/^	li	sp, 0x82000000$/;"	v
 sp	include/stackframe.h	/^	lw	sp, KERNEL_SP$/;"	v
 sp	lib/traps.c	/^        u_int sp;$/;"	m	struct:pgfault_trap_frame	file:
+st	include/env.h	/^	int st;$/;"	m	struct:Env
 static_assert	include/types.h	42;"	d
 static_assert	readelf/types.h	41;"	d
 subu	lib/syscall.S	/^subu    sp, 20$/;"	l

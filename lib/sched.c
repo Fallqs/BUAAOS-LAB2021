@@ -12,14 +12,26 @@
  *  3. CANNOT use `return` statement!
  */
 /*** exercise 3.14 ***/
-int PRI(struct Env *e){return e->env_pri&255;}
+int PRI(struct Env *e){
+    return e->env_pri&255;
+}
 int FUNC1(struct Env *e){
     return (e->env_pri>>8)&255;
+}
+int FUNC2(struct Env *e){
+    return (e->env_pri>>16)&255;
+}
+int FUNC3(struct Env *e){
+    return (e->env_pri>>24)&255;
 }
 void sPRI(struct Env *e, int x){
     e->env_pri>>=8;
     e->env_pri<<=8;
     e->env_pri|=(x&255);
+}
+void sFUNC3(struct Env *e, int x){
+    e->env_pri ^= FUNC3(e)<<24;
+    e->env_pri |= (x&255)<<24;
 }
 void UPD(struct Env *e){
     if(e!=NULL){
@@ -35,6 +47,9 @@ void sched_yield(void)
     static int point = 0; // current env_sched_list index
     static struct Env *e = NULL;
     static struct Env *ei;
+
+    static int icnt=0;
+    ++icnt;
     
     /*  hint:
      *  1. if (count==0), insert `e` into `env_sched_list[1-point]`
@@ -49,7 +64,9 @@ void sched_yield(void)
      *  LIST_INSERT_TAIL, LIST_REMOVE, LIST_FIRST, LIST_EMPTY
      */
     if(count<=0){
-	    UPD(e);
+	    if(e!=NULL&&icnt==FUNC2(e)){
+		e->st=1; e->env_status = ENV_NOT_RUNNABLE;
+	    }
 
 	    do{
 		    if( LIST_EMPTY(&env_sched_list[point]) ) point = 1 - point;
@@ -57,6 +74,11 @@ void sched_yield(void)
 		    LIST_FOREACH(ei, &env_sched_list[point], env_sched_link){
 			if(e==NULL|| e->env_status != ENV_RUNNABLE || PRI(ei) > PRI(e)
 				&& ei->env_status== ENV_RUNNABLE) e = ei;
+			if(ei->st){
+			    int f3 = FUNC3(ei);
+			    if(!f3)ei->env_status = ENV_RUNNABLE, ei->st=0;
+			    else sFUNC3(ei, f3-1);
+			}
 		    }
 		    /*
 		    e = LIST_FIRST(&env_sched_list[point]);
