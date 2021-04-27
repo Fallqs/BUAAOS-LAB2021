@@ -665,6 +665,7 @@ npage	mm/pmap.c	/^u_long npage;            \/* Amount of memory(in pages) *\/$/;
 objects	Makefile	/^objects		  := $(boot_dir)\/start.o			  \\$/;"	m
 offsetof	include/types.h	44;"	d
 offsetof	readelf/types.h	43;"	d
+ov_do	lib/handle_ov.c	/^void ov_do(char* sp)$/;"	f
 p_align	include/kerelf.h	/^	Elf32_Word	p_align;		\/* Segment alignment *\/$/;"	m	struct:__anon2
 p_align	readelf/kerelf.h	/^        Elf32_Word      p_align;                \/* Segment alignment *\/$/;"	m	struct:__anon5
 p_filesz	include/kerelf.h	/^	Elf32_Word	p_filesz;		\/* Segment size in file *\/$/;"	m	struct:__anon2
