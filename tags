@@ -235,6 +235,7 @@ FSREQ_SYNC	include/fs.h	62;"	d
 FS_MAGIC	include/fs.h	46;"	d
 FTYPE_DIR	include/fs.h	41;"	d
 FTYPE_REG	include/fs.h	40;"	d
+FUNC1	lib/sched.c	/^int FUNC1(struct Env *e){$/;"	f
 File	include/fs.h	/^struct File {$/;"	s
 Fsreq_close	include/fs.h	/^struct Fsreq_close {$/;"	s
 Fsreq_dirty	include/fs.h	/^struct Fsreq_dirty {$/;"	s
@@ -308,6 +309,7 @@ PF_X	readelf/kerelf.h	143;"	d
 PGSHIFT	include/mmu.h	18;"	d
 PHYSADDR_OFFSET	drivers/gxconsole/console.c	13;"	d	file:
 PPN	include/mmu.h	25;"	d
+PRI	lib/sched.c	/^int PRI(struct Env *e){return e->env_pri&255;}$/;"	f
 PTE2PT	include/mmu.h	29;"	d
 PTE_ADDR	include/mmu.h	22;"	d
 PTE_COW	include/mmu.h	39;"	d
@@ -445,6 +447,7 @@ UENVS	include/mmu.h	98;"	d
 ULIM	include/mmu.h	94;"	d
 UNISTD_H	include/unistd.h	2;"	d
 UPAGES	include/mmu.h	97;"	d
+UPD	lib/sched.c	/^void UPD(struct Env *e){$/;"	f
 USTACKTOP	include/mmu.h	104;"	d
 UTEXT	include/mmu.h	105;"	d
 UTOP	include/mmu.h	100;"	d
@@ -748,6 +751,7 @@ s7	include/asm-mips3k/regdef.h	38;"	d
 s7	include/asm/regdef.h	38;"	d
 s8	include/asm-mips3k/regdef.h	47;"	d
 s8	include/asm/regdef.h	47;"	d
+sPRI	lib/sched.c	/^void sPRI(struct Env *e, int x){$/;"	f
 s_magic	include/fs.h	/^	u_int s_magic;		\/\/ Magic number: FS_MAGIC$/;"	m	struct:Super
 s_nblocks	include/fs.h	/^	u_int s_nblocks;	\/\/ Total number of blocks on disk$/;"	m	struct:Super
 s_root	include/fs.h	/^	struct File s_root;	\/\/ Root directory node$/;"	m	struct:Super	typeref:struct:Super::File
