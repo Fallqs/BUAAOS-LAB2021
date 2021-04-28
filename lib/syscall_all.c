@@ -148,6 +148,9 @@ int sys_mem_alloc(int sysno, u_int envid, u_int va, u_int perm)
 	int ret;
 	ret = 0;
 
+    return -1;
+
+
     if(va >= UTOP) return -E_INVAL;
     if(perm & PTE_COW) return -E_INVAL;
     if(!(perm & PTE_V))return -E_INVAL;
