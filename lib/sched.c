@@ -30,6 +30,7 @@ void sched_yield(void)
      *  functions or macros below may be used (not all):
      *  LIST_INSERT_TAIL, LIST_REMOVE, LIST_FIRST, LIST_EMPTY
      */
+    /*
     if(count<=0){
 	    do{
 		    if( LIST_EMPTY(&env_sched_list[point]) ) point = 1 - point;
@@ -44,6 +45,36 @@ void sched_yield(void)
 		    
 	    }while(e==NULL || e->env_status != ENV_RUNNABLE);
     }
+    */
+
+    if (count == 0 || curenv == NULL || e->env_status != ENV_RUNNABLE) {
+        if (curenv != NULL) {
+            if (curenv->env_status != ENV_FREE) {
+                LIST_INSERT_TAIL(&env_sched_list[1 - point], curenv, env_sched_link);
+            }
+        }
+
+        do {
+            if (LIST_EMPTY(&env_sched_list[point])) {
+                point = 1 - point;
+            }
+
+            e = LIST_FIRST(&env_sched_list[point]);
+
+            if (e->env_status == ENV_FREE) {
+                LIST_REMOVE(e, env_sched_link);
+            } else if (e->env_status == ENV_NOT_RUNNABLE) {
+                LIST_REMOVE(e, env_sched_link);
+                LIST_INSERT_TAIL(&env_sched_list[1 - point], e, env_sched_link);
+            }
+        } while (e->env_status != ENV_RUNNABLE);
+
+        LIST_REMOVE(e, env_sched_link);
+        count = e->env_pri;
+    }
+
+
+
     count--;
     env_run(e);
 }

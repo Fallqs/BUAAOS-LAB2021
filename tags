@@ -749,6 +749,7 @@ offsetof	include/types.h	43;"	d
 offsetof	readelf/types.h	43;"	d
 open	user/file.c	/^open(const char *path, int mode)$/;"	f
 opencons	user/console.c	/^opencons(void)$/;"	f
+ov_do	lib/handle_ov.c	/^void ov_do(char* sp)$/;"	f
 p_align	include/kerelf.h	/^	Elf32_Word	p_align;		\/* Segment alignment *\/$/;"	m	struct:__anon2
 p_align	readelf/kerelf.h	/^        Elf32_Word      p_align;                \/* Segment alignment *\/$/;"	m	struct:__anon5
 p_buf	user/pipe.c	/^	u_char p_buf[BY2PIPE];	\/\/ data buffer$/;"	m	struct:Pipe	file:
