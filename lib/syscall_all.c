@@ -148,7 +148,7 @@ int sys_mem_alloc(int sysno, u_int envid, u_int va, u_int perm)
 	int ret;
 	ret = 0;
 
-    return -1;
+    //return -1;
 
 
     if(va >= UTOP) return -E_INVAL;
@@ -205,7 +205,7 @@ int sys_mem_map(int sysno, u_int srcid, u_int srcva, u_int dstid, u_int dstva,
         return -E_INVAL;
     }
 
-    if( (ret = envid2env(srcid, &srcenv, 1)) < 0){
+    if( (ret = envid2env(srcid, &srcenv, 0)) < 0){
         return ret;
     }
 
