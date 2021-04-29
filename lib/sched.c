@@ -48,11 +48,11 @@ void sched_yield(void)
     */
 
     if (count == 0 || curenv == NULL || e->env_status != ENV_RUNNABLE) {
-       // if (curenv != NULL) {
-         //   if (curenv->env_status != ENV_FREE) {
-           //     LIST_INSERT_TAIL(&env_sched_list[1 - point], curenv, env_sched_link);
-      //      }
-      //  }
+        if (curenv != NULL) {
+            if (curenv->env_status != ENV_FREE) {
+                LIST_INSERT_TAIL(&env_sched_list[1 - point], curenv, env_sched_link);
+            }
+        }
 
         do {
             if (LIST_EMPTY(&env_sched_list[point])) {
