@@ -12,7 +12,7 @@ fre	pageReplace.cpp	/^    long fre[M+1],*top;$/;"	m	struct:free	file:
 free	pageReplace.cpp	/^    free(){$/;"	f	struct:free
 free	pageReplace.cpp	/^struct free{$/;"	s	file:
 ind	pageReplace.cpp	/^    long ind;$/;"	m	struct:pg	file:
-l	pageReplace.cpp	/^    pg* l,r;$/;"	m	struct:pg	file:
+l	pageReplace.cpp	/^    pg *l,*r;$/;"	m	struct:pg	file:
 ll	pageReplace.cpp	/^pg lst[N],*ll=lst,*rr=lst;$/;"	v
 lst	pageReplace.cpp	/^pg lst[N],*ll=lst,*rr=lst;$/;"	v
 pageReplace	pageReplace.cpp	/^void pageReplace(long * physic_memery, long nwAdd){$/;"	f
@@ -20,6 +20,6 @@ pg	pageReplace.cpp	/^    pg(){l=r=NULL;ind=-1;}$/;"	f	struct:pg
 pg	pageReplace.cpp	/^struct pg{$/;"	s	file:
 pop	pageReplace.cpp	/^inline void pop(){$/;"	f
 push	pageReplace.cpp	/^inline void push(long *tb, long id){$/;"	f
-r	pageReplace.cpp	/^    pg* l,r;$/;"	m	struct:pg	file:
+r	pageReplace.cpp	/^    pg *l,*r;$/;"	m	struct:pg	file:
 rr	pageReplace.cpp	/^pg lst[N],*ll=lst,*rr=lst;$/;"	v
 top	pageReplace.cpp	/^    long fre[M+1],*top;$/;"	m	struct:free	file:

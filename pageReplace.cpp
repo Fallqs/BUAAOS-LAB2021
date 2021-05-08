@@ -2,7 +2,7 @@ include "pageReplace.h"
 using namespace std;
 const long N=1<<20,M=63;
 struct pg{
-    pg* l,r;
+    pg *l,*r;
     long ind;
     pg(){l=r=NULL;ind=-1;}
 };
