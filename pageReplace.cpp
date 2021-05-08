@@ -6,8 +6,8 @@ int cnt=256;
 inline void upd(int &x,int j){
     register int p=x&3;
     register int y=x&2<<5+x&2<<4;
-    register int z=x&1<<5;
-    x=(j-y-z)<<2|p>>1;
+    //register int z=x&1<<5;
+    x=(j-y)<<2|p>>1;
 }
 inline void qry(long *pp,int rnk){
     register int old=0,j=++cnt;
