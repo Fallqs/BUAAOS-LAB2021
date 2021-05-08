@@ -1,0 +1,27 @@
+Autotest: Begin at 2021年 05月 08日 星期六 10:03:08 CST
+[32m[ found your pageReplace.cpp ][0m
+pageReplace.cpp:1:1: error: 'nclude' does not name a type
+ nclude "pageReplace.h"
+ ^
+pageReplace.cpp:5:11: error: field 'r' has incomplete type 'pg'
+     pg* l,r;
+           ^
+pageReplace.cpp: In constructor 'pg::pg()':
+pageReplace.cpp:7:14: error: 'NULL' was not declared in this scope
+     pg(){l=r=NULL;ind=-1;}
+              ^
+pageReplace.cpp: In function 'long int* alloc()':
+pageReplace.cpp:24:21: error: invalid conversion from 'long int' to 'long int*' [-fpermissive]
+     return *(f.top--);
+                     ^
+pageReplace.cpp: In function 'void push(long int*, long int)':
+pageReplace.cpp:34:27: error: invalid conversion from 'long int*' to 'long int' [-fpermissive]
+         tb[p->ind = alloc()] = id;
+                           ^
+pageReplace.cpp: In function 'void pageReplace(long int*, long int)':
+pageReplace.cpp:39:1: error: expected ';' before '}' token
+ }
+ ^
+make: *** [main] Error 1
+[31m[01m[ compile error ][0m
+[33m[01m[ You got 0 (of 100) this time. 2021年 05月 08日 星期六 10:03:10 CST ][0m
