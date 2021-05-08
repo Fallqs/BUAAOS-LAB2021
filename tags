@@ -8,8 +8,8 @@ E	pageReplace.cpp	/^const int N=64,I=8,E=3;$/;"	v
 I	pageReplace.cpp	/^const int N=64,I=8,E=3;$/;"	v
 N	pageReplace.cpp	/^const int N=64,I=8,E=3;$/;"	v
 cnt	pageReplace.cpp	/^int cnt=0;$/;"	v
+mx	pageReplace.cpp	/^inline void mx(int &x,int y){if(x>y)x=y;}$/;"	f
 pageReplace	pageReplace.cpp	/^void pageReplace(long * physic_memery, long nwAdd){$/;"	f
 qry	pageReplace.cpp	/^inline void qry(long *pp,int rnk){$/;"	f
-r	pageReplace.cpp	/^int r[64],t[64];$/;"	v
-t	pageReplace.cpp	/^int r[64],t[64];$/;"	v
+t	pageReplace.cpp	/^int t[64];$/;"	v
 v	pageReplace.cpp	/^unsigned long long v;$/;"	v
