@@ -4,20 +4,12 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-N	pageReplace.cpp	/^const int N=64;$/;"	v
-buf	pageReplace.cpp	/^pg buf[N+1],*ll,*rr;$/;"	v
-del	pageReplace.cpp	/^inline pg* del(pg *p){$/;"	f
-id	pageReplace.cpp	/^char id[1<<20];$/;"	v
-ins	pageReplace.cpp	/^inline void ins(long *pp,int r){$/;"	f
-l	pageReplace.cpp	/^    pg *l,*r;int rnk;$/;"	m	struct:pg	file:
-ll	pageReplace.cpp	/^pg buf[N+1],*ll,*rr;$/;"	v
-lst	pageReplace.cpp	/^const pg *lst=buf+1;$/;"	v
+E	pageReplace.cpp	/^const int N=64,I=8,E=3;$/;"	v
+I	pageReplace.cpp	/^const int N=64,I=8,E=3;$/;"	v
+N	pageReplace.cpp	/^const int N=64,I=8,E=3;$/;"	v
+cnt	pageReplace.cpp	/^int cnt=0;$/;"	v
 pageReplace	pageReplace.cpp	/^void pageReplace(long * physic_memery, long nwAdd){$/;"	f
-pg	pageReplace.cpp	/^struct pg{$/;"	s	file:
-pop	pageReplace.cpp	/^inline pg* pop(){$/;"	f
-push	pageReplace.cpp	/^inline void push(pg *p){$/;"	f
-pushbk	pageReplace.cpp	/^inline void pushbk(pg *p){$/;"	f
-r	pageReplace.cpp	/^    pg *l,*r;int rnk;$/;"	m	struct:pg	file:
-rnk	pageReplace.cpp	/^    pg *l,*r;int rnk;$/;"	m	struct:pg	file:
-rr	pageReplace.cpp	/^pg buf[N+1],*ll,*rr;$/;"	v
-sz	pageReplace.cpp	/^int sz;$/;"	v
+qry	pageReplace.cpp	/^inline void qry(long *pp,int rnk){$/;"	f
+r	pageReplace.cpp	/^int r[64],t[64];$/;"	v
+t	pageReplace.cpp	/^int r[64],t[64];$/;"	v
+v	pageReplace.cpp	/^unsigned long long v;$/;"	v
