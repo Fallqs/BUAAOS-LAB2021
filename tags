@@ -6,7 +6,8 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 M	pageReplace.cpp	/^const long N=1<<20,M=63;$/;"	v
 N	pageReplace.cpp	/^const long N=1<<20,M=63;$/;"	v
-alloc	pageReplace.cpp	/^inline long* alloc(){$/;"	f
+NULL	pageReplace.cpp	3;"	d	file:
+alloc	pageReplace.cpp	/^inline long alloc(){$/;"	f
 f	pageReplace.cpp	/^} f;$/;"	v	typeref:struct:free
 fre	pageReplace.cpp	/^    long fre[M+1],*top;$/;"	m	struct:free	file:
 free	pageReplace.cpp	/^    free(){$/;"	f	struct:free

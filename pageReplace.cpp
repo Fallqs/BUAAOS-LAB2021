@@ -1,5 +1,6 @@
-include "pageReplace.h"
+#include "pageReplace.h"
 using namespace std;
+#define NULL 0
 const long N=1<<20,M=63;
 struct pg{
     pg *l,*r;
@@ -19,7 +20,7 @@ inline void pop(){
     ll->ind = -1;
     ll = ll->r;
 }
-inline long* alloc(){
+inline long alloc(){
     if(f.top==f.fre)pop();
     return *(f.top--);
 }
@@ -35,5 +36,5 @@ inline void push(long *tb, long id){
     }
 }
 void pageReplace(long * physic_memery, long nwAdd){
-    push(physic_memery, nwAdd>>12)
+    push(physic_memery, nwAdd>>12);
 }
