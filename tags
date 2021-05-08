@@ -4,7 +4,7 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-N	pageReplace.cpp	/^const long N = 64;$/;"	v
+N	pageReplace.cpp	/^const long N = 3;$/;"	v
 NULL	pageReplace.cpp	3;"	d	file:
 buf	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;$/;"	v
 id	pageReplace.cpp	/^short id[1 << 20];$/;"	v
