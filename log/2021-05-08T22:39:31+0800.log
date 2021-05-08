@@ -1,0 +1,8 @@
+Autotest: Begin at 2021年 05月 08日 星期六 22:39:31 CST
+[32m[ found your pageReplace.cpp ][0m
+pageReplace.cpp:5:14: error: register name not specified for 'cnt'
+ register int cnt=0;
+              ^
+make: *** [main] Error 1
+[31m[01m[ compile error ][0m
+[33m[01m[ You got 0 (of 100) this time. 2021年 05月 08日 星期六 22:39:33 CST ][0m
