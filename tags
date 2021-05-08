@@ -4,23 +4,18 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
-M	pageReplace.cpp	/^const long N=1<<20,M=63;$/;"	v
-N	pageReplace.cpp	/^const long N=1<<20,M=63;$/;"	v
+N	pageReplace.cpp	/^const long N = 64;$/;"	v
 NULL	pageReplace.cpp	3;"	d	file:
-alloc	pageReplace.cpp	/^inline long alloc(){$/;"	f
-f	pageReplace.cpp	/^} f;$/;"	v	typeref:struct:free
-fre	pageReplace.cpp	/^    long fre[M+1],*top;$/;"	m	struct:free	file:
-free	pageReplace.cpp	/^    free(){$/;"	f	struct:free
-free	pageReplace.cpp	/^struct free{$/;"	s	file:
-ind	pageReplace.cpp	/^    long ind;$/;"	m	struct:pg	file:
-l	pageReplace.cpp	/^    pg *l,*r;$/;"	m	struct:pg	file:
-ll	pageReplace.cpp	/^pg lst[N],*ll=lst,*rr=lst;$/;"	v
-lst	pageReplace.cpp	/^pg lst[N],*ll=lst,*rr=lst;$/;"	v
-pageReplace	pageReplace.cpp	/^void pageReplace(long * physic_memery, long nwAdd){$/;"	f
-pg	pageReplace.cpp	/^    pg(){l=r=NULL;ind=-1;}$/;"	f	struct:pg
-pg	pageReplace.cpp	/^struct pg{$/;"	s	file:
-pop	pageReplace.cpp	/^inline void pop(){$/;"	f
-push	pageReplace.cpp	/^inline void push(long *tb, long id){$/;"	f
-r	pageReplace.cpp	/^    pg *l,*r;$/;"	m	struct:pg	file:
-rr	pageReplace.cpp	/^pg lst[N],*ll=lst,*rr=lst;$/;"	v
-top	pageReplace.cpp	/^    long fre[M+1],*top;$/;"	m	struct:free	file:
+buf	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;$/;"	v
+id	pageReplace.cpp	/^char id[1 << 20];$/;"	v
+ins	pageReplace.cpp	/^inline void ins(long *pp, int rnk) {$/;"	f
+l	pageReplace.cpp	/^    pg *l, *r;$/;"	m	struct:pg	file:
+ll	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;$/;"	v
+lst	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;$/;"	v
+pageReplace	pageReplace.cpp	/^inline void pageReplace(long *physic_memery, long nwAdd) {$/;"	f
+pg	pageReplace.cpp	/^struct pg {$/;"	s	file:
+qry	pageReplace.cpp	/^inline void qry(long *pp, int rnk) {$/;"	f
+r	pageReplace.cpp	/^    pg *l, *r;$/;"	m	struct:pg	file:
+rnk	pageReplace.cpp	/^    long rnk;$/;"	m	struct:pg	file:
+rr	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;$/;"	v
+sz	pageReplace.cpp	/^int sz;$/;"	v

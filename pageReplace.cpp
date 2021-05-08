@@ -1,40 +1,41 @@
-#include "pageReplace.h"
+include "pageReplace.h"
 using namespace std;
 #define NULL 0
-const long N=1<<20,M=63;
-struct pg{
-    pg *l,*r;
-    long ind;
-    pg(){l=r=NULL;ind=-1;}
+const long N = 64;
+struct pg {
+    pg *l, *r;
+    long rnk;
 };
-pg lst[N],*ll=lst,*rr=lst;
-struct free{
-    long fre[M+1],*top;
-    free(){
-        top=fre+M;
-        for(long *p=fre,i=M;p<=top;++p,--i)*p=i;
-    }
-} f;
-inline void pop(){
-    *(f.top++) = ll->ind;
-    ll->ind = -1;
-    ll = ll->r;
-}
-inline long alloc(){
-    if(f.top==f.fre)pop();
-    return *(f.top--);
-}
-inline void push(long *tb, long id){
-    pg *p = lst+id;
-    if(~p->ind){
-        p->l->r = p->r;
-        p->r->l = p->l;
+pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;
+int sz;
+char id[1 << 20];
+
+inline void ins(long *pp, int rnk) {
+    if (sz < N) {
+        pg *p = lst + (sz++);
+        p->rnk = rnk;
+        id[rnk] = p - lst;
+        rr->r = p;
         p->l = rr;
         rr = p;
-    }else{
-        tb[p->ind = alloc()] = id;
+        *(pp + (p - lst)) = rnk;
+    } else {
+        ll->rnk = rnk;
+        id[rnk] = ll - lst;
+        *(pp + (ll - lst)) = rnk;
     }
 }
-void pageReplace(long * physic_memery, long nwAdd){
-    push(physic_memery, nwAdd>>12);
+
+inline void qry(long *pp, int rnk) {
+    int ind = id[rnk];
+    if (ind) {
+        pg *p = lst + ind;
+        rr->r = p;
+        p->l = rr;
+        rr = p;
+    } else ins(pp, rnk);
+}
+
+inline void pageReplace(long *physic_memery, long nwAdd) {
+    qry(physic_memery, nwAdd >> 12);
 }
