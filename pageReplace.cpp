@@ -1,4 +1,4 @@
-nclude "pageReplace.h"
+include "pageReplace.h"
 using namespace std;
 const long N=1<<20,M=63;
 struct pg{
