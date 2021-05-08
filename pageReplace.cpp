@@ -8,7 +8,7 @@ inline void mx(int &x,int y){if(x>y)x=y;}
 inline void qry(long *pp,int rnk){
     int ex=0,old=ex;
     for(int i=ex,j=ex+I;i<j;++i){
-        if(t[i])t[i]=t[i]*3/4;
+        if(t[i])t[i]=(t[i]<<3)-t[i]>>3;
         if(pp[i]==rnk){mx(t[i]+=1<<25,1<<27);return;}
         if(t[i]<t[old])old=i;
     }
