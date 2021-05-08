@@ -1,4 +1,4 @@
-include "pageReplace.h"
+#include "pageReplace.h"
 using namespace std;
 #define NULL 0
 const long N = 64;
