@@ -1,47 +1,55 @@
 #include "pageReplace.h"
 using namespace std;
-#define NULL 0
-const long N = 3;
-struct pg {
-    pg *l, *r;
-    long rnk;
+const int N=64;
+struct pg{
+    pg *l,*r;int rnk;
 };
-pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;
-int sz;
-short id[1 << 20];
-
-inline void ins(long *pp, int rnk) {
-    pg *p;
-    if (sz < N) {
-        p = lst + (sz++);
-    } else {
-        id[(p=ll)->rnk] = 0;
-        //        printf("ll:lst[%d] = %d\n",ll-lst,ll->rnk);
-        ll = ll->r;
-
+char id[1<<20];
+pg buf[N+1],*ll,*rr;
+const pg *lst=buf+1;
+inline void push(pg *p){
+    if(!rr)rr=p;
+    else{
+        rr->r=p;p->l=rr;rr=p;
     }
-    rr->r = p;
-    p->l = rr;
-    rr = p;
-    id[rr->rnk = rnk] = rr - buf;
-    *(pp + (rr - lst)) = rnk;
+    if(!ll)ll=p;
 }
-
-inline void qry(long *pp, int rnk) {
-    int ind = id[rnk];
-    if (ind) {
-        pg *p = buf + ind;
-        if(p!=rr){
-            rr->r = p;
-            if(p!=ll)p->l->r = p->r;
-            else ll = ll->r;
-            p->r->l = p->l;
-            p->l = rr;
-            rr = p;
-        }
-    } else ins(pp, rnk);
+inline void pushbk(pg *p){
+    if(!ll)ll=p;
+    else{
+        ll->l=p;p->r=ll;ll=p;
+    }
+    if(!rr)rr=p;
 }
-
-void pageReplace(long *physic_memery, long nwAdd) {
-    qry(physic_memery, nwAdd >> 12);
+inline pg* pop(){
+    return (ll=ll->r)->l;
+}
+inline pg* del(pg *p){
+    if(p->r)p->r->l=p->l;
+    if(p->l)p->l->r=p->r;
+    if(p==ll)ll=ll->r;
+    if(p==rr)rr=rr->l;
+    p->r=0;
+    return p;
+}
+int sz;
+inline void ins(long *pp,int r){
+    int ind=id[r];pg *p;
+    if(ind){
+        push(del(buf+ind));
+        return;
+    }else if(sz<N){
+        pp[sz]=r;
+        p=buf+(++sz);
+        push(p);
+    }else{
+        pp[ll-lst]=r;
+        id[ll->rnk]=0;
+        push(del(p=ll));
+    }
+    p->rnk=r;
+    id[r]=p-buf;
+}
+void pageReplace(long * physic_memery, long nwAdd){
+    ins(physic_memery, nwAdd>>12);
 }
