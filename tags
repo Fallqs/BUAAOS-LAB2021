@@ -5,7 +5,7 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 N	pageReplace.cpp	/^const int N=64;$/;"	v
-cnt	pageReplace.cpp	/^int cnt=0;$/;"	v
+cnt	pageReplace.cpp	/^register int cnt=0;$/;"	v
 mx	pageReplace.cpp	/^inline void mx(int &x,int y){if(x>y)x=y;}$/;"	f
 pageReplace	pageReplace.cpp	/^void pageReplace(long * physic_memery, long nwAdd){$/;"	f
 qry	pageReplace.cpp	/^inline void qry(long *pp,int rnk){$/;"	f
