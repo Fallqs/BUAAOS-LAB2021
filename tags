@@ -6,16 +6,16 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 N	pageReplace.cpp	/^const long N = 64;$/;"	v
 NULL	pageReplace.cpp	3;"	d	file:
-buf	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = buf, *rr = lst;$/;"	v
+buf	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;$/;"	v
 id	pageReplace.cpp	/^short id[1 << 20];$/;"	v
 ins	pageReplace.cpp	/^inline void ins(long *pp, int rnk) {$/;"	f
 l	pageReplace.cpp	/^    pg *l, *r;$/;"	m	struct:pg	file:
-ll	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = buf, *rr = lst;$/;"	v
-lst	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = buf, *rr = lst;$/;"	v
+ll	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;$/;"	v
+lst	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;$/;"	v
 pageReplace	pageReplace.cpp	/^void pageReplace(long *physic_memery, long nwAdd) {$/;"	f
 pg	pageReplace.cpp	/^struct pg {$/;"	s	file:
 qry	pageReplace.cpp	/^inline void qry(long *pp, int rnk) {$/;"	f
 r	pageReplace.cpp	/^    pg *l, *r;$/;"	m	struct:pg	file:
 rnk	pageReplace.cpp	/^    long rnk;$/;"	m	struct:pg	file:
-rr	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = buf, *rr = lst;$/;"	v
+rr	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;$/;"	v
 sz	pageReplace.cpp	/^int sz;$/;"	v

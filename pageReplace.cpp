@@ -6,24 +6,21 @@ struct pg {
     pg *l, *r;
     long rnk;
 };
-pg buf[N + 1], *lst = buf + 1, *ll = buf, *rr = lst;
+pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;
 int sz;
 short id[1 << 20];
 
 inline void ins(long *pp, int rnk) {
+    pg *p;
     if (sz < N) {
-        pg *p = lst + (sz++);
-        p->rnk = rnk;
-        id[rnk] = p - buf;
-        ll->l = p;
-        p->r = ll;
-        ll = p;
-        *(pp + (p - lst)) = rnk;
+        p = lst + (sz++);
     } else {
-        id[ll->rnk] = 0;
-        id[ll->rnk = rnk] = ll - buf;
-        *(pp + (ll - lst)) = rnk;
+        id[(p=ll)->rnk] = 0;
+        ll = ll->r;
     }
+    rr->r = p; rr = p;
+    id[rr->rnk = rnk] = rr - buf;
+    *(pp + (rr - lst)) = rnk;
 }
 
 inline void qry(long *pp, int rnk) {
