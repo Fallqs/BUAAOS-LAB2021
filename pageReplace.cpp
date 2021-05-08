@@ -12,7 +12,7 @@ struct free{
     long fre[M+1],*top;
     free(){
         top=fre+M;
-        for(long *p=fre,i=0;p<=top;++p,++i)*p=i;
+        for(long *p=fre,i=M;p<=top;++p,--i)*p=i;
     }
 } f;
 inline void pop(){
