@@ -1,0 +1,8 @@
+Autotest: Begin at 2021年 05月 08日 星期六 23:28:04 CST
+[32m[ found your pageReplace.cpp ][0m
+pageReplace.cpp:1:1: error: 'nclude' does not name a type
+ nclude "pageReplace.h"
+ ^
+make: *** [main] Error 1
+[31m[01m[ compile error ][0m
+[33m[01m[ You got 0 (of 100) this time. 2021年 05月 08日 星期六 23:28:08 CST ][0m
