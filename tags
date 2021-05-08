@@ -12,7 +12,7 @@ ins	pageReplace.cpp	/^inline void ins(long *pp, int rnk) {$/;"	f
 l	pageReplace.cpp	/^    pg *l, *r;$/;"	m	struct:pg	file:
 ll	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;$/;"	v
 lst	pageReplace.cpp	/^pg buf[N + 1], *lst = buf + 1, *ll = lst, *rr = buf;$/;"	v
-pageReplace	pageReplace.cpp	/^inline void pageReplace(long *physic_memery, long nwAdd) {$/;"	f
+pageReplace	pageReplace.cpp	/^void pageReplace(long *physic_memery, long nwAdd) {$/;"	f
 pg	pageReplace.cpp	/^struct pg {$/;"	s	file:
 qry	pageReplace.cpp	/^inline void qry(long *pp, int rnk) {$/;"	f
 r	pageReplace.cpp	/^    pg *l, *r;$/;"	m	struct:pg	file:

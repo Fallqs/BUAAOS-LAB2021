@@ -36,6 +36,6 @@ inline void qry(long *pp, int rnk) {
     } else ins(pp, rnk);
 }
 
-inline void pageReplace(long *physic_memery, long nwAdd) {
+void pageReplace(long *physic_memery, long nwAdd) {
     qry(physic_memery, nwAdd >> 12);
 }
