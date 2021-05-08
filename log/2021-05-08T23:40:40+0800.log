@@ -1,0 +1,49 @@
+Autotest: Begin at 2021年 05月 08日 星期六 23:40:40 CST
+[32m[ found your pageReplace.cpp ][0m
+pageReplace.cpp:4:31: error: conflicting specifiers in declaration of 'rint'
+ typedef register unsigned int rint;
+                               ^
+pageReplace.cpp: In function 'void upd(int&, int)':
+pageReplace.cpp:9:5: error: 'rint' was not declared in this scope
+     rint p=x&3;
+     ^
+pageReplace.cpp:10:10: error: expected ';' before 'y'
+     rint y=x&2<<5+x&2<<4;
+          ^
+pageReplace.cpp:11:10: error: expected ';' before 'z'
+     rint z=x&1<<2;
+          ^
+pageReplace.cpp:12:10: error: 'y' was not declared in this scope
+     x=(j-y-z)<<2|p>>1;
+          ^
+pageReplace.cpp:12:12: error: 'z' was not declared in this scope
+     x=(j-y-z)<<2|p>>1;
+            ^
+pageReplace.cpp:12:18: error: 'p' was not declared in this scope
+     x=(j-y-z)<<2|p>>1;
+                  ^
+pageReplace.cpp: In function 'void qry(long int*, int)':
+pageReplace.cpp:15:5: error: 'rint' was not declared in this scope
+     rint old=0,j=++cnt;
+     ^
+pageReplace.cpp:16:14: error: expected ';' before 'i'
+     for(rint i=0;i<N;++i){
+              ^
+pageReplace.cpp:16:18: error: 'i' was not declared in this scope
+     for(rint i=0;i<N;++i){
+                  ^
+pageReplace.cpp:17:33: error: 'j' was not declared in this scope
+         if(pp[i]==rnk){upd(t[i],j);return;}
+                                 ^
+pageReplace.cpp:18:19: error: 'old' was not declared in this scope
+         if(t[i]<t[old])old=i;
+                   ^
+pageReplace.cpp:20:8: error: 'old' was not declared in this scope
+     pp[old]=rnk;t[old]=j-256<<2|2;
+        ^
+pageReplace.cpp:20:24: error: 'j' was not declared in this scope
+     pp[old]=rnk;t[old]=j-256<<2|2;
+                        ^
+make: *** [main] Error 1
+[31m[01m[ compile error ][0m
+[33m[01m[ You got 0 (of 100) this time. 2021年 05月 08日 星期六 23:40:43 CST ][0m
