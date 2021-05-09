@@ -7,7 +7,7 @@ get:
 
 push:
 	git add .
-	git commit -m "auto"
+	git commit --allow-empty -m "auto"
 	git push
 
 
