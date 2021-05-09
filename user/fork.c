@@ -84,7 +84,7 @@ pgfault(u_int va)
 {
 	u_int *tmp;
 	va = ROUNDDOWN(va, BY2PG);
-	tmp = UTOP - 2*BY2PG;
+	tmp = USTACKTOP;
 
 	//	writef("fork.c:pgfault():\t va:%x\n",va);
 	u_int perm = (*vpt)[VPN(va)] & 0xfff;
@@ -127,17 +127,19 @@ pgfault(u_int va)
 static void
 duppage(u_int envid, u_int pn)
 {
-	u_int addr;
+	u_int addr = pn << PGSHIFT;
 	u_int perm = (*vpt)[pn] & 0xfff;
 	u_int permf = perm;
 
+	if(!(perm & PTE_V))return;
+
 	if( ((perm & PTE_R) || (perm & PTE_COW)) && !(perm & PTE_LIBRARY) )perm |= PTE_COW;
 
-	if (syscall_mem_map(0, pn * BY2PG, envid, pn * BY2PG, perm) )
-		;//user_panic("syscall_mem_map for son failed!\n");
+	if (syscall_mem_map(0, addr, envid, addr, perm) )
+		user_panic("syscall_mem_map for son failed!\n");
 
-	if (permf != perm && syscall_mem_map(0, pn * BY2PG, 0, pn * BY2PG, perm) )
-		;//user_panic("syscall_mem_map for father failed!\n");
+	if (permf != perm && syscall_mem_map(0, addr, 0, addr, perm) )
+		user_panic("syscall_mem_map for father failed!\n");
 
 	//	user_panic("duppage not implemented");
 }
@@ -174,12 +176,22 @@ fork(void)
 
 	//printf("-duppage-");
 
-	for(i = 0; i < USTACKTOP; i += PDMAP)if( (*vpd)[PDX(i)] ){
+	for (i = 0; i < UTOP -  2 * BY2PG; i += BY2PG)
+	{
+		if ((((Pde *)(*vpd))[i >> PDSHIFT] & PTE_V) && (((Pte *)(*vpt))[i >> PGSHIFT] & PTE_V))
+		{
+			//writef("%x\n",(*vpt)[VPN(i)]);
+			duppage(newenvid, VPN(i));
+		}
+	}
+/*
+	for(i = 0; i < USTACKTOP; i += PDMAP)if( (*vpd)[PDX(i)] & PTE_V ){
 		lim = USTACKTOP - i;
 		if(lim > PDMAP)lim = PDMAP;
-		for(j = 0; j < lim; j += BY2PG)if( (*vpt)[VPN(i + j)] )
+		for(j = 0; j < lim; j += BY2PG)if( (*vpt)[VPN(i + j)] & PTE_V)
 			duppage(newenvid, VPN(i + j));
 	}
+*/
 
 	//printf("-memalloc-");
 

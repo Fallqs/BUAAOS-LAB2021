@@ -28,15 +28,6 @@ extern char *KERNEL_SP;
  * Post-Condition:
  *  return e's envid on success.
  */
-u_int fork(struct Env *e){
-	struct Env *ch;
-	env_alloc(&ch, e->env_id);
-	ch->env_status = e->env_status;
-	ch->env_pgdir = e->env_pgdir;
-	ch->env_cr3 = e->env_cr3;
-	ch->env_pri = e->env_pri;
-	return ch->env_id;
-}
 
 u_int mkenvid(struct Env *e)
 {

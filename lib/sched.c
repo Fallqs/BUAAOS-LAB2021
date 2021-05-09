@@ -47,8 +47,7 @@ void sched_yield(void)
         
         count = e->env_pri;
     }
-    
-
+   
     count--;
     env_run(e);
 }

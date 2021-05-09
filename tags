@@ -661,7 +661,6 @@ file_close	user/file.c	/^file_close(struct Fd *fd)$/;"	f
 file_read	user/file.c	/^file_read(struct Fd *fd, void *buf, u_int n, u_int offset)$/;"	f	file:
 file_stat	user/file.c	/^file_stat(struct Fd *fd, struct Stat *st)$/;"	f	file:
 file_write	user/file.c	/^file_write(struct Fd *fd, const void *buf, u_int n, u_int offset)$/;"	f	file:
-fork	lib/env.c	/^u_int fork(struct Env *e){$/;"	f
 fork	user/fork.c	/^fork(void)$/;"	f
 fp	include/asm-mips3k/regdef.h	46;"	d
 fp	include/asm/regdef.h	46;"	d

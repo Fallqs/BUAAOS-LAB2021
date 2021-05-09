@@ -200,14 +200,18 @@ int sys_mem_map(int sysno, u_int srcid, u_int srcva, u_int dstid, u_int dstva,
 	round_srcva = ROUNDDOWN(srcva, BY2PG);
 	round_dstva = ROUNDDOWN(dstva, BY2PG);
 
+	//printf("Mapping--PTE_V-");
+
     //your code here
     if(srcva >= UTOP || dstva >= UTOP){
         return -E_UNSPECIFIED;
     }
 
-    if(!(perm & PTE_V)||(perm & PTE_COW)){
+    if(!(perm & PTE_V)){
         return -E_INVAL;
     }
+
+	//printf("-ENVID-");
 
     if( (ret = envid2env(srcid, &srcenv, 1)) < 0){
         return ret;
@@ -217,15 +221,21 @@ int sys_mem_map(int sysno, u_int srcid, u_int srcva, u_int dstid, u_int dstva,
         return ret;
     }
 
+	//printf("-pg_lookup-");
+
     if( (ppage = page_lookup(srcenv->env_pgdir, round_srcva, &ppte)) == NULL){
         return -E_UNSPECIFIED;
     }
 
     if( !(*ppte & PTE_R) && (perm & PTE_R) )return -E_INVAL;
 
+	//printf("-insert-");
+
     if(ret = page_insert(dstenv->env_pgdir, ppage, round_dstva, perm)){
         return ret;
     }
+
+	//printf("-Success\n");
 
 	return 0;
 }
@@ -306,8 +316,6 @@ int sys_set_env_status(int sysno, u_int envid, u_int status)
 	struct Env *env;
 	int ret;
 
-	printf("SetStatus-%d:=%d---", envid, env->env_status==ENV_RUNNABLE);
-
 	if (status != ENV_RUNNABLE && status != ENV_NOT_RUNNABLE && status != ENV_FREE)
 		return -E_INVAL;
 
@@ -318,7 +326,9 @@ int sys_set_env_status(int sysno, u_int envid, u_int status)
 	if(status == ENV_RUNNABLE)LIST_INSERT_HEAD(&env_sched_list[0], env, env_sched_link);
 	else if(status == ENV_FREE)env_destroy(env);
 
-	printf("SetStatus-Success\n");
+	//printf("SetStatus-%d:=%d---", envid, env->env_status==ENV_RUNNABLE);
+
+	//printf("SetStatus-Success\n");
 
 	return 0;
 	//	panic("sys_env_set_status not implemented");
