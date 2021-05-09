@@ -2,8 +2,8 @@
 using namespace std;
 const int N=64,M=256;
 int t[64],cnt=M;
-inline void qry(long *pp,int rnk){
-    register int old=0,j=++cnt,r=rnk;
+inline void qry(register long *pp,register int rnk){
+    register int old=0,j=++cnt;
     for(register int i=0;i<N;++i){
         if(pp[i]==r){t[i]=j;return;}
         if(t[i]<t[old])old=i;
