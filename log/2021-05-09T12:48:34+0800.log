@@ -1,0 +1,74 @@
+Autotest: Begin at 2021年 05月 09日 星期日 12:48:34 CST
+[32m[ found your pageReplace.cpp ][0m
+pageReplace.cpp:5:17: error: no matching function for call to 'std::map<int, int>::map(const int&)'
+ map<int,int>mp(N);
+                 ^
+pageReplace.cpp:5:17: note: candidates are:
+In file included from /usr/local/include/c++/4.9.4/map:61:0,
+                 from pageReplace.cpp:2:
+/usr/local/include/c++/4.9.4/bits/stl_map.h:270:9: note: template<class _InputIterator> std::map<_Key, _Tp, _Compare, _Alloc>::map(_InputIterator, _InputIterator, const _Compare&, const allocator_type&)
+         map(_InputIterator __first, _InputIterator __last,
+         ^
+/usr/local/include/c++/4.9.4/bits/stl_map.h:270:9: note:   template argument deduction/substitution failed:
+pageReplace.cpp:5:17: note:   candidate expects 4 arguments, 1 provided
+ map<int,int>mp(N);
+                 ^
+In file included from /usr/local/include/c++/4.9.4/map:61:0,
+                 from pageReplace.cpp:2:
+/usr/local/include/c++/4.9.4/bits/stl_map.h:253:9: note: template<class _InputIterator> std::map<_Key, _Tp, _Compare, _Alloc>::map(_InputIterator, _InputIterator)
+         map(_InputIterator __first, _InputIterator __last)
+         ^
+/usr/local/include/c++/4.9.4/bits/stl_map.h:253:9: note:   template argument deduction/substitution failed:
+pageReplace.cpp:5:17: note:   candidate expects 2 arguments, 1 provided
+ map<int,int>mp(N);
+                 ^
+In file included from /usr/local/include/c++/4.9.4/map:61:0,
+                 from pageReplace.cpp:2:
+/usr/local/include/c++/4.9.4/bits/stl_map.h:236:9: note: template<class _InputIterator> std::map<_Key, _Tp, _Compare, _Alloc>::map(_InputIterator, _InputIterator, const allocator_type&)
+         map(_InputIterator __first, _InputIterator __last,
+         ^
+/usr/local/include/c++/4.9.4/bits/stl_map.h:236:9: note:   template argument deduction/substitution failed:
+pageReplace.cpp:5:17: note:   candidate expects 3 arguments, 1 provided
+ map<int,int>mp(N);
+                 ^
+In file included from /usr/local/include/c++/4.9.4/map:61:0,
+                 from pageReplace.cpp:2:
+/usr/local/include/c++/4.9.4/bits/stl_map.h:230:7: note: std::map<_Key, _Tp, _Compare, _Alloc>::map(std::initializer_list<std::pair<const _Key, _Tp> >, const allocator_type&) [with _Key = int; _Tp = int; _Compare = std::less<int>; _Alloc = std::allocator<std::pair<const int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::allocator_type = std::allocator<std::pair<const int, int> >]
+       map(initializer_list<value_type> __l, const allocator_type& __a)
+       ^
+/usr/local/include/c++/4.9.4/bits/stl_map.h:230:7: note:   candidate expects 2 arguments, 1 provided
+/usr/local/include/c++/4.9.4/bits/stl_map.h:224:7: note: std::map<_Key, _Tp, _Compare, _Alloc>::map(std::map<_Key, _Tp, _Compare, _Alloc>&&, const allocator_type&) [with _Key = int; _Tp = int; _Compare = std::less<int>; _Alloc = std::allocator<std::pair<const int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::allocator_type = std::allocator<std::pair<const int, int> >]
+       map(map&& __m, const allocator_type& __a)
+       ^
+/usr/local/include/c++/4.9.4/bits/stl_map.h:224:7: note:   candidate expects 2 arguments, 1 provided
+/usr/local/include/c++/4.9.4/bits/stl_map.h:220:7: note: std::map<_Key, _Tp, _Compare, _Alloc>::map(const std::map<_Key, _Tp, _Compare, _Alloc>&, const allocator_type&) [with _Key = int; _Tp = int; _Compare = std::less<int>; _Alloc = std::allocator<std::pair<const int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::allocator_type = std::allocator<std::pair<const int, int> >]
+       map(const map& __m, const allocator_type& __a)
+       ^
+/usr/local/include/c++/4.9.4/bits/stl_map.h:220:7: note:   candidate expects 2 arguments, 1 provided
+/usr/local/include/c++/4.9.4/bits/stl_map.h:216:7: note: std::map<_Key, _Tp, _Compare, _Alloc>::map(const allocator_type&) [with _Key = int; _Tp = int; _Compare = std::less<int>; _Alloc = std::allocator<std::pair<const int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::allocator_type = std::allocator<std::pair<const int, int> >]
+       map(const allocator_type& __a)
+       ^
+/usr/local/include/c++/4.9.4/bits/stl_map.h:216:7: note:   no known conversion for argument 1 from 'const int' to 'const allocator_type& {aka const std::allocator<std::pair<const int, int> >&}'
+/usr/local/include/c++/4.9.4/bits/stl_map.h:208:7: note: std::map<_Key, _Tp, _Compare, _Alloc>::map(std::initializer_list<std::pair<const _Key, _Tp> >, const _Compare&, const allocator_type&) [with _Key = int; _Tp = int; _Compare = std::less<int>; _Alloc = std::allocator<std::pair<const int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::allocator_type = std::allocator<std::pair<const int, int> >]
+       map(initializer_list<value_type> __l,
+       ^
+/usr/local/include/c++/4.9.4/bits/stl_map.h:208:7: note:   no known conversion for argument 1 from 'const int' to 'std::initializer_list<std::pair<const int, int> >'
+/usr/local/include/c++/4.9.4/bits/stl_map.h:193:7: note: std::map<_Key, _Tp, _Compare, _Alloc>::map(std::map<_Key, _Tp, _Compare, _Alloc>&&) [with _Key = int; _Tp = int; _Compare = std::less<int>; _Alloc = std::allocator<std::pair<const int, int> >]
+       map(map&& __x)
+       ^
+/usr/local/include/c++/4.9.4/bits/stl_map.h:193:7: note:   no known conversion for argument 1 from 'const int' to 'std::map<int, int>&&'
+/usr/local/include/c++/4.9.4/bits/stl_map.h:182:7: note: std::map<_Key, _Tp, _Compare, _Alloc>::map(const std::map<_Key, _Tp, _Compare, _Alloc>&) [with _Key = int; _Tp = int; _Compare = std::less<int>; _Alloc = std::allocator<std::pair<const int, int> >]
+       map(const map& __x)
+       ^
+/usr/local/include/c++/4.9.4/bits/stl_map.h:182:7: note:   no known conversion for argument 1 from 'const int' to 'const std::map<int, int>&'
+/usr/local/include/c++/4.9.4/bits/stl_map.h:171:7: note: std::map<_Key, _Tp, _Compare, _Alloc>::map(const _Compare&, const allocator_type&) [with _Key = int; _Tp = int; _Compare = std::less<int>; _Alloc = std::allocator<std::pair<const int, int> >; std::map<_Key, _Tp, _Compare, _Alloc>::allocator_type = std::allocator<std::pair<const int, int> >]
+       map(const _Compare& __comp,
+       ^
+/usr/local/include/c++/4.9.4/bits/stl_map.h:171:7: note:   no known conversion for argument 1 from 'const int' to 'const std::less<int>&'
+/usr/local/include/c++/4.9.4/bits/stl_map.h:162:7: note: std::map<_Key, _Tp, _Compare, _Alloc>::map() [with _Key = int; _Tp = int; _Compare = std::less<int>; _Alloc = std::allocator<std::pair<const int, int> >]
+       map()
+       ^
+/usr/local/include/c++/4.9.4/bits/stl_map.h:162:7: note:   candidate expects 0 arguments, 1 provided
+make: *** [main] Error 1
+[31m[01m[ compile error ][0m
+[33m[01m[ You got 0 (of 100) this time. 2021年 05月 09日 星期日 12:48:37 CST ][0m
