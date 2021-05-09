@@ -383,7 +383,8 @@ void sys_panic(int sysno, char *msg)
 /*** exercise 4.7 ***/
 void sys_ipc_recv(int sysno, u_int dstva)
 {
-    curenv->env_ipc_recving = 1;
+    if(dstva>=UTOP)return;
+	curenv->env_ipc_recving = 1;
     curenv->env_ipc_dstva = dstva;
     curenv->env_status = ENV_NOT_RUNNABLE;
     sys_yield();
@@ -414,6 +415,9 @@ int sys_ipc_can_send(int sysno, u_int envid, u_int value, u_int srcva,
 	int r;
 	struct Env *e;
 	struct Page *p;
+	Pte *pte;
+
+	if(srcva >= UTOP)return -E_INVAL;
 
     if ((r = envid2env(envid, &e, 0)) < 0)return r;
 
@@ -426,8 +430,9 @@ int sys_ipc_can_send(int sysno, u_int envid, u_int value, u_int srcva,
     e->env_status = ENV_RUNNABLE;
 
     if(srcva){
-        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid,e->env_ipc_dstva,perm)) return r;
-        page_insert(e->env_pgdir, p, e->env_ipc_dstva, perm);
+        //if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid,e->env_ipc_dstva,perm)) return r;
+        if(!(p = page_lookup(curenv->env_pgdir, srcva, &pte)))return -E_INVAL;
+		page_insert(e->env_pgdir, p, e->env_ipc_dstva, perm);
     }
 
 	return 0;
