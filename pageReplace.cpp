@@ -4,7 +4,7 @@ const int N=64,M=426,Q=N>>1;
 int t[64],cnt=M;
 inline void qry(register long *pp,register int rnk){
 	register int bs=rnk&Q,*old=t+bs,j=++cnt;
-	register long *end=pp+Q+bs,*p=pp+bs;
+	register long *p=pp+bs,*end=p+Q;
 	for(register int *i=old;p<end;++p,++i){
 		if(*p==rnk){*i=j;return;}
 		if(*i<*old)old=i;
