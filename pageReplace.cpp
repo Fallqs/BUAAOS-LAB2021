@@ -1,3 +1,4 @@
+#pragma GCC optimize(2)
 #include "pageReplace.h"
 using namespace std;
 const int N=64,M=426;
