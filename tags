@@ -9,4 +9,3 @@ cnt	pageReplace.cpp	/^int cnt=256;$/;"	v
 pageReplace	pageReplace.cpp	/^void pageReplace(long * physic_memery, long nwAdd){$/;"	f
 qry	pageReplace.cpp	/^inline void qry(long *pp,int rnk){$/;"	f
 t	pageReplace.cpp	/^int t[64];$/;"	v
-upd	pageReplace.cpp	/^inline void upd(int &x,int j){$/;"	f
