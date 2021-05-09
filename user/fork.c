@@ -83,16 +83,28 @@ static void
 pgfault(u_int va)
 {
 	u_int *tmp;
+	va = ROUNDDOWN(va, BY2PG);
+	tmp = UTOP - 2*BY2PG;
+
 	//	writef("fork.c:pgfault():\t va:%x\n",va);
-    
-    //map the new page at a temporary place
+	u_int perm = (*vpt)[VPN(va)] & 0xfff;
+
+	//map the new page at a temporary place
+	if(!(perm & PTE_COW))user_panic("va is not PTE_COW!\n");
+
+	if (syscall_mem_alloc(0, tmp, perm & (~PTE_COW)|PTE_R))
+		user_panic("sys_mem_alloc error 1\n");
 
 	//copy the content
-	
-    //map the page on the appropriate place
-	
-    //unmap the temporary place
-	
+	user_bcopy((void *)va, (void *)tmp, BY2PG);
+
+	//map the page on the appropriate place
+	if (syscall_mem_map(0, tmp, 0, va, perm & (~PTE_COW)|PTE_R))
+		user_panic("sys_mem_map error 2\n");
+
+	//unmap the temporary place
+	if (syscall_mem_unmap(0, tmp))
+		user_panic("sys_mem_unmap error 3\n");
 }
 
 /* Overview:
@@ -116,7 +128,16 @@ static void
 duppage(u_int envid, u_int pn)
 {
 	u_int addr;
-	u_int perm;
+	u_int perm = (*vpt)[pn] & 0xfff;
+	u_int permf = perm;
+
+	if( ((perm & PTE_R) || (perm & PTE_COW)) && !(perm & PTE_LIBRARY) )perm |= PTE_COW;
+
+	if (syscall_mem_map(0, pn * BY2PG, envid, pn * BY2PG, perm) )
+		;//user_panic("syscall_mem_map for son failed!\n");
+
+	if (permf != perm && syscall_mem_map(0, pn * BY2PG, 0, pn * BY2PG, perm) )
+		;//user_panic("syscall_mem_map for father failed!\n");
 
 	//	user_panic("duppage not implemented");
 }
@@ -139,13 +160,41 @@ fork(void)
 	u_int newenvid;
 	extern struct Env *envs;
 	extern struct Env *env;
-	u_int i;
+	u_int i,j,lim;
 
 
 	//The parent installs pgfault using set_pgfault_handler
+	set_pgfault_handler(pgfault);
+
+	//printf("Fork--envid-");
 
 	//alloc a new alloc
+	if(!(newenvid = syscall_env_alloc() ) )
+		return env = &envs[ENVX(syscall_getenvid())], 0;
 
+	//printf("-duppage-");
+
+	for(i = 0; i < USTACKTOP; i += PDMAP)if( (*vpd)[PDX(i)] ){
+		lim = USTACKTOP - i;
+		if(lim > PDMAP)lim = PDMAP;
+		for(j = 0; j < lim; j += BY2PG)if( (*vpt)[VPN(i + j)] )
+			duppage(newenvid, VPN(i + j));
+	}
+
+	//printf("-memalloc-");
+
+	if(syscall_mem_alloc(newenvid, UXSTACKTOP - BY2PG, PTE_V | PTE_R | PTE_LIBRARY) )
+		user_panic("UXSTACK alloc failed!\n");
+
+	//printf("-pgfault-");
+
+	if(syscall_set_pgfault_handler(newenvid, __asm_pgfault_handler, UXSTACKTOP) )
+		user_panic("page fault handler setup failed.\n");
+
+	//printf("-status-\n");
+
+	if(syscall_set_env_status(newenvid, ENV_RUNNABLE) )
+		user_panic("fork set status faild");
 
 	return newenvid;
 }

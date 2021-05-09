@@ -642,6 +642,8 @@ void pageout(int va, int context)
     u_long r;
     struct Page *p = NULL;
 
+	printf("curenv = %d\n", curenv->env_id);
+
     if (context < 0x80000000) {
         panic("tlb refill and alloc error!");
     }
