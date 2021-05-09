@@ -38,7 +38,7 @@ run: all
 push: clean
 	git add .
 	git commit -m "auto push"
-	git push
+	git push origin lab4:lab4
 
 vmlinux: $(modules)
 	$(LD) -o $(vmlinux_elf) -N -T $(link_script) $(objects)
