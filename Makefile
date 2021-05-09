@@ -4,6 +4,7 @@ get:
 	git commit -m "auto score"
 	git push
 	rm getScore
+	git rm --cached getScore
 
 push:
 	git add .
