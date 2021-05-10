@@ -7,7 +7,7 @@ inline void qry(register long *pp,register int rnk){
 	for(register long *p=pp+j,*end=p+Q;p<end;++p)
 		if(*p==rnk){*(t+(p-pp))=++cnt;return;}
 	register int *old=t+j;
-	for(register int *i=old,end=old+Q;i<end;++i)
+	for(register int *i=old,*end=old+Q;i<end;++i)
 		if(*i<*old)old=i;
 	*(pp+(old-t))=rnk;*old=++cnt-M;
 }
