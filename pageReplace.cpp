@@ -1,11 +1,11 @@
 #include "pageReplace.h"
 using namespace std;
-const int N=64,M=426,Q=N>>1;
+const int N=64,M=426;
 int t[64],cnt=M;
 inline void qry(register long *pp,register int rnk){
-	register int bs=rnk&Q,*old=t+bs,j=++cnt;
-	register long *p=pp+bs,*end=p+Q;
-	for(register int *i=old;p<end;++p,++i){
+	register int *old=t,j=++cnt;
+	register long *end=pp+N,*p=pp;
+	for(register int *i=t;p<end;++p,++i){
 		if(*p==rnk){*i=j;return;}
 		if(*i<*old)old=i;
 	}
