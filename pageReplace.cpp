@@ -1,6 +1,6 @@
 #include "pageReplace.h"
 using namespace std;
-const int N=64,M=512,Q=16,R=48;
+const int N=64,M=1024,Q=16,R=48;
 int t[64],cnt=M;
 inline void qry(register long *pp,register int rnk){
 	register int bs=rnk&R,*old=t+bs,j=++cnt;
