@@ -59,7 +59,7 @@ IS_BD:
    
 	addi s0, sp, 0
 	addi t6, sp, 0
-    subiu    sp, sp, 24
+    subi    sp, sp, 24
 	sw  a0, 0(sp)
 	addiu t5, sp, 4
 RLOOP:
