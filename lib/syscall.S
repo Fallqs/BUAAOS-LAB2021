@@ -66,13 +66,14 @@ IS_BD:
 
 
 RLOOP:
-	//lw	a1, TF_REG6(t6)
+	nop
+	lw	a1, TF_REG6(t6)
 	nop
 	nop
 	nop
 	nop
 	nop
-	//sw	a1, 0(t5)
+	sw	a1, 0(t5)
 	addiu t5, t5, 4
 	addiu t6, t6, 4
 	nop
@@ -83,7 +84,7 @@ RLOOP:
 	bne t5, s0, RLOOP
 	nop
 	
-	sw  a1, 4(sp)
+	//sw  a1, 4(sp)
     sw  a2, 8(sp)
     sw  a3, 12(sp)
     sw	t3, 16(sp)
