@@ -725,6 +725,7 @@ lw	lib/env_asm.S	/^lw	k0,TF_STATUS(k0)                 $/;"	l
 lw	lib/env_asm.S	/^lw	k1,TF_PC(k0)$/;"	l
 lw	lib/env_asm.S	/^lw	v1,TF_EPC(k0)                    $/;"	l
 lw	lib/env_asm.S	/^lw	v1,TF_LO(k0)                                       $/;"	l
+lw	lib/syscall.S	/^lw	a1, TF_REG6(t6)$/;"	l
 mCONTEXT	boot/start.S	/^mCONTEXT:$/;"	l
 main	init/main.c	/^int main()$/;"	f
 main	readelf/main.c	/^int main(int argc,char *argv[])$/;"	f

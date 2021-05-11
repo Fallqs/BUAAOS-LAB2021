@@ -83,6 +83,16 @@ RLOOP:
 	addiu t5, t5, 4
 	addiu t6, t6, 4
 
+lw	a1, TF_REG6(t6)
+	sw	a1, 0(t5)
+	addiu t5, t5, 4
+	addiu t6, t6, 4
+
+lw	a1, TF_REG6(t6)
+	sw	a1, 0(t5)
+	addiu t5, t5, 4
+	addiu t6, t6, 4
+
 
 //	bne t5, s0, RLOOP
 //	nop
