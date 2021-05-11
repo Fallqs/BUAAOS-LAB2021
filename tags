@@ -444,7 +444,6 @@ TF_REG9	include/trap.h	70;"	d
 TF_SIZE	include/trap.h	109;"	d
 TF_STATUS	include/trap.h	97;"	d
 TIMESTACK	include/mmu.h	102;"	d
-TLOOP	lib/syscall.S	/^	TLOOP:$/;"	l
 TRUP	include/mmu.h	167;"	d
 T_ALIGN	include/trap.h	22;"	d
 T_BOUND	include/trap.h	10;"	d
