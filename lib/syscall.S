@@ -43,19 +43,24 @@ IS_BD:
 	sub t5, sp, s1
 	sw a0, 0(t5)
 	addiu t5,4
+	addiu t6, sp, 0
 
-    lw	a1, TF_REG6(sp)
-    lw	a2, TF_REG7(sp)
-    lw	a3, TF_REG8(sp)
+	TLOOP:
+	lw	a1, TF_REG6(t6)
+	sw	a1, 0(t5)
+	addiu t5, 4
+	addiu t6, 4
+	bne t5,sp,TLOOP
+	nop
    
 	addi s0, sp, 0
     sub    sp, sp, s1
-    sw  a0, 0(sp)
+   /* sw  a0, 0(sp)
     sw  a1, 4(sp)
     sw  a2, 8(sp)
     sw  a3, 12(sp)
     sw	t3, 16(sp)
-    sw	t4, 20(sp)
+    sw	t4, 20(sp)*/
     
     
     jalr    t2                          // Invoke sys_* function
