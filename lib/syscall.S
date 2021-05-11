@@ -49,8 +49,7 @@ IS_BD:
 	addi t6, t0, 20
     //sub sp, sp, s1
 	addiu  sp, sp, -24
-	sw  a0, 0(sp)
-	addiu t5, sp, 4
+	addiu t5, sp, 16
 
 RLOOP:
 	nop
