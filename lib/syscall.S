@@ -80,7 +80,7 @@ RLOOP:
 	bne t5, s0, RLOOP
 	nop
 	
-	sw  a1, 4(sp)
+	//sw  a1, 4(sp)
     sw  a2, 8(sp)
     sw  a3, 12(sp)
     sw	t3, 16(sp)
