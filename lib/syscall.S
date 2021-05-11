@@ -75,6 +75,10 @@ RLOOP:
 	sw	a1, 0(t5)
 	addiu t5, t5, 4
 	addiu t6, t6, 4
+	nop
+	nop
+	nop
+	nop
 	
 	lw	a1, TF_REG6(t6)
 	nop
