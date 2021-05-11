@@ -8,7 +8,7 @@ M	pageReplace.cpp	/^const int N=64,M=410,Q=16,R=48;$/;"	v
 N	pageReplace.cpp	/^const int N=64,M=410,Q=16,R=48;$/;"	v
 Q	pageReplace.cpp	/^const int N=64,M=410,Q=16,R=48;$/;"	v
 R	pageReplace.cpp	/^const int N=64,M=410,Q=16,R=48;$/;"	v
-cnt	pageReplace.cpp	/^int t[64],cnt=M;$/;"	v
-pageReplace	pageReplace.cpp	/^void pageReplace(long * physic_memery, long nwAdd){$/;"	f
-qry	pageReplace.cpp	/^inline void qry(register long *pp,register int rnk){$/;"	f
-t	pageReplace.cpp	/^int t[64],cnt=M;$/;"	v
+cnt	pageReplace.cpp	/^int t[64],sz[64],cnt=M;$/;"	v
+pageReplace	pageReplace.cpp	/^void pageReplace(long *p,long nwAdd){$/;"	f
+sz	pageReplace.cpp	/^int t[64],sz[64],cnt=M;$/;"	v
+t	pageReplace.cpp	/^int t[64],sz[64],cnt=M;$/;"	v
