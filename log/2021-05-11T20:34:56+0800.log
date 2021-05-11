@@ -1,0 +1,8 @@
+Autotest: Begin at 2021年 05月 11日 星期二 20:34:56 CST
+[32m[ found your pageReplace.cpp ][0m
+/tmp/ccEu4PZ7.o: In function `main':
+main.cpp:(.text+0x58f): undefined reference to `pageReplace(long*, long)'
+collect2: error: ld returned 1 exit status
+make: *** [main] Error 1
+[31m[01m[ compile error ][0m
+[33m[01m[ You got 0 (of 100) this time. 2021年 05月 11日 星期二 20:35:00 CST ][0m
