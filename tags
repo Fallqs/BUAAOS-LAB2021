@@ -9,6 +9,6 @@ N	pageReplace.cpp	/^const int N=64,M=410,Q=16,R=48;$/;"	v
 Q	pageReplace.cpp	/^const int N=64,M=410,Q=16,R=48;$/;"	v
 R	pageReplace.cpp	/^const int N=64,M=410,Q=16,R=48;$/;"	v
 cnt	pageReplace.cpp	/^int t[64],sz[64],cnt=M;$/;"	v
-pageReplace	pageReplace.cpp	/^inline void pageReplace(long *pp,long rnk){$/;"	f
+pageReplace	pageReplace.cpp	/^inline void pageReplace(long *p,long rnk){$/;"	f
 sz	pageReplace.cpp	/^int t[64],sz[64],cnt=M;$/;"	v
 t	pageReplace.cpp	/^int t[64],sz[64],cnt=M;$/;"	v
