@@ -59,7 +59,8 @@ IS_BD:
    
 	addi s0, sp, 0
 	addi t6, sp, 0
-    addiu    sp, sp, -24
+    sub sp, sp, s1
+	//addiu  sp, sp, -24
 	sw  a0, 0(sp)
 	addiu t5, sp, 4
 RLOOP:
@@ -68,40 +69,14 @@ RLOOP:
 	addiu t5, t5, 4
 	addiu t6, t6, 4
 
-	lw	a1, TF_REG6(t6)
-	sw	a1, 0(t5)
-	addiu t5, t5, 4
-	addiu t6, t6, 4
-
-	lw	a1, TF_REG6(t6)
-	sw	a1, 0(t5)
-	addiu t5, t5, 4
-	addiu t6, t6, 4
-
-	lw	a1, TF_REG6(t6)
-	sw	a1, 0(t5)
-	addiu t5, t5, 4
-	addiu t6, t6, 4
-
-lw	a1, TF_REG6(t6)
-	sw	a1, 0(t5)
-	addiu t5, t5, 4
-	addiu t6, t6, 4
-
-lw	a1, TF_REG6(t6)
-	sw	a1, 0(t5)
-	addiu t5, t5, 4
-	addiu t6, t6, 4
-
-
 //	bne t5, s0, RLOOP
 //	nop
 	
 	//sw  a1, 4(sp)
-//    sw  a2, 8(sp)
-//    sw  a3, 12(sp)
-//    sw	t3, 16(sp)
-//    sw	t4, 20(sp)
+    sw  a2, 8(sp)
+    sw  a3, 12(sp)
+    sw	t3, 16(sp)
+    sw	t4, 20(sp)
     
     
     jalr    t2                          // Invoke sys_* function
