@@ -82,8 +82,8 @@ RLOOP:
 	
 	//sw  a1, 4(sp)
    // sw  a2, 8(sp)
-    sw  a3, 12(sp)
-    sw	t3, 16(sp)
+   // sw  a3, 12(sp)
+   // sw	t3, 16(sp)
     sw	t4, 20(sp)
     
     
