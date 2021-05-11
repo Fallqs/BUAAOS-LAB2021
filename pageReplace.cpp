@@ -5,10 +5,10 @@ int t[64],sz[64],cnt=M;
 void pageReplace(long *physic_memery,long nwAdd){
 	register int rnk=nwAdd>>12, j=(rnk&3)<<4;
 	if(sz[j]<Q){
-		register int end=j+sz[j];
+		register int end=j+sz[j], jj=j;
 		for(;j<end;++j)
 			if(physic_memery[j]==rnk){t[j]=++cnt;return;}
-		physic_memery[end]=rnk;t[end]=++cnt;++sz[j];
+		physic_memery[end]=rnk;t[end]=++cnt;++sz[jj];
 		return;
 	}
 	register int old=j;
