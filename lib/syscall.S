@@ -41,9 +41,9 @@ IS_BD:
 	nop
 	nop
 	nop
-	//lw	a1, TF_REG6(sp)
-	//lw	a2, TF_REG7(sp)
-	//lw	a3, TF_REG8(sp)
+	lw	a1, TF_REG6(sp)
+	lw	a2, TF_REG7(sp)
+	lw	a3, TF_REG8(sp)
 
 	addiu s1, s1, 1
 	sll s1, s1, 2
