@@ -40,7 +40,8 @@ IS_BD:
     lw	a1, TF_REG6(sp)
     lw	a2, TF_REG7(sp)
     lw	a3, TF_REG8(sp)
-    
+   
+	addi s0, sp, 0
     addiu    sp, sp, -24
     sw  a0, 0(sp)
     sw  a1, 4(sp)
@@ -54,7 +55,7 @@ IS_BD:
     nop
     
     // TODO: Resume current kernel stack
-    addiu	sp, sp, 24
+    addiu	sp, s0, 0
     
     sw      v0, TF_REG2(sp)             // Store return value of function sys_* (in $v0) into trapframe
 
