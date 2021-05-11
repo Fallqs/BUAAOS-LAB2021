@@ -374,6 +374,7 @@ PrintNum	lib/print.c	/^PrintNum(char * buf, unsigned long u, int base, int negFl
 PrintString	lib/print.c	/^PrintString(char * buf, char* s, int length, int ladjust)$/;"	f
 Pte	include/mmu.h	/^typedef u_long Pte;$/;"	t
 RD	lib/print.c	38;"	d	file:
+RLOOP	lib/syscall.S	/^RLOOP:$/;"	l
 ROUND	include/types.h	46;"	d
 ROUND	readelf/types.h	46;"	d
 ROUNDDOWN	include/types.h	47;"	d

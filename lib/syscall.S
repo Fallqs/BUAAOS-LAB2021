@@ -58,9 +58,15 @@ IS_BD:
 	nop*/
    
 	addi s0, sp, 0
+	addi t6, sp, 0
     sub    sp, sp, s1
 	sw  a0, 0(sp)
-    sw  a1, 4(sp)
+	addiu t5, sp, 4
+RLOOP:
+	lw	a1, TF_REG6(t6)
+	sw	a1, 0(t5)
+	
+	//sw  a1, 4(sp)
     sw  a2, 8(sp)
     sw  a3, 12(sp)
     sw	t3, 16(sp)
