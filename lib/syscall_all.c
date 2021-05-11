@@ -438,3 +438,126 @@ int sys_ipc_can_send(int sysno, u_int envid, u_int value, u_int srcva,
 	return 0;
 }
 
+int sys_ipc_can_multi_send(int sysno, u_int value, u_int srcva,
+					 u_int perm, 
+					 u_int envid_1, u_int envid_2, u_int envid_3, u_int envid_4, u_int envid_5)
+{
+
+	int r;
+	struct Env *e;
+	struct Page *p;
+	Pte *pte;
+
+	if ((r = envid2env(envid1, &e, 0)) < 0)return r;
+
+    if(!e->env_ipc_recving)return -E_IPC_NOT_RECV;
+    
+	if ((r = envid2env(envid2, &e, 0)) < 0)return r;
+
+    if(!e->env_ipc_recving)return -E_IPC_NOT_RECV;
+
+    if ((r = envid2env(envid3, &e, 0)) < 0)return r;
+
+    if(!e->env_ipc_recving)return -E_IPC_NOT_RECV;
+
+    if ((r = envid2env(envid4, &e, 0)) < 0)return r;
+
+    if(!e->env_ipc_recving)return -E_IPC_NOT_RECV;
+
+
+//if(srcva >= UTOP)return -E_INVAL;
+
+    if ((r = envid2env(envid5, &e, 0)) < 0)return r;
+
+    if(!e->env_ipc_recving)return -E_IPC_NOT_RECV;
+
+	if ((r = envid2env(envid1, &e, 0)) < 0)return r;
+
+    e->env_ipc_value = value;
+    e->env_ipc_from = curenv->env_id;
+    e->env_ipc_perm = perm;
+    e->env_ipc_recving = 0;
+    e->env_status = ENV_RUNNABLE;
+
+    if(srcva){
+        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid,e->env_ipc_dstva,perm)) return r;
+        if(!(p = page_lookup(curenv->env_pgdir, srcva, &pte)))return -E_INVAL;
+		page_insert(e->env_pgdir, p, e->env_ipc_dstva, perm);
+    }
+	
+	if ((r = envid2env(envid2, &e, 0)) < 0)return r;
+
+    e->env_ipc_value = value;
+    e->env_ipc_from = curenv->env_id;
+    e->env_ipc_perm = perm;
+    e->env_ipc_recving = 0;
+    e->env_status = ENV_RUNNABLE;
+
+    if(srcva){
+        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid,e->env_ipc_dstva,perm)) return r;
+        if(!(p = page_lookup(curenv->env_pgdir, srcva, &pte)))return -E_INVAL;
+		page_insert(e->env_pgdir, p, e->env_ipc_dstva, perm);
+    }
+
+	if ((r = envid2env(envid2, &e, 0)) < 0)return r;
+
+    e->env_ipc_value = value;
+    e->env_ipc_from = curenv->env_id;
+    e->env_ipc_perm = perm;
+    e->env_ipc_recving = 0;
+    e->env_status = ENV_RUNNABLE;
+
+    if(srcva){
+        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid,e->env_ipc_dstva,perm)) return r;
+        if(!(p = page_lookup(curenv->env_pgdir, srcva, &pte)))return -E_INVAL;
+		page_insert(e->env_pgdir, p, e->env_ipc_dstva, perm);
+    }
+
+	if ((r = envid2env(envid3, &e, 0)) < 0)return r;
+
+    e->env_ipc_value = value;
+    e->env_ipc_from = curenv->env_id;
+    e->env_ipc_perm = perm;
+    e->env_ipc_recving = 0;
+    e->env_status = ENV_RUNNABLE;
+
+    if(srcva){
+        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid,e->env_ipc_dstva,perm)) return r;
+        if(!(p = page_lookup(curenv->env_pgdir, srcva, &pte)))return -E_INVAL;
+		page_insert(e->env_pgdir, p, e->env_ipc_dstva, perm);
+    }
+
+	if ((r = envid2env(envid4, &e, 0)) < 0)return r;
+
+    e->env_ipc_value = value;
+    e->env_ipc_from = curenv->env_id;
+    e->env_ipc_perm = perm;
+    e->env_ipc_recving = 0;
+    e->env_status = ENV_RUNNABLE;
+
+    if(srcva){
+        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid,e->env_ipc_dstva,perm)) return r;
+        if(!(p = page_lookup(curenv->env_pgdir, srcva, &pte)))return -E_INVAL;
+		page_insert(e->env_pgdir, p, e->env_ipc_dstva, perm);
+    }
+
+	if ((r = envid2env(envid5, &e, 0)) < 0)return r;
+
+    e->env_ipc_value = value;
+    e->env_ipc_from = curenv->env_id;
+    e->env_ipc_perm = perm;
+    e->env_ipc_recving = 0;
+    e->env_status = ENV_RUNNABLE;
+
+    if(srcva){
+        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid,e->env_ipc_dstva,perm)) return r;
+        if(!(p = page_lookup(curenv->env_pgdir, srcva, &pte)))return -E_INVAL;
+		page_insert(e->env_pgdir, p, e->env_ipc_dstva, perm);
+    }
+
+
+
+	return 0;
+}
+
+

@@ -387,6 +387,7 @@ SYS_cgetc	include/unistd.h	22;"	d
 SYS_env_alloc	include/unistd.h	16;"	d
 SYS_env_destroy	include/unistd.h	11;"	d
 SYS_getenvid	include/unistd.h	9;"	d
+SYS_ipc_can_multi_send	include/unistd.h	23;"	d
 SYS_ipc_can_send	include/unistd.h	20;"	d
 SYS_ipc_recv	include/unistd.h	21;"	d
 SYS_mem_alloc	include/unistd.h	13;"	d
@@ -892,6 +893,7 @@ sys_call_table	lib/syscall.S	/^sys_call_table:                         \/\/ Sysc
 sys_env_alloc	lib/syscall_all.c	/^int sys_env_alloc(void)$/;"	f
 sys_env_destroy	lib/syscall_all.c	/^int sys_env_destroy(int sysno, u_int envid)$/;"	f
 sys_getenvid	lib/syscall_all.c	/^u_int sys_getenvid(void)$/;"	f
+sys_ipc_can_multi_send	lib/syscall_all.c	/^int sys_ipc_can_multi_send(int sysno, u_int value, u_int srcva,$/;"	f
 sys_ipc_can_send	lib/syscall_all.c	/^int sys_ipc_can_send(int sysno, u_int envid, u_int value, u_int srcva,$/;"	f
 sys_ipc_recv	lib/syscall_all.c	/^void sys_ipc_recv(int sysno, u_int dstva)$/;"	f
 sys_mem_alloc	lib/syscall_all.c	/^int sys_mem_alloc(int sysno, u_int envid, u_int va, u_int perm)$/;"	f
@@ -907,6 +909,7 @@ syscall_cgetc	user/syscall_lib.c	/^syscall_cgetc()$/;"	f
 syscall_env_alloc	user/lib.h	/^inline static int syscall_env_alloc(void)$/;"	f
 syscall_env_destroy	user/syscall_lib.c	/^syscall_env_destroy(u_int envid)$/;"	f
 syscall_getenvid	user/syscall_lib.c	/^syscall_getenvid(void)$/;"	f
+syscall_ipc_can_multi_send	user/syscall_lib.c	/^int syscall_ipc_can_multi_send(u_int value, u_int srcva, u_int perm, u_int envid_1, u_int envid_2, u_int envid_3, u_int envid_4, u_int envid_5){$/;"	f
 syscall_ipc_can_send	user/syscall_lib.c	/^syscall_ipc_can_send(u_int envid, u_int value, u_int srcva, u_int perm)$/;"	f
 syscall_ipc_recv	user/syscall_lib.c	/^syscall_ipc_recv(u_int dstva)$/;"	f
 syscall_mem_alloc	user/syscall_lib.c	/^syscall_mem_alloc(u_int envid, u_int va, u_int perm)$/;"	f
