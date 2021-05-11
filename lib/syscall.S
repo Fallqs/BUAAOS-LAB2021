@@ -38,7 +38,7 @@ IS_BD:
     // TODO: Allocate a space of six arguments on current kernel stack and copy the six arguments to proper location
     lw	a0, TF_REG4(sp)
 	lw	s1, TF_REG5(sp)
-	lw	a1, TF_REG6(sp)
+	//lw	a1, TF_REG6(sp)
 	lw	a2, TF_REG7(sp)
 	lw	a3, TF_REG8(sp)
 
@@ -80,19 +80,11 @@ RLOOP:
 	nop
 	nop
 	
-	lw	a1, TF_REG6(t6)
-	nop
-	nop
-	nop
-	nop
-	nop
-	sw	a1, 0(t5)
-
 //	bne t5, s0, RLOOP
 //	nop
 	
 	//sw  a1, 4(sp)
-    //sw  a2, 8(sp)
+    sw  a2, 8(sp)
     sw  a3, 12(sp)
     sw	t3, 16(sp)
     sw	t4, 20(sp)
