@@ -1,0 +1,18 @@
+Autotest: Begin at 2021年 05月 11日 星期二 20:30:55 CST
+[32m[ found your pageReplace.cpp ][0m
+pageReplace.cpp: In function 'void pageReplace(long int*, long int)':
+pageReplace.cpp:10:7: error: 'p' was not declared in this scope
+    if(p[j]==rnk){t[j]=++cnt;return;}
+       ^
+pageReplace.cpp:11:3: error: 'p' was not declared in this scope
+   p[end]=rnk;t[end]=++cnt;++sz[j];
+   ^
+pageReplace.cpp:16:6: error: 'p' was not declared in this scope
+   if(p[j]==rnk){t[j]=++cnt;return;}
+      ^
+pageReplace.cpp:19:2: error: 'p' was not declared in this scope
+  p[old]=rnk;t[old]=++cnt;
+  ^
+make: *** [main] Error 1
+[31m[01m[ compile error ][0m
+[33m[01m[ You got 0 (of 100) this time. 2021年 05月 11日 星期二 20:30:59 CST ][0m
