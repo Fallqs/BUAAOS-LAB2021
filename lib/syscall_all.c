@@ -480,7 +480,7 @@ int sys_ipc_can_multi_send(int sysno, u_int value, u_int srcva,
     e->env_status = ENV_RUNNABLE;
 
     if(srcva){
-        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid,e->env_ipc_dstva,perm)) return r;
+        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid_1,e->env_ipc_dstva,perm)) return r;
         if(!(p = page_lookup(curenv->env_pgdir, srcva, &pte)))return -E_INVAL;
 		page_insert(e->env_pgdir, p, e->env_ipc_dstva, perm);
     }
@@ -494,7 +494,7 @@ int sys_ipc_can_multi_send(int sysno, u_int value, u_int srcva,
     e->env_status = ENV_RUNNABLE;
 
     if(srcva){
-        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid,e->env_ipc_dstva,perm)) return r;
+        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid_2,e->env_ipc_dstva,perm)) return r;
         if(!(p = page_lookup(curenv->env_pgdir, srcva, &pte)))return -E_INVAL;
 		page_insert(e->env_pgdir, p, e->env_ipc_dstva, perm);
     }
@@ -508,7 +508,7 @@ int sys_ipc_can_multi_send(int sysno, u_int value, u_int srcva,
     e->env_status = ENV_RUNNABLE;
 
     if(srcva){
-        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid,e->env_ipc_dstva,perm)) return r;
+        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid_3,e->env_ipc_dstva,perm)) return r;
         if(!(p = page_lookup(curenv->env_pgdir, srcva, &pte)))return -E_INVAL;
 		page_insert(e->env_pgdir, p, e->env_ipc_dstva, perm);
     }
@@ -522,7 +522,7 @@ int sys_ipc_can_multi_send(int sysno, u_int value, u_int srcva,
     e->env_status = ENV_RUNNABLE;
 
     if(srcva){
-        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid,e->env_ipc_dstva,perm)) return r;
+        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid_4,e->env_ipc_dstva,perm)) return r;
         if(!(p = page_lookup(curenv->env_pgdir, srcva, &pte)))return -E_INVAL;
 		page_insert(e->env_pgdir, p, e->env_ipc_dstva, perm);
     }
@@ -536,7 +536,7 @@ int sys_ipc_can_multi_send(int sysno, u_int value, u_int srcva,
     e->env_status = ENV_RUNNABLE;
 
     if(srcva){
-        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid,e->env_ipc_dstva,perm)) return r;
+        if (r = sys_mem_map(sysno,curenv->env_id,srcva,envid_5,e->env_ipc_dstva,perm)) return r;
         if(!(p = page_lookup(curenv->env_pgdir, srcva, &pte)))return -E_INVAL;
 		page_insert(e->env_pgdir, p, e->env_ipc_dstva, perm);
     }
