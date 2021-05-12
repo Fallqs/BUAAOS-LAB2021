@@ -1,0 +1,27 @@
+Autotest: Begin at 2021年 05月 12日 星期三 08:41:08 CST
+[32m[ found your pageReplace.cpp ][0m
+pageReplace.cpp: In function 'void pageReplace(long int*, long int)':
+pageReplace.cpp:8:2: error: expected ',' or ';' before 'register'
+  register int i(rnk&3), j(i<<4);
+  ^
+pageReplace.cpp:9:8: error: 'i' was not declared in this scope
+  if(sz[i]<Q){
+        ^
+pageReplace.cpp:10:9: error: 'ch' was not declared in this scope
+   cache[ch]=rnk;
+         ^
+pageReplace.cpp:11:20: error: 'j' was not declared in this scope
+   register int end(j+sz[i]);
+                    ^
+pageReplace.cpp:22:19: error: 'j' was not declared in this scope
+  register int old(j);
+                   ^
+pageReplace.cpp:25:10: error: 'ch' was not declared in this scope
+    cache[ch]=rnk;
+          ^
+pageReplace.cpp:33:31: error: 'ch' was not declared in this scope
+  p[old]=rnk;t[old]=++cnt-M;ct[ch]=t+old;
+                               ^
+make: *** [main] Error 1
+[31m[01m[ compile error ][0m
+[33m[01m[ You got 0 (of 100) this time. 2021年 05月 12日 星期三 08:41:11 CST ][0m
