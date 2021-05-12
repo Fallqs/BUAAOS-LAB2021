@@ -1,6 +1,9 @@
 #include "pageReplace.h"
 using namespace std;
-const int N=64,M=410,Q=16;
+//const int N=64,M=410,Q=16;
+#define N 64
+#define M 410
+#define Q 16
 int t[64],sz[4],cnt=M;
 void pageReplace(long *p,long nwAdd){
 	register int rnk(nwAdd>>12), i(rnk&3), j(i<<4);
