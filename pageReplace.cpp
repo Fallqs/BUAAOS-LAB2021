@@ -11,7 +11,7 @@ void pageReplace(long *p,long nwAdd){
 		p[end]=rnk;t[end]=++cnt-M;++sz[i];
 		return;
 	}
-	register int old(j),i=t[j];
+	register int old(j); i=t[j];
 	for(register int end(j+Q);j<end;++j){
 		if(p[j]==rnk){t[j]=++cnt;return;}
 		if(t[j]<i)i=t[old=j];
