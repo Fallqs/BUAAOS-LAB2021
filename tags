@@ -14,3 +14,4 @@ ct	pageReplace.cpp	/^int t[64],sz[4],cnt=M,cache[C]={-1},*ct[C];$/;"	v
 pageReplace	pageReplace.cpp	/^void pageReplace(long *p,long nwAdd){$/;"	f
 sz	pageReplace.cpp	/^int t[64],sz[4],cnt=M,cache[C]={-1},*ct[C];$/;"	v
 t	pageReplace.cpp	/^int t[64],sz[4],cnt=M,cache[C]={-1},*ct[C];$/;"	v
+time	Makefile	/^	time=$(date "+%Y-%m-%d %H:%M:%S")$/;"	m
