@@ -1,0 +1,21 @@
+Autotest: Begin at 2021年 05月 12日 星期三 10:12:39 CST
+[32m[ found your pageReplace.cpp ][0m
+pageReplace.cpp: In function 'void pageReplace(long int*, long int)':
+pageReplace.cpp:12:27: error: 'bs' was not declared in this scope
+   for(register long *p=pp+bs,*pend=p+end;p<pend;++p)
+                           ^
+pageReplace.cpp:12:44: error: 'pend' was not declared in this scope
+   for(register long *p=pp+bs,*pend=p+end;p<pend;++p)
+                                            ^
+pageReplace.cpp:14:3: error: 'p' was not declared in this scope
+   p[end]=rnk;t[end]=++cnt-M;
+   ^
+pageReplace.cpp:19:22: error: 'bs' was not declared in this scope
+  register long *p=pp+bs,*pend=p+Q;
+                      ^
+pageReplace.cpp:20:29: error: 'pend' was not declared in this scope
+  for(register int *i(old);p<pend;++p,++i){
+                             ^
+make: *** [main] Error 1
+[31m[01m[ compile error ][0m
+[33m[01m[ You got 0 (of 100) this time. 2021年 05月 12日 星期三 10:12:42 CST ][0m
