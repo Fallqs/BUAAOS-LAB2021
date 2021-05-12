@@ -30,5 +30,5 @@ void pageReplace(long *p,long nwAdd){
 		if(t[j]<t[old])old=j;
 	}
 	cache[p[old]]=0;
-	p[old]=rnk;t[old]=++cnt-M;ct[ch]=t+end;
+	p[old]=rnk;t[old]=++cnt-M;ct[ch]=t+old;
 }
