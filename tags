@@ -8,9 +8,9 @@ C	pageReplace.cpp	/^const int N=64,M=410,Q=16,C=256;$/;"	v
 M	pageReplace.cpp	/^const int N=64,M=410,Q=16,C=256;$/;"	v
 N	pageReplace.cpp	/^const int N=64,M=410,Q=16,C=256;$/;"	v
 Q	pageReplace.cpp	/^const int N=64,M=410,Q=16,C=256;$/;"	v
-cache	pageReplace.cpp	/^int t[64],sz[4],cnt=M,cache[C],ct[C];$/;"	v
-cnt	pageReplace.cpp	/^int t[64],sz[4],cnt=M,cache[C],ct[C];$/;"	v
-ct	pageReplace.cpp	/^int t[64],sz[4],cnt=M,cache[C],ct[C];$/;"	v
+cache	pageReplace.cpp	/^int t[64],sz[4],cnt=M,cache[C]; char ct[C];$/;"	v
+cnt	pageReplace.cpp	/^int t[64],sz[4],cnt=M,cache[C]; char ct[C];$/;"	v
+ct	pageReplace.cpp	/^int t[64],sz[4],cnt=M,cache[C]; char ct[C];$/;"	v
 pageReplace	pageReplace.cpp	/^void pageReplace(long *p,long nwAdd){$/;"	f
-sz	pageReplace.cpp	/^int t[64],sz[4],cnt=M,cache[C],ct[C];$/;"	v
-t	pageReplace.cpp	/^int t[64],sz[4],cnt=M,cache[C],ct[C];$/;"	v
+sz	pageReplace.cpp	/^int t[64],sz[4],cnt=M,cache[C]; char ct[C];$/;"	v
+t	pageReplace.cpp	/^int t[64],sz[4],cnt=M,cache[C]; char ct[C];$/;"	v
