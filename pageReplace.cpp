@@ -3,7 +3,7 @@ using namespace std;
 const int N=64,M=410,Q=16,C=256;
 int t[64],sz[4],cnt=M,cache[C],*ct[C];
 void pageReplace(long *p,long nwAdd){
-	register int rnk(nwAdd>>12)//, ch=rnk&255;
+	register int rnk(nwAdd>>12), ch=rnk&255;
 	//if(cache[ch]==rnk){*(ct[ch])=++cnt;return;}
 	register int i(rnk&3), j(i<<4);
 	if(sz[i]<Q){
