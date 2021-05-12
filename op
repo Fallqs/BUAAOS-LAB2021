@@ -1,0 +1,9 @@
+#!/bin/bash
+
+touch getScore
+git add .
+time=time=$(date "+%Y-%m-%d %H:%M:%S")
+git commit --allow-empty -m "${time}"
+git push
+git rm --cached getScore
+rm getScore
