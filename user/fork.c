@@ -133,6 +133,11 @@ duppage(u_int envid, u_int pn)
 
 	if(!(perm & PTE_V))return;
 
+	int v = *(int *)addr;
+	*(int *)addr = 1;
+	*(int *)addr = v;
+	perm = ((Pte *)(*vpt))[pn] & 0xfff;
+
 	if( ((perm & PTE_R) || (perm & PTE_COW)) && !(perm & PTE_LIBRARY) )perm |= PTE_COW;
 
 	if (syscall_mem_map(0, addr, envid, addr, perm) )
