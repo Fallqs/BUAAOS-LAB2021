@@ -133,12 +133,18 @@ duppage(u_int envid, u_int pn)
 
 	if(!(perm & PTE_V))return;
 
-	int v = *(int *)addr;
-	*(int *)addr = 1;
-	*(int *)addr = v;
-	perm = ((Pte *)(*vpt))[pn] & 0xfff;
-
+	
 	if( ((perm & PTE_R) || (perm & PTE_COW)) && !(perm & PTE_LIBRARY) )perm |= PTE_COW;
+
+	/*
+	if(permf&PTE_COW){
+		int v = *(int *)addr;
+		*(int *)addr = 1;
+		*(int *)addr = v;
+		perm = ((Pte *)(*vpt))[pn] & 0xfff;
+	}
+	*/
+
 
 	if (syscall_mem_map(0, addr, envid, addr, perm) )
 		user_panic("syscall_mem_map for son failed!\n");

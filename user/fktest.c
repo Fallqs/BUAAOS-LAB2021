@@ -11,20 +11,20 @@ void umain()
 			a += 3;
 
 			for (;;) {
-				writef("\t\tthis is child2 :a:%d\n", a);
+				writef("\t\tthis is CHILD=%d :a:%d\n", id, a);
 			}
 		}
 
 		a += 2;
 
 		for (;;) {
-			writef("\tthis is child :a:%d\n", a);
+			writef("\tthis is child=%d :a:%d\n", id, a);
 		}
 	}
 
 	a++;
 
 	for (;;) {
-		writef("this is father: a:%d\n", a);
+		writef("this is father=%d : a:%d\n", id, a);
 	}
 }
