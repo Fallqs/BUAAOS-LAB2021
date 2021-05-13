@@ -138,8 +138,8 @@ duppage(u_int envid, u_int pn)
 	if (syscall_mem_map(0, addr, envid, addr, perm) )
 		user_panic("syscall_mem_map for son failed!\n");
 
-	if (permf != perm && syscall_mem_map(0, addr, 0, addr, perm) )
-		user_panic("syscall_mem_map for father failed!\n");
+	//if (permf != perm && syscall_mem_map(0, addr, 0, addr, perm) )
+	//	user_panic("syscall_mem_map for father failed!\n");
 
 	//	user_panic("duppage not implemented");
 }
