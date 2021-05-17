@@ -508,6 +508,7 @@ _print_h_	include/print.h	13;"	d
 _printf_h_	include/printf.h	13;"	d
 _start	user/entry.S	/^_start:$/;"	l
 _user_panic	user/printf.c	/^_user_panic(const char *file, int line, const char *fmt, ...)$/;"	f
+a	user/tfk.c	/^int a[100];$/;"	v
 a0	include/asm-mips3k/regdef.h	19;"	d
 a0	include/asm/regdef.h	19;"	d
 a1	include/asm-mips3k/regdef.h	20;"	d
@@ -979,6 +980,7 @@ uint64_t	readelf/kerelf.h	/^typedef u_int64_t               uint64_t;$/;"	t
 umain	user/fktest.c	/^void umain()$/;"	f
 umain	user/idle.c	/^void umain()$/;"	f
 umain	user/pingpong.c	/^umain(void)$/;"	f
+umain	user/tfk.c	/^void umain()$/;"	f
 user_PrintChar	user/print.c	/^user_PrintChar(char *buf, char c, int length, int ladjust)$/;"	f
 user_PrintNum	user/print.c	/^user_PrintNum(char *buf, unsigned long u, int base, int negFlag,$/;"	f
 user_PrintString	user/print.c	/^user_PrintString(char *buf, char *s, int length, int ladjust)$/;"	f
