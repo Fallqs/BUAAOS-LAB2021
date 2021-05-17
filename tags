@@ -945,6 +945,7 @@ t8	include/asm-mips3k/regdef.h	39;"	d
 t8	include/asm/regdef.h	39;"	d
 t9	include/asm-mips3k/regdef.h	40;"	d
 t9	include/asm/regdef.h	40;"	d
+tfork	user/fork.c	/^tfork(void)$/;"	f
 theFatalMsg	lib/print.c	/^static const char theFatalMsg[] = "fatal error in lp_Print!";$/;"	v	file:
 timer_irq	lib/genex.S	/^timer_irq:$/;"	l
 tlb_invalidate	mm/pmap.c	/^tlb_invalidate(Pde *pgdir, u_long va)$/;"	f
