@@ -146,7 +146,7 @@ duppage(u_int envid, u_int pn)
 }
 
 static void 
-cppage(u_int envid, u_int p){
+cppage(u_int envid, u_int pn){
 	u_int addr = pn << PGSHIFT;
 	u_int perm = ((Pte *)(*vpt))[pn] & 0xfff;
 
