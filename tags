@@ -544,6 +544,7 @@ cp0_badvaddr	include/trap.h	/^	unsigned long cp0_badvaddr;$/;"	m	struct:Trapfram
 cp0_cause	include/trap.h	/^	unsigned long cp0_cause;$/;"	m	struct:Trapframe
 cp0_epc	include/trap.h	/^	unsigned long cp0_epc;$/;"	m	struct:Trapframe
 cp0_status	include/trap.h	/^	unsigned long cp0_status;$/;"	m	struct:Trapframe
+cppage	user/fork.c	/^cppage(u_int envid, u_int p){$/;"	f	file:
 curenv	lib/env.c	/^struct Env *curenv = NULL;            \/\/ the current env$/;"	v	typeref:struct:Env
 debug	user/fd.c	6;"	d	file:
 debug	user/file.c	4;"	d	file:

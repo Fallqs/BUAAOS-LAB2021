@@ -136,16 +136,6 @@ duppage(u_int envid, u_int pn)
 	
 	if( ((perm & PTE_R) || (perm & PTE_COW)) && !(perm & PTE_LIBRARY) )perm |= PTE_COW;
 
-	/*
-	if(permf&PTE_COW){
-		int v = *(int *)addr;
-		*(int *)addr = 1;
-		*(int *)addr = v;
-		perm = ((Pte *)(*vpt))[pn] & 0xfff;
-	}
-	*/
-
-
 	if (syscall_mem_map(0, addr, envid, addr, perm) )
 		user_panic("syscall_mem_map for son failed!\n");
 
@@ -153,6 +143,23 @@ duppage(u_int envid, u_int pn)
 		user_panic("syscall_mem_map for father failed!\n");
 
 	//	user_panic("duppage not implemented");
+}
+
+static void 
+cppage(u_int envid, u_int p){
+	u_int addr = pn << PGSHIFT;
+	u_int perm = ((Pte *)(*vpt))[pn] & 0xfff;
+
+	if(!(perm & PTE_V))return;
+
+	if((perm & PTE_R) && (perm & PTE_COW) && !(perm & PTE_LIBRARY)){
+		pgfault(addr);
+		perm = ((Pte *)(*vpt))[pn] & 0xfff;
+	}
+
+	if (syscall_mem_map(0, addr, envid, addr, perm) )
+		user_panic("syscall_mem_map for son failed!\n");
+
 }
 
 /* Overview:
@@ -179,13 +186,9 @@ fork(void)
 	//The parent installs pgfault using set_pgfault_handler
 	set_pgfault_handler(pgfault);
 
-	//printf("Fork--envid-");
-
 	//alloc a new alloc
 	if(!(newenvid = syscall_env_alloc() ) )
 		return env = &envs[ENVX(syscall_getenvid())], 0;
-
-	//printf("-duppage-");
 
 	for (i = 0; i < UTOP -  2 * BY2PG; i += BY2PG)
 	{
@@ -195,26 +198,12 @@ fork(void)
 			duppage(newenvid, VPN(i));
 		}
 	}
-/*
-	for(i = 0; i < USTACKTOP; i += PDMAP)if( (*vpd)[PDX(i)] & PTE_V ){
-		lim = USTACKTOP - i;
-		if(lim > PDMAP)lim = PDMAP;
-		for(j = 0; j < lim; j += BY2PG)if( (*vpt)[VPN(i + j)] & PTE_V)
-			duppage(newenvid, VPN(i + j));
-	}
-*/
 
-	//printf("-memalloc-");
-
-	if(syscall_mem_alloc(newenvid, UXSTACKTOP - BY2PG, PTE_V | PTE_R | PTE_LIBRARY) )
+	if(syscall_mem_alloc(newenvid, UXSTACKTOP - BY2PG, PTE_V | PTE_R ) )
 		user_panic("UXSTACK alloc failed!\n");
-
-	//printf("-pgfault-");
 
 	if(syscall_set_pgfault_handler(newenvid, __asm_pgfault_handler, UXSTACKTOP) )
 		user_panic("page fault handler setup failed.\n");
-
-	//printf("-status-\n");
 
 	if(syscall_set_env_status(newenvid, ENV_RUNNABLE) )
 		user_panic("fork set status faild");
