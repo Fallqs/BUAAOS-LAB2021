@@ -67,9 +67,8 @@ page_fault_handler(struct Trapframe *tf)
 	u_int instr = *(u_int*)(tf->cp0_epc);
 	tf->cp0_epc = curenv->env_pgfault_handler;
 	curenv->env_nop++;
-/*	printf("Env: 0x%x, Instr: 0x%x, opcode: %b, reg_rs: %d, reg_rt: %d, OUT_count: %d, COW_count: %d\n", 
-			curenv->env_id, instr, (instr>>26)&0x3f, (instr>>21)&0x1f, (instr>>16)&0x1f, 
-			curenv->env_runs, curenv->env_nop);
-*/
+	printf("\nEnv:0x%x, code:0x%x, pgcow:%d, pgout:%d\n", 
+			curenv->env_id, instr, curenv->env_runs, curenv->env_nop);
+
 	return;
 }
