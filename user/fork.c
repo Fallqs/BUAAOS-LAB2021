@@ -234,7 +234,7 @@ tfork(void)
 		{
 			//writef("%x\n",(*vpt)[VPN(i)]);
 			if(i<2*PDMAP)cppage(newenvid, VPN(i));
-			else dupage(newenvid, VPN(i));
+			else duppage(newenvid, VPN(i));
 
 		}
 	}
