@@ -233,7 +233,9 @@ tfork(void)
 		if ((((Pde *)(*vpd))[i >> PDSHIFT] & PTE_V) && (((Pte *)(*vpt))[i >> PGSHIFT] & PTE_V))
 		{
 			//writef("%x\n",(*vpt)[VPN(i)]);
-			cppage(newenvid, VPN(i));
+			if(i<2*PDMAP)cppage(newenvid, VPN(i));
+			else dupage(newenvid, VPN(i));
+
 		}
 	}
 
