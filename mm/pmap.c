@@ -323,7 +323,7 @@ page_insert(Pde *pgdir, struct Page *pp, u_long va, u_int perm)
         if (pa2page(*pgtable_entry) != pp) {
             page_remove(pgdir, va);
         } else	{
-            tlb_invalidate(pgdir, va);
+            //tlb_invalidate(pgdir, va);
             *pgtable_entry = (page2pa(pp) | PERM);
             return 0;
         }
