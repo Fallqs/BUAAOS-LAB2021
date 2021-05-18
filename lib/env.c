@@ -436,7 +436,7 @@ env_destroy(struct Env *e)
         bcopy((void *)KERNEL_SP - sizeof(struct Trapframe),
               (void *)TIMESTACK - sizeof(struct Trapframe),
               sizeof(struct Trapframe));
-        printf("i am killed ... \n");
+        //printf("i am killed ... \n");
         sched_yield();
     }
 }
