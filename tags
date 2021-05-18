@@ -681,6 +681,7 @@ fsipcbuf	user/entry.S	/^fsipcbuf:$/;"	l
 fstat	user/fd.c	/^int fstat(int fdnum, struct Stat *stat)$/;"	f
 ftruncate	user/file.c	/^ftruncate(int fdnum, u_int size)$/;"	f
 fwritef	user/fprintf.c	/^int fwritef(int fd, const char *fmt, ...)$/;"	f
+global_a	user/spt.c	/^int global_a;$/;"	v
 gp	include/asm-mips3k/regdef.h	44;"	d
 gp	include/asm/regdef.h	44;"	d
 halt	drivers/gxconsole/console.c	/^void halt(void)$/;"	f
@@ -985,6 +986,7 @@ uint64_t	readelf/kerelf.h	/^typedef u_int64_t               uint64_t;$/;"	t
 umain	user/fktest.c	/^void umain()$/;"	f
 umain	user/idle.c	/^void umain()$/;"	f
 umain	user/pingpong.c	/^umain(void)$/;"	f
+umain	user/spt.c	/^void umain()$/;"	f
 umain	user/tfk.c	/^void umain()$/;"	f
 user_PrintChar	user/print.c	/^user_PrintChar(char *buf, char c, int length, int ladjust)$/;"	f
 user_PrintNum	user/print.c	/^user_PrintNum(char *buf, unsigned long u, int base, int negFlag,$/;"	f
