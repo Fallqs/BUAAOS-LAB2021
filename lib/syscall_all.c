@@ -324,7 +324,7 @@ int sys_set_env_status(int sysno, u_int envid, u_int status)
 	env->env_status = status;
 
 	if(status == ENV_RUNNABLE)LIST_INSERT_HEAD(&env_sched_list[0], env, env_sched_link);
-	else if(status == ENV_FREE)env_destroy(env);
+	//else if(status == ENV_FREE)env_destroy(env);
 
 	//printf("SetStatus-%d:=%d---", envid, env->env_status==ENV_RUNNABLE);
 
