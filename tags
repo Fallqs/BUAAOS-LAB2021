@@ -984,6 +984,7 @@ uint64_t	include/kerelf.h	/^typedef u_int64_t		uint64_t;$/;"	t
 uint64_t	readelf/kerelf.h	/^typedef u_int64_t               uint64_t;$/;"	t
 umain	user/fktest.c	/^void umain()$/;"	f
 umain	user/idle.c	/^void umain()$/;"	f
+umain	user/pgfault_t.c	/^void umain(){$/;"	f
 umain	user/pingpong.c	/^umain(void)$/;"	f
 umain	user/tfk.c	/^void umain()$/;"	f
 user_PrintChar	user/print.c	/^user_PrintChar(char *buf, char c, int length, int ladjust)$/;"	f
