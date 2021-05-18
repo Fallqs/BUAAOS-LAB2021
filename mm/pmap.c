@@ -425,6 +425,9 @@ tlb_invalidate(Pde *pgdir, u_long va)
 {
     if (curenv) {
         tlb_out(PTE_ADDR(va) | GET_ENV_ASID(curenv->env_id));
+		curenv->env_nop++;
+		printf("\nEnv:0x%x, va:0x%x, pgcow:%d, pgout:%d\n",
+				curenv->env_id, va, curenv->env_runs, curenv->env_nop);
     } else {
         tlb_out(PTE_ADDR(va));
     }
