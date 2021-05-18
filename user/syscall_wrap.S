@@ -11,3 +11,7 @@ LEAF(msyscall)
 
 END(msyscall)
 
+LEAF(gtsp)
+move v0, sp	
+END(gtsp)
+

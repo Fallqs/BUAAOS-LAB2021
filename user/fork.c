@@ -240,18 +240,19 @@ tfork(void)
 	duppage(newenvid, VPN(USTACKTOP - BY2PG));
 
 	if(syscall_mem_alloc(newenvid, UXSTACKTOP - BY2PG, PTE_V | PTE_R ) )
-		user_panic("UXSTACK alloc failed!\n");
+		return -1;
 
 	if(syscall_set_pgfault_handler(newenvid, __asm_pgfault_handler, UXSTACKTOP) )
-		user_panic("page fault handler setup failed.\n");
+		return -1;
 
 	if(syscall_set_env_status(newenvid, ENV_RUNNABLE) )
-		user_panic("fork set status faild");
+		return -1;
 
 	return newenvid;
 }
 
-
+extern int gtsp(void);
+u_int get_sp(void){return gtsp();}
 
 
 // Challenge!
