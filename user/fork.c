@@ -252,7 +252,7 @@ tfork(void)
 }
 
 extern int gtsp(void);
-u_int get_sp(void){return gtsp();}
+u_int uget_sp(void){return gtsp();}
 
 
 // Challenge!
