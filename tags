@@ -517,6 +517,8 @@ a2	include/asm-mips3k/regdef.h	21;"	d
 a2	include/asm/regdef.h	21;"	d
 a3	include/asm-mips3k/regdef.h	22;"	d
 a3	include/asm/regdef.h	22;"	d
+addiu	user/syscall_wrap.S	/^addiu v0, sp, 0$/;"	l
+addiu	user/syscall_wrap.S	/^addiu v1, sp, 0$/;"	l
 alloc	mm/pmap.c	/^static void *alloc(u_int n, u_int align, int clear)$/;"	f	file:
 and	lib/genex.S	/^and	t0, t2$/;"	l
 andi	lib/genex.S	/^andi	t1, t0, STATUSF_IP4$/;"	l
@@ -697,6 +699,7 @@ is_elf_format	readelf/readelf.c	/^int is_elf_format(u_char *binary)$/;"	f
 iscons	user/console.c	/^iscons(int fdnum)$/;"	f
 jp	include/asm-mips3k/regdef.h	41;"	d
 jp	include/asm/regdef.h	41;"	d
+jr	user/syscall_wrap.S	/^jr ra$/;"	l
 k0	include/asm-mips3k/regdef.h	42;"	d
 k0	include/asm/regdef.h	42;"	d
 k0	include/stackframe.h	/^bltz	k0, 1f$/;"	v
@@ -739,11 +742,11 @@ mips_vm_init	mm/pmap.c	/^void mips_vm_init()$/;"	f
 mkenvid	lib/env.c	/^u_int mkenvid(struct Env *e)$/;"	f
 mm_dir	Makefile	/^mm_dir		  := mm$/;"	m
 modules	Makefile	/^modules		  := boot drivers init lib mm user$/;"	m
-move	user/syscall_wrap.S	/^move v0, sp	$/;"	l
 myoutput	lib/printf.c	/^static void myoutput(void *arg, char *s, int l)$/;"	f	file:
 nop	lib/genex.S	/^nop$/;"	l
 nop	mm/tlb_asm.S	/^nop$/;"	l
 nop	user/entry.S	/^nop$/;"	l
+nop	user/syscall_wrap.S	/^nop$/;"	l
 npage	mm/pmap.c	/^u_long npage;            \/* Amount of memory(in pages) *\/$/;"	v
 num2fd	user/fd.c	/^num2fd(int fd)$/;"	f
 objects	Makefile	/^objects		  := $(boot_dir)\/start.o			  \\$/;"	m

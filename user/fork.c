@@ -253,7 +253,9 @@ tfork(void)
 
 extern int gtsp(void);
 u_int uget_sp(void){
+	//writef("uget_sp===");
 	int ans = gtsp();
+	//writef("%x===\n",ans);
 	return ROUNDDOWN(ans,BY2PG);
 }
 

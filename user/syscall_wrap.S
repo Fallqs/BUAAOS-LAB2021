@@ -12,6 +12,9 @@ LEAF(msyscall)
 END(msyscall)
 
 LEAF(gtsp)
-move v0, sp	
+addiu v0, sp, 0
+addiu v1, sp, 0
+jr ra
+nop
 END(gtsp)
 
