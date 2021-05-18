@@ -38,7 +38,7 @@ run: all
 push: clean
 	git add .
 	git commit -m "auto push"
-	git push origin lab4-2-exam:lab4-2-exam
+	git push origin lab4-2-Extra:lab4-2-Extra
 
 vmlinux: $(modules)
 	$(LD) -o $(vmlinux_elf) -N -T $(link_script) $(objects)
