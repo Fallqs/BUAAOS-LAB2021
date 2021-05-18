@@ -252,7 +252,10 @@ tfork(void)
 }
 
 extern int gtsp(void);
-u_int uget_sp(void){return gtsp();}
+u_int uget_sp(void){
+	int ans = gtsp();
+	return ROUNDDOWN(ans,BY2PG);
+}
 
 
 // Challenge!

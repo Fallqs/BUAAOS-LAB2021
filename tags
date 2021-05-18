@@ -972,7 +972,7 @@ u_quad_t	include/types.h	/^typedef	u_int64_t	u_quad_t;	\/* quads *\/$/;"	t
 u_quad_t	readelf/types.h	/^typedef	u_int64_t	u_quad_t;	\/* quads *\/$/;"	t
 u_short	include/types.h	/^typedef	unsigned short	u_short;$/;"	t
 u_short	readelf/types.h	/^typedef	unsigned short	u_short;$/;"	t
-uget_sp	user/fork.c	/^u_int uget_sp(void){return gtsp();}$/;"	f
+uget_sp	user/fork.c	/^u_int uget_sp(void){$/;"	f
 uint16_t	include/kerelf.h	/^typedef u_int16_t		uint16_t;$/;"	t
 uint16_t	readelf/kerelf.h	/^typedef u_int16_t               uint16_t;$/;"	t
 uint32_t	include/kerelf.h	/^typedef u_int32_t		uint32_t;$/;"	t
