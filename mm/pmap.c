@@ -424,8 +424,8 @@ void
 tlb_invalidate(Pde *pgdir, u_long va)
 {
     if (curenv) {
-		printf("\nEnv:0x%x, va:0x%x, pgcow:%d, pgout:%d\n",
-				curenv->env_id, va, curenv->env_runs, ++curenv->env_nop);
+	//	printf("\nEnv:0x%x, va:0x%x, pgcow:%d, pgout:%d\n",
+	//			curenv->env_id, va, curenv->env_runs, ++curenv->env_nop);
         tlb_out(PTE_ADDR(va) | GET_ENV_ASID(curenv->env_id));
     } else {
         tlb_out(PTE_ADDR(va));
@@ -666,7 +666,7 @@ void pageout(int va, int context)
 
 	//curenv->env_runs++;
 	printf("\nEnv:0x%x, va:0x%x, pgcow:%d, pgout:%d\n",
-				curenv->env_id, va, curenv->env_runs, curenv->env_nop);
+				curenv->env_id, va, curenv->env_runs, ++curenv->env_nop);
 
 
     page_insert((Pde *)context, p, VA2PFN(va), PTE_R);
