@@ -33,7 +33,7 @@ all: $(modules) vmlinux
 
 push: clean
 	git add .
-	git commit —allow-empty -m “auto lab5”
+	git commit --allow-empty -m "auto lab5"
 	git push origin lab5:lab5
 
 vmlinux: $(modules)
