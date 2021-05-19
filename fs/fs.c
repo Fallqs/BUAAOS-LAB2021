@@ -90,7 +90,7 @@ unmap_block(u_int blockno)
 	u_int addr;
 
 	// Step 1: check if this block is mapped.
-	if(!(addr = block_is_mapped(block)))return;
+	if(!(addr = block_is_mapped(blockno)))return;
 
 	// Step 2: use block_is_free，block_is_dirty to check block , 
 	//if this block is used(not free) and dirty, it needs to be synced to disk: write_block
