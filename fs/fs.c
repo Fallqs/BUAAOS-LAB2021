@@ -99,7 +99,7 @@ unmap_block(u_int blockno)
 		write_block(blockno);
 
 	// Step 3: use 'syscall_mem_unmap' to unmap corresponding virtual memory.
-	if(syscall_mem_umap(0, addr))writef("unmap_block FAILED\n");
+	if(syscall_mem_unmap(0, addr))writef("unmap_block FAILED\n");
 
 	// Step 4: validate result of this unmap operation.
 	user_assert(!block_is_mapped(blockno));
