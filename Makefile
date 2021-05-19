@@ -31,6 +31,11 @@ objects		  := $(boot_dir)/start.o			  \
 
 all: $(modules) vmlinux
 
+push: clean
+	git add .
+	git commit —allow-empty -m “auto lab5”
+	git push origin lab5:lab5
+
 vmlinux: $(modules)
 	$(LD) -o $(vmlinux_elf) -N -T $(link_script) $(objects)
 
