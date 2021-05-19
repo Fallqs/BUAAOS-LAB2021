@@ -158,6 +158,9 @@ read_block(u_int blockno, void **blk, u_int *isnew)
 		ide_read(0, blockno * SECT2BLK, (void *)va, SECT2BLK);
 	}
 
+	//writef("\nread_block:: %08x----------------------------\n", va);
+	//int *i,j;for(i=(int*)va,j=0;j<20;++j)writef("%08x ",*(i+j));
+
 	// Step 5: if blk != NULL, set `va` to *blk.
 	if (blk) {
 		*blk = (void *)va;
@@ -278,6 +281,8 @@ read_super(void)
 	}
 
 	super = blk;
+	//writef("\nread_super:: %08x-----------------------\n",super);
+	//int *i,j;for(i = (int*)(super), j=0;j<20;++j)writef("%08x ", *(i+j));
 
 	// Step 2: Check fs magic nunber.
 	if (super->s_magic != FS_MAGIC) {
@@ -350,6 +355,7 @@ check_write_block(void)
 
 	// validate the data read from the disk.
 	read_block(1, 0, 0);
+	writef("\ndisk_name::%s\n",(char*)diskaddr(1));
 	user_assert(strcmp((char *)diskaddr(1), "OOPS!\n") == 0);
 
 	// restore the super block.

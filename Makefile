@@ -36,6 +36,12 @@ push: clean
 	git commit --allow-empty -m "auto lab5"
 	git push origin lab5:lab5
 
+test: all
+	/OSLAB/gxemul -E testmips -C R3000 -M 64 -V -d gxemul/fs.img $(vmlinux_elf)
+		
+run: all
+	/OSLAB/gxemul -E testmips -C R3000 -M 64 -d gxemul/fs.img $(vmlinux_elf)
+
 vmlinux: $(modules)
 	$(LD) -o $(vmlinux_elf) -N -T $(link_script) $(objects)
 

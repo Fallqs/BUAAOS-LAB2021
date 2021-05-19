@@ -471,7 +471,7 @@ int sys_write_dev(int sysno, u_int va, u_int dev, u_int len)
 		!(dev >= 0x15000000 && dev+len <= 0x15000000 + 0x200))
 		return -E_INVAL;
 
-	return bcopy((void*)va, (void*)KADDR(dev), len), 0;
+	return bcopy((void*)va, (void*)(dev + 0xa0000000), len), 0;
 }
 
 /* Overview:
@@ -490,7 +490,7 @@ int sys_write_dev(int sysno, u_int va, u_int dev, u_int len)
  *      
  * Hint: Use ummapped segment in kernel address space to perform MMIO.
  */
-int sys_read_dev(int sysno, u_int va, u_int dev, u_int len)
+int sys_read_dev(int sysno, const u_int va, u_int dev, u_int len)
 {
         // Your code here
 	if( !(dev >= 0x10000000 && dev+len <= 0x10000000 + 0x20) && 
@@ -498,5 +498,5 @@ int sys_read_dev(int sysno, u_int va, u_int dev, u_int len)
 		!(dev >= 0x15000000 && dev+len <= 0x15000000 + 0x200))
 		return -E_INVAL;
 
-	return bcopy((void*)KADDR(dev), (void*)va, len), 0;
+	return bcopy((void*)(dev + 0xa0000000), (void*)va, len),0;
 }
