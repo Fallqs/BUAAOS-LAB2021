@@ -155,6 +155,7 @@ serve_map(u_int envid, struct Fsreq_map *rq)
 
 	filebno = rq->req_offset / BY2BLK;
 
+	//writef("___FJH______serve_map___");
 	if ((r = file_get_block(pOpen->o_file, filebno, &blk)) < 0) {
 		ipc_send(envid, r, 0, 0);
 		return;
@@ -210,9 +211,11 @@ serve_remove(u_int envid, struct Fsreq_remove *rq)
 	user_bcopy(rq->req_path, path, MAXPATHLEN);
 	path[MAXPATHLEN - 1] = '\0';
 
+	//writef("REMOVING::%s\n",path);
 	// Step 2: Remove file from file system and response to user-level process.
 	// Call file_remove and ipc_send an approprite value to corresponding env.
-	ipc_send(envid, file_remove(path), 0, 0);
+	r = file_remove(path);
+	ipc_send(envid, r, 0, 0);
 }
 
 void

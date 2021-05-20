@@ -117,7 +117,7 @@ void init_disk() {
         disk[2+i].type = BLOCK_BMAP;
     }
     for(i = 0; i < nbitblock; ++i) {
-        memset(disk[2+i].data, 0xff, NBLOCK/8);
+        memset(disk[2+i].data, 0xff, BY2BLK);
     }
     if(NBLOCK != nbitblock * BIT2BLK) {
         diff = NBLOCK % BY2BLK / 8;
@@ -178,8 +178,9 @@ void save_block_link(struct File *f, int nblk, int bno)
         if(f->f_indirect == 0) {
             // create new indirect block.
             f->f_indirect = next_block(BLOCK_INDEX);
+        	((uint32_t *)(disk[f->f_indirect].data))[nblk] = next_block(BLOCK_DATA);
         }
-        ((uint32_t *)(disk[f->f_indirect].data))[nblk] = bno;
+		else ((uint32_t *)(disk[f->f_indirect].data))[nblk] = bno;
     }
 }
 

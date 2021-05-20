@@ -48,7 +48,7 @@ ide_read(u_int diskno, u_int secno, void *dst, u_int nsecs)
 
 		offset += 0x200;
 	}
-//	writef("ide_read:: %08x\n",dst);
+//	writef("ide_read:: %08x, name==%s\n",dst, (char*)dst);
 //	int *i,j;for(i=(int*)dst, j=0;j<20;++j)writef("%08x ",*(i+j));
 }
 
@@ -87,7 +87,7 @@ ide_write(u_int diskno, u_int secno, void *src, u_int nsecs)
 			syscall_write_dev( (u_int)	&ofs, 		dev + 0x0,  	4) )
 					user_panic("ide_write COMMAND error");
 
-		if( syscall_write_dev( (u_int)(src + ofs),	dev + 0x4000, 	0x200))
+		if( syscall_write_dev( (u_int)(src + offset),	dev + 0x4000, 	0x200))
 			user_panic("ide_read CONTENT error");
 
 		if( syscall_write_dev( (u_int)	&op,  		dev + 0x20, 	1) ||
@@ -96,5 +96,6 @@ ide_write(u_int diskno, u_int secno, void *src, u_int nsecs)
 
 		offset += 0x200;
 	}
+	//writef("\nide_write%08x, name==%s\n", src, (char*)(src));
 }
 

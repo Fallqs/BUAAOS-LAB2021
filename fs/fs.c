@@ -142,20 +142,25 @@ read_block(u_int blockno, void **blk, u_int *isnew)
 	// Step 3: transform block number to corresponding virtual address.
 	va = diskaddr(blockno);
 
+	//writef("is_mapped(%d)==%08x\n",blockno, block_is_mapped(blockno));
+
 	// Step 4: read disk and set *isnew.
 	// Hint: if this block is already mapped, just set *isnew, else alloc memory and
 	// read data from IDE disk (use `syscall_mem_alloc` and `ide_read`).
 	// We have only one IDE disk, so the diskno of ide_read should be 0.
 	if (block_is_mapped(blockno)) {	//the block is in memory
+		//writef("???????????????????????\n");
 		if (isnew) {
 			*isnew = 0;
 		}
 	} else {			//the block is not in memory
+		//writef(".......................\n");
 		if (isnew) {
 			*isnew = 1;
 		}
 		syscall_mem_alloc(0, va, PTE_V | PTE_R);
 		ide_read(0, blockno * SECT2BLK, (void *)va, SECT2BLK);
+	//writef("\nBLK_NAME::%s\n", (char*)va);
 	}
 
 	//writef("\nread_block:: %08x----------------------------\n", va);
@@ -234,7 +239,7 @@ alloc_block_num(void)
 	for (blockno = 3; blockno < super->s_nblocks; blockno++) {
 		if (bitmap[blockno / 32] & (1 << (blockno % 32))) {	//the block is free
 			bitmap[blockno / 32] &= ~(1 << (blockno % 32));
-			write_block(blockno / BIT2BLK); // write to disk.
+			write_block(blockno / BIT2BLK + 2); // write to disk.
 			return blockno;
 		}
 	}
@@ -302,8 +307,8 @@ read_super(void)
 //
 // Hint:
 // 	Read all the bitmap blocks into memory.
-// 	Set the "bitmap" pointer to point ablocknot the beginning of the first bitmap block.
-//	For each block i, user_assert(!block_is_free(i))).Check that they're all marked as inuse 
+// 	Set the "bitmap" pointer to point blockno at the beginning of the first bitmap block.
+//	For each block i, user_assert(!block_is_free(i))).Check that they're all marked as in use 
 void
 read_bitmap(void)
 {
@@ -348,14 +353,19 @@ check_write_block(void)
 	strcpy((char *)diskaddr(1), "OOPS!\n");
 	write_block(1);
 	user_assert(block_is_mapped(1));
+	//writef("\nPRE0_name::%s\n",(char*)diskaddr(1));
+	read_block(1,0,0);
+	//writef("\nPRE1_name::%s\n",(char*)diskaddr(1));
 
 	// clear it out
 	syscall_mem_unmap(0, diskaddr(1));
-	user_assert(!block_is_mapped(1));
+	user_assert(block_is_mapped(1)==0);
+	//writef("\nUNMAP_name::%s\n",(char*)diskaddr(1));
 
+	//writef("is_mapped(%d)==%08x\n",1, block_is_mapped(1));
 	// validate the data read from the disk.
 	read_block(1, 0, 0);
-	writef("\ndisk_name::%s\n",(char*)diskaddr(1));
+	//writef("\ndisk_name::%s\n",(char*)diskaddr(1));
 	user_assert(strcmp((char *)diskaddr(1), "OOPS!\n") == 0);
 
 	// restore the super block.
@@ -417,6 +427,7 @@ file_block_walk(struct File *f, u_int filebno, u_int **ppdiskbno, u_int alloc)
 			f->f_indirect = r;
 		}
 
+		//writef("_______file_block_walk___");
 		// Step 3: read the new indirect block to memory. 
 		if ((r = read_block(f->f_indirect, &blk, 0)) < 0) {
 			return r;
@@ -505,14 +516,18 @@ file_get_block(struct File *f, u_int filebno, void **blk)
 	u_int isnew;
 
 	// Step 1: find the disk block number is `f` using `file_map_block`.
+	//writef("_______file_get_block_1___");
 	if ((r = file_map_block(f, filebno, &diskbno, 1)) < 0) {
 		return r;
 	}
 
+	//writef("_______file_get_block_2___");
 	// Step 2: read the data in this disk to blk.
 	if ((r = read_block(diskbno, blk, &isnew)) < 0) {
+	//writef("_______file_get_block_2___");
 		return r;
 	}
+	//writef("_______file_get_block_2___");
 	return 0;
 }
 
@@ -523,7 +538,6 @@ file_dirty(struct File *f, u_int offset)
 {
 	int r;
 	void *blk;
-
 	if ((r = file_get_block(f, offset / BY2BLK, &blk)) < 0) {
 		return r;
 	}
@@ -552,6 +566,7 @@ dir_lookup(struct File *dir, char *name, struct File **file)
 	for (i = 0; i < nblock; i++) {
 		// Step 2: Read the i'th block of the dir.
 		// Hint: Use file_get_block.
+		//writef("___FJH____dir_lookup___");
 		if(r = file_get_block(dir, i, &blk))return r;
 
 		// Step 3: Find target file by file name in all files on this block.
@@ -561,6 +576,7 @@ dir_lookup(struct File *dir, char *name, struct File **file)
 			if(!strcmp(f->f_name, name)){
 				f->f_dir = dir;
 				*file = f;
+				//writef("___FJH____dir_lookup_FOUND___");
 				return 0;
 			}
 		}
@@ -586,6 +602,7 @@ dir_alloc_file(struct File *dir, struct File **file)
 
 	for (i = 0; i < nblock; i++) {
 		// read the block.
+		//writef("___FJH____dir_alloc_file___");
 		if ((r = file_get_block(dir, i, &blk)) < 0) {
 			return r;
 		}
@@ -603,6 +620,7 @@ dir_alloc_file(struct File *dir, struct File **file)
 	// no free File structure in exists data block.
 	// new data block need to be created.
 	dir->f_size += BY2BLK;
+	//writef("___FJH____dir_alloc_file_2___");
 	if ((r = file_get_block(dir, i, &blk)) < 0) {
 		return r;
 	}
@@ -812,14 +830,22 @@ file_flush(struct File *f)
 
 	nblocks = f->f_size / BY2BLK + 1;
 
+	//writef("FLUSH::");
+
 	for (bno = 0; bno < nblocks; bno++) {
+		//writef(".");
 		if ((r = file_map_block(f, bno, &diskno, 0)) < 0) {
 			continue;
 		}
+		//writef("-");
 		if (block_is_dirty(diskno)) {
+			writef("-%04x",diskno);
 			write_block(diskno);
 		}
 	}
+	//writef("\n");
+	file_map_block(f,0,&diskno,0);
+	//writef("\nFLUNSH::%s\n",f->f_name);
 }
 
 // Overview:
@@ -859,7 +885,8 @@ file_remove(char *path)
 	if ((r = walk_path(path, 0, &f, 0)) < 0) {
 		return r;
 	}
-
+	
+	//writef("FILE_REMOV::%s\n",f->f_name);
 	// Step 2: truncate it's size to zero.
 	file_truncate(f, 0);
 
@@ -871,6 +898,8 @@ file_remove(char *path)
 	if (f->f_dir) {
 		file_flush(f->f_dir);
 	}
+
+	//writef("FILE_REMOV::%d\n",f->f_size);
 
 	return 0;
 }

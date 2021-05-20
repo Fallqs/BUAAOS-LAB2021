@@ -49,6 +49,10 @@ fsipc_open(const char *path, u_int omode, struct Fd *fd)
 	}
 
 	strcpy((char *)req->req_path, path);
+
+	//writef("fsipc_open:: name==%s\n",path);
+	//writef("___FJH____fsipc_open___");
+
 	req->req_omode = omode;
 	return fsipc(FSREQ_OPEN, req, (u_int)fd, &perm);
 }
