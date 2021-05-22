@@ -70,7 +70,6 @@ ARGEND	include/args.h	21;"	d
 ARGF	include/args.h	22;"	d
 AT	include/asm-mips3k/regdef.h	16;"	d
 AT	include/asm/regdef.h	16;"	d
-BDEND	lib/syscall.S	/^BDEND:$/;"	l
 BIT2BLK	include/fs.h	12;"	d
 BLOCK_BMAP	fs/fsformat.c	/^    BLOCK_BMAP  = 2,$/;"	e	enum:__anon1	file:
 BLOCK_BOOT	fs/fsformat.c	/^    BLOCK_BOOT  = 1,$/;"	e	enum:__anon1	file:
