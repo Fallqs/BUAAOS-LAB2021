@@ -216,6 +216,7 @@ read(int fdnum, void *buf, u_int n)
 	}
 	((char *)buf)[r] = '\0';
 
+
 	return r;
 }
 

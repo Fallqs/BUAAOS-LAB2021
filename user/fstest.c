@@ -17,7 +17,7 @@ void umain()
         writef("open is good\n");
 
         if ((n = read(fdnum, buf, 511)) < 0) {
-                user_panic("read /newmotd: %d", r);
+                user_panic("read /newmotd: %d", n);
         }
         if (strcmp(buf, diff_msg) != 0) {
                 user_panic("read returned wrong data");
@@ -45,7 +45,7 @@ void umain()
         writef("open again: OK\n");
 
         if ((n = read(fdnum, buf, 511)) < 0) {
-                user_panic("read /newmotd: %d", r);
+                user_panic("read /newmotd: %d", n);
         }
         if (strcmp(buf, msg) != 0) {
                 user_panic("read returned wrong data");
@@ -59,7 +59,6 @@ void umain()
 	if((r = remove("/newmotd"))<0){
 		user_panic("remove /newmotd: %d",r);
 	}
-	writef("file remove: PRE\n");
 	if((r = open("/newmotd", O_RDONLY))>=0){
 		user_panic("open after remove /newmotd: %d",r);
 	}

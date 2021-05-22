@@ -556,14 +556,16 @@ int
 dir_lookup(struct File *dir, char *name, struct File **file)
 {
 	int r;
-	u_int i, j, nblock;
+	u_int i, j, nblock, cnt;
 	void *blk;
 	struct File *f;
+	*file = NULL;
 
 	// Step 1: Calculate nblock: how many blocks this dir have.
 	nblock = ROUND(dir->f_size, BY2BLK) / BY2BLK;
+	cnt = dir->f_size / sizeof(struct File);
 
-	for (i = 0; i < nblock; i++) {
+	for (i = 0; i < nblock; i++, cnt -= BY2BLK/ sizeof(struct File)) {
 		// Step 2: Read the i'th block of the dir.
 		// Hint: Use file_get_block.
 		//writef("___FJH____dir_lookup___");
@@ -576,7 +578,6 @@ dir_lookup(struct File *dir, char *name, struct File **file)
 			if(!strcmp(f->f_name, name)){
 				f->f_dir = dir;
 				*file = f;
-				//writef("___FJH____dir_lookup_FOUND___");
 				return 0;
 			}
 		}
@@ -885,8 +886,8 @@ file_remove(char *path)
 	if ((r = walk_path(path, 0, &f, 0)) < 0) {
 		return r;
 	}
+
 	
-	//writef("FILE_REMOV::%s\n",f->f_name);
 	// Step 2: truncate it's size to zero.
 	file_truncate(f, 0);
 
@@ -899,7 +900,8 @@ file_remove(char *path)
 		file_flush(f->f_dir);
 	}
 
-	//writef("FILE_REMOV::%d\n",f->f_size);
+	fs_sync();
+	walk_path(path, 0, &f, 0);
 
 	return 0;
 }

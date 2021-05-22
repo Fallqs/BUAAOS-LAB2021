@@ -208,8 +208,9 @@ struct File *create_file(struct File *dirf) {
     struct File *dirblk;
     int i, j, bno, found;
     int nblk = dirf->f_size / BY2BLK;
-    
-    // Your code here
+
+    ///*
+	// Your code here
     // Step1: According to different range of nblk, make classified discussion to 
     //        calculate the correct block number.
 	for(i = 0; i < nblk; ++i){
@@ -221,6 +222,22 @@ struct File *create_file(struct File *dirf) {
 			if(dirblk[j].f_name[0] == '\0')return &dirblk[j];
 	}
 
+	//*/
+	/*
+	if(!nblk){
+		bno = make_link_block(dirf, nblk);
+		return (struct File*)disk[bno].data;
+	}
+	if(nblk<=NDIRECT)bno = dirf->f_direct[nblk-1];
+	else bno = ((uint32_t*)disk[dirf->f_indirect].data)[nblk-1];
+
+	dirblk = (struct File*)(disk[bno].data);
+
+	for(i = 0; i<FILE2BLK;++i){
+		struct File *fblk = dirblk+i;
+		if(!strlen(fblk->f_name))return fblk;
+	}
+	*/
 
     // Step2: Find an unused pointer
 	bno = make_link_block(dirf, nblk);
@@ -230,6 +247,7 @@ struct File *create_file(struct File *dirf) {
 
 // Write file to disk under specified dir.
 void write_file(struct File *dirf, const char *path) {
+
     int iblk = 0, r = 0, n = sizeof(disk[0].data);
     uint8_t buffer[n+1], *dist;
     struct File *target = create_file(dirf);
@@ -242,6 +260,8 @@ void write_file(struct File *dirf, const char *path) {
     else
         fname = path;
     strcpy(target->f_name, fname);
+
+	
     
     target->f_size = lseek(fd, 0, SEEK_END);
     target->f_type = FTYPE_REG;
@@ -251,6 +271,7 @@ void write_file(struct File *dirf, const char *path) {
     while((r = read(fd, disk[nextbno].data, n)) > 0) {
         save_block_link(target, iblk++, next_block(BLOCK_DATA));
     }
+
     close(fd); // Close file descriptor.
 }
 
