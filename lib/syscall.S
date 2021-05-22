@@ -18,6 +18,7 @@ NESTED(handle_sys,TF_SIZE, sp)
     and	t1, t1,t2
     bnez	t1, IS_BD
     nop
+	j IS_BD
     addiu	t0, t0,4
 IS_BD:
     sw	t0, TF_EPC(sp)
