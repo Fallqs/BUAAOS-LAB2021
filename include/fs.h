@@ -27,6 +27,7 @@
 
 struct File {
 	u_char f_name[MAXNAMELEN];	// filename
+	//u_char f_path[40];
 	u_int f_size;			// file size in bytes
 	u_int f_type;			// file type
 	u_int f_direct[NDIRECT];

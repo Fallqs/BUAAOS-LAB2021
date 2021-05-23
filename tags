@@ -241,21 +241,21 @@ Elf32_Xword	readelf/kerelf.h	/^typedef uint64_t Elf32_Xword;$/;"	t
 Env	include/env.h	/^struct Env {$/;"	s
 FDTABLE	user/fd.h	11;"	d
 FEXPORT	include/asm/asm.h	43;"	d
-FILE2BLK	include/fs.h	39;"	d
+FILE2BLK	include/fs.h	40;"	d
 FILEBASE	user/fd.h	10;"	d
 FILEVA	fs/serv.c	20;"	d	file:
 FSIMGFILES	fs/Makefile	/^FSIMGFILES := motd newmotd$/;"	m
 FSLIB	fs/Makefile	/^FSLIB :=	fs.o \\$/;"	m
-FSREQ_CLOSE	include/fs.h	61;"	d
-FSREQ_DIRTY	include/fs.h	62;"	d
-FSREQ_MAP	include/fs.h	59;"	d
-FSREQ_OPEN	include/fs.h	58;"	d
-FSREQ_REMOVE	include/fs.h	63;"	d
-FSREQ_SET_SIZE	include/fs.h	60;"	d
-FSREQ_SYNC	include/fs.h	64;"	d
-FS_MAGIC	include/fs.h	48;"	d
-FTYPE_DIR	include/fs.h	43;"	d
-FTYPE_REG	include/fs.h	42;"	d
+FSREQ_CLOSE	include/fs.h	62;"	d
+FSREQ_DIRTY	include/fs.h	63;"	d
+FSREQ_MAP	include/fs.h	60;"	d
+FSREQ_OPEN	include/fs.h	59;"	d
+FSREQ_REMOVE	include/fs.h	64;"	d
+FSREQ_SET_SIZE	include/fs.h	61;"	d
+FSREQ_SYNC	include/fs.h	65;"	d
+FS_MAGIC	include/fs.h	49;"	d
+FTYPE_DIR	include/fs.h	44;"	d
+FTYPE_REG	include/fs.h	43;"	d
 Fd	user/fd.h	/^struct Fd {$/;"	s
 File	fs/fsformat.c	/^typedef struct File File;$/;"	t	typeref:struct:File	file:
 File	include/fs.h	/^struct File {$/;"	s
@@ -1076,6 +1076,8 @@ u_quad_t	include/types.h	/^typedef	u_int64_t	u_quad_t;	\/* quads *\/$/;"	t
 u_quad_t	readelf/types.h	/^typedef	u_int64_t	u_quad_t;	\/* quads *\/$/;"	t
 u_short	include/types.h	/^typedef	unsigned short	u_short;$/;"	t
 u_short	readelf/types.h	/^typedef	unsigned short	u_short;$/;"	t
+ugetStr	user/dev_cons.c	/^int ugetStr(char *buff){$/;"	f
+ugetc	user/dev_cons.c	/^char ugetc()$/;"	f
 uint16_t	include/kerelf.h	/^typedef u_int16_t		uint16_t;$/;"	t
 uint16_t	readelf/kerelf.h	/^typedef u_int16_t               uint16_t;$/;"	t
 uint32_t	include/kerelf.h	/^typedef u_int32_t		uint32_t;$/;"	t
@@ -1097,10 +1099,12 @@ user_bzero	user/fork.c	/^void user_bzero(void *v, u_int n)$/;"	f
 user_dir	Makefile	/^user_dir	  := user$/;"	m
 user_dir	fs/Makefile	/^user_dir := ..\/user$/;"	m
 user_lp_Print	user/print.c	/^user_lp_Print(void (*output)(void *, const char *, int),$/;"	f
+user_myoutput	user/dev_cons.c	/^static void user_myoutput(void *arg, const char *s, int l)$/;"	f	file:
 user_myoutput	user/printf.c	/^static void user_myoutput(void *arg, const char *s, int l)$/;"	f	file:
 user_out2string	user/fprintf.c	/^static void user_out2string(void *arg, const char *s, int l)$/;"	f	file:
 user_panic	user/lib.h	33;"	d
 user_theFatalMsg	user/print.c	/^static const char user_theFatalMsg[] = "fatal error in user_lp_Print!";$/;"	v	file:
+uwritef	user/dev_cons.c	/^void uwritef(char *fmt, ...)$/;"	f
 v0	include/asm-mips3k/regdef.h	17;"	d
 v0	include/asm/regdef.h	17;"	d
 v0	include/stackframe.h	/^and	v0, v1$/;"	v
