@@ -819,7 +819,6 @@ msg	user/fstest.c	/^static char *msg = "This is the NEW message of the day!\\r\\
 myoutput	lib/printf.c	/^static void myoutput(void *arg, char *s, int l)$/;"	f	file:
 nbitblock	fs/fsformat.c	/^uint32_t nbitblock; \/\/ the number of bitmap blocks.$/;"	v
 nbitmap	fs/fs.c	/^u_int nbitmap;		\/\/ number of bitmap blocks$/;"	v
-nclude	lib/kcons_asm.S	/^nclude <asm\/regdef.h>$/;"	l
 nelem	fs/fsformat.c	18;"	d	file:
 next_block	fs/fsformat.c	/^int next_block(int type) {$/;"	f
 nextbno	fs/fsformat.c	/^uint32_t nextbno;   \/\/ next availiable block.$/;"	v
