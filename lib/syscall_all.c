@@ -500,3 +500,29 @@ int sys_read_dev(int sysno, const u_int va, u_int dev, u_int len)
 
 	return bcopy((void*)(dev + 0xa0000000), (void*)va, len),0;
 }
+
+int sys_get_time(int sysno){
+	int ans;
+	bcopy((void*)(0x15000000+0x0010),(void*)&ans,4);
+	return ans;
+}
+
+char ugetc()
+{
+	char c = 0;
+	while (c == 0)
+	{
+		sys_read_dev(0, &c, 0x10000000 + 0x0, 1);
+		//sys_write_dev(&c, 0x10000000 + 0x0, 1);
+	}
+	return c;
+}
+
+int sys_read_str(int sysno, char *buf,int secno){
+	int i=0; char c=0;
+	do{
+		buf[i++] = c = ugetc();
+	}while(c!='\r');
+	buf[i]='\0';
+	return i;
+}

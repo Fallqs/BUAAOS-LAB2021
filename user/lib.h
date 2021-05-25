@@ -54,6 +54,10 @@ int syscall_mem_map(u_int srcid, u_int srcva, u_int dstid, u_int dstva,
 					u_int perm);
 int syscall_mem_unmap(u_int envid, u_int va);
 
+////////////////////////////////////////////////exam
+int syscall_get_time(void);
+int syscall_read_str(char *buf, int secno);
+
 inline static int syscall_env_alloc(void)
 {
     return msyscall(SYS_env_alloc, 0, 0, 0, 0, 0);
