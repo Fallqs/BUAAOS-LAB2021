@@ -9,6 +9,10 @@ void umain()
         int fdnum;
         char buf[512];
         int n;
+		
+		int ii=0;for(;ii<100;++ii)
+			writef("%d\n",syscall_get_time());
+		user_panic("time");
 
         if ((r = open("/newmotd", O_RDWR)) < 0) {
                 user_panic("open /newmotd: %d", r);

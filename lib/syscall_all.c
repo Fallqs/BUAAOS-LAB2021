@@ -502,8 +502,9 @@ int sys_read_dev(int sysno, const u_int va, u_int dev, u_int len)
 }
 
 int sys_get_time(int sysno){
-	int ans;
-	bcopy((void*)(0x15000000+0x0010),(void*)&ans,4);
+	int ans=1;
+	bcopy((void*)&ans, (void*)(0x15000000+0x0000+0xa0000000), 4);
+	bcopy((void*)(0x15000000+0x0010+0xa0000000),(void*)&ans,4);
 	return ans;
 }
 
