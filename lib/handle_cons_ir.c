@@ -29,6 +29,7 @@ void handle_cons_ir(char c, int status){
 	if(itv>=5){
 		buf[len]='\0';
 		printf("length=%d, string=%s\n", len, buf);
+		bcopy((void*)(0x10000000+0x0010+0xa0000000),(void*)&buf,1);
 	}
 
 }
