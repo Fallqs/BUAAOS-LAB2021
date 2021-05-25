@@ -83,10 +83,10 @@ timer_irq:
 	nop
 
 cons_irq:
-	lui	t1, 0x1000
+	lui	t1, 0xb000
 	lb	a0, 0(t1)
 	mfc0	a1, CP0_STATUS
-	j	handle_cons_ir
+	jal	handle_cons_ir
 	nop
 	j	ret_from_exception
 	nop

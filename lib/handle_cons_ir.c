@@ -1,5 +1,9 @@
 #include<printf.h>
 
+void print_situation(int v){
+	printf("%x\n",v);
+}
+
 void handle_cons_ir(char c, int status){
 	static char buf[70];
 	static int len=0;

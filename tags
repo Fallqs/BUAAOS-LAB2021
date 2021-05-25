@@ -782,6 +782,7 @@ k1	include/stackframe.h	/^move	k1, sp$/;"	v
 k1	include/stackframe.h	/^subu	sp, k1, TF_SIZE$/;"	v
 k1	include/stackframe.h	/^xori	k1, 0x1000$/;"	v
 kclock_init	lib/kclock.c	/^kclock_init(void)$/;"	f
+kcons_init	lib/kcons.c	/^void kcons_init(){set_console();}$/;"	f
 lib_dir	Makefile	/^lib_dir		  := lib$/;"	m
 libmain	user/libos.c	/^libmain(int argc, char **argv)$/;"	f
 link_script	Makefile	/^link_script   := $(tools_dir)\/scse0_3.lds$/;"	m
@@ -818,6 +819,7 @@ msg	user/fstest.c	/^static char *msg = "This is the NEW message of the day!\\r\\
 myoutput	lib/printf.c	/^static void myoutput(void *arg, char *s, int l)$/;"	f	file:
 nbitblock	fs/fsformat.c	/^uint32_t nbitblock; \/\/ the number of bitmap blocks.$/;"	v
 nbitmap	fs/fs.c	/^u_int nbitmap;		\/\/ number of bitmap blocks$/;"	v
+nclude	lib/kcons_asm.S	/^nclude <asm\/regdef.h>$/;"	l
 nelem	fs/fsformat.c	18;"	d	file:
 next_block	fs/fsformat.c	/^int next_block(int type) {$/;"	f
 nextbno	fs/fsformat.c	/^uint32_t nextbno;   \/\/ next availiable block.$/;"	v
@@ -891,6 +893,7 @@ pipestat	user/pipe.c	/^pipestat(struct Fd *fd, struct Stat *stat)$/;"	f	file:
 pipewrite	user/pipe.c	/^pipewrite(struct Fd *fd, const void *vbuf, u_int n, u_int offset)$/;"	f	file:
 pp_link	include/pmap.h	/^	Page_LIST_entry_t pp_link;	\/* free list link *\/$/;"	m	struct:Page
 pp_ref	include/pmap.h	/^	u_short pp_ref;$/;"	m	struct:Page
+print_situation	lib/handle_cons_ir.c	/^void print_situation(int v){$/;"	f
 printcharc	drivers/gxconsole/console.c	/^void printcharc(char ch)$/;"	f
 printf	lib/printf.c	/^void printf(char *fmt, ...)$/;"	f
 printstr	drivers/gxconsole/console.c	/^void printstr(char *s)$/;"	f
@@ -960,6 +963,7 @@ serve_sync	fs/serv.c	/^serve_sync(u_int envid)$/;"	f
 set_except_vector	lib/traps.c	/^void *set_except_vector(int n, void *addr)$/;"	f
 set_pgfault_handler	user/pgfault.c	/^set_pgfault_handler(void (*fn)(u_int va))$/;"	f
 setup_c0_status	lib/kclock_asm.S	/^setup_c0_status STATUS_CU0|0x1001 0$/;"	l
+setup_c0_status	lib/kcons_asm.S	/^setup_c0_status STATUS_CU0|STATUSF_IP2|0x1 0$/;"	l
 sfork	user/fork.c	/^sfork(void)$/;"	f
 sh_addr	readelf/kerelf.h	/^        Elf32_Addr sh_addr;                 \/* Section addr *\/$/;"	m	struct:__anon5
 sh_addralign	readelf/kerelf.h	/^        Elf32_Word sh_addralign;            \/* Section alignment *\/$/;"	m	struct:__anon5
