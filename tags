@@ -241,21 +241,21 @@ Elf32_Xword	readelf/kerelf.h	/^typedef uint64_t Elf32_Xword;$/;"	t
 Env	include/env.h	/^struct Env {$/;"	s
 FDTABLE	user/fd.h	11;"	d
 FEXPORT	include/asm/asm.h	43;"	d
-FILE2BLK	include/fs.h	39;"	d
+FILE2BLK	include/fs.h	43;"	d
 FILEBASE	user/fd.h	10;"	d
 FILEVA	fs/serv.c	20;"	d	file:
 FSIMGFILES	fs/Makefile	/^FSIMGFILES := motd newmotd$/;"	m
 FSLIB	fs/Makefile	/^FSLIB :=	fs.o \\$/;"	m
-FSREQ_CLOSE	include/fs.h	61;"	d
-FSREQ_DIRTY	include/fs.h	62;"	d
-FSREQ_MAP	include/fs.h	59;"	d
-FSREQ_OPEN	include/fs.h	58;"	d
-FSREQ_REMOVE	include/fs.h	63;"	d
-FSREQ_SET_SIZE	include/fs.h	60;"	d
-FSREQ_SYNC	include/fs.h	64;"	d
-FS_MAGIC	include/fs.h	48;"	d
-FTYPE_DIR	include/fs.h	43;"	d
-FTYPE_REG	include/fs.h	42;"	d
+FSREQ_CLOSE	include/fs.h	65;"	d
+FSREQ_DIRTY	include/fs.h	66;"	d
+FSREQ_MAP	include/fs.h	63;"	d
+FSREQ_OPEN	include/fs.h	62;"	d
+FSREQ_REMOVE	include/fs.h	67;"	d
+FSREQ_SET_SIZE	include/fs.h	64;"	d
+FSREQ_SYNC	include/fs.h	68;"	d
+FS_MAGIC	include/fs.h	52;"	d
+FTYPE_DIR	include/fs.h	47;"	d
+FTYPE_REG	include/fs.h	46;"	d
 Fd	user/fd.h	/^struct Fd {$/;"	s
 File	fs/fsformat.c	/^typedef struct File File;$/;"	t	typeref:struct:File	file:
 File	include/fs.h	/^struct File {$/;"	s
@@ -328,14 +328,14 @@ NULL	readelf/types.h	8;"	d
 NoCOW	lib/genex.S	/^NoCOW:$/;"	l
 OUTPUT	lib/print.c	50;"	d	file:
 OUTPUT	user/print.c	36;"	d	file:
-O_ACCMODE	user/lib.h	139;"	d
-O_CREAT	user/lib.h	141;"	d
-O_EXCL	user/lib.h	143;"	d
-O_MKDIR	user/lib.h	144;"	d
-O_RDONLY	user/lib.h	136;"	d
-O_RDWR	user/lib.h	138;"	d
-O_TRUNC	user/lib.h	142;"	d
-O_WRONLY	user/lib.h	137;"	d
+O_ACCMODE	user/lib.h	143;"	d
+O_CREAT	user/lib.h	145;"	d
+O_EXCL	user/lib.h	147;"	d
+O_MKDIR	user/lib.h	148;"	d
+O_RDONLY	user/lib.h	140;"	d
+O_RDWR	user/lib.h	142;"	d
+O_TRUNC	user/lib.h	146;"	d
+O_WRONLY	user/lib.h	141;"	d
 Open	fs/serv.c	/^struct Open {$/;"	s	file:
 PADDR	include/mmu.h	147;"	d
 PDMAP	include/mmu.h	17;"	d
@@ -403,9 +403,10 @@ ROUNDDOWN	include/types.h	47;"	d
 ROUNDDOWN	readelf/types.h	47;"	d
 SAVE_ALL	lib/genex.S	/^SAVE_ALL$/;"	l
 SECT2BLK	fs/fs.h	9;"	d
-STATUSF_IP4	include/asm/cp0regdef.h	40;"	d
-STATUS_CU0	include/asm/cp0regdef.h	41;"	d
-STATUS_KUC	include/asm/cp0regdef.h	42;"	d
+STATUSF_IP2	include/asm/cp0regdef.h	40;"	d
+STATUSF_IP4	include/asm/cp0regdef.h	42;"	d
+STATUS_CU0	include/asm/cp0regdef.h	43;"	d
+STATUS_KUC	include/asm/cp0regdef.h	44;"	d
 SYS_cgetc	include/unistd.h	22;"	d
 SYS_env_alloc	include/unistd.h	16;"	d
 SYS_env_destroy	include/unistd.h	11;"	d
@@ -549,6 +550,7 @@ alloc	mm/pmap.c	/^static void *alloc(u_int n, u_int align, int clear)$/;"	f	file
 alloc_block	fs/fs.c	/^alloc_block(void)$/;"	f
 alloc_block_num	fs/fs.c	/^alloc_block_num(void)$/;"	f
 and	lib/genex.S	/^and	t0, t2$/;"	l
+andi	lib/genex.S	/^andi	t1, t0, STATUSF_IP2$/;"	l
 andi	lib/genex.S	/^andi	t1, t0, STATUSF_IP4$/;"	l
 aoutcode	init/code.c	/^char aoutcode[]={0x7f,0x45,0x4c,0x46,0x1,0x2,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x0,0x8,0x0,0x0,0x0,0x1,0x0,0x40,0x0,0xb0,0x0,0x0,0x0,0x34,0x0,0x0,0xf,0xb0,0x50,0x0,0x10,0x1,0x0,$/;"	v
 assert	include/mmu.h	164;"	d
@@ -562,6 +564,7 @@ bitmap	fs/fs.c	/^u_int *bitmap;		\/\/ bitmap blocks mapped in memory$/;"	v
 block_is_dirty	fs/fs.c	/^block_is_dirty(u_int blockno)$/;"	f
 block_is_free	fs/fs.c	/^block_is_free(u_int blockno)$/;"	f
 block_is_mapped	fs/fs.c	/^block_is_mapped(u_int blockno)$/;"	f
+bnez	lib/genex.S	/^bnez	t1, cons_irq$/;"	l
 bnez	lib/genex.S	/^bnez	t1, timer_irq$/;"	l
 boot_dir	Makefile	/^boot_dir	  := boot$/;"	m
 boot_map_segment	mm/pmap.c	/^void boot_map_segment(Pde *pgdir, u_long va, u_long size, u_long pa, int perm)$/;"	f
@@ -573,6 +576,7 @@ check_write_block	fs/fs.c	/^check_write_block(void)$/;"	f
 close	user/fd.c	/^close(int fdnum)$/;"	f
 close_all	user/fd.c	/^close_all(void)$/;"	f
 cons_close	user/console.c	/^cons_close(struct Fd *fd)$/;"	f
+cons_irq	lib/genex.S	/^cons_irq:$/;"	l
 cons_read	user/console.c	/^cons_read(struct Fd *fd, void *vbuf, u_int n, u_int offset)$/;"	f
 cons_stat	user/console.c	/^cons_stat(struct Fd *fd, struct Stat *stat)$/;"	f
 cons_write	user/console.c	/^cons_write(struct Fd *fd, const void *vbuf, u_int n, u_int offset)$/;"	f
@@ -687,8 +691,10 @@ f_fd	user/fd.h	/^	struct Fd f_fd;$/;"	m	struct:Filefd	typeref:struct:Filefd::Fd
 f_file	user/fd.h	/^	struct File f_file;$/;"	m	struct:Filefd	typeref:struct:Filefd::File
 f_fileid	user/fd.h	/^	u_int f_fileid;$/;"	m	struct:Filefd
 f_indirect	include/fs.h	/^	u_int f_indirect;$/;"	m	struct:File
+f_modifycount	include/fs.h	/^	u_int f_modifycount;$/;"	m	struct:File
 f_name	include/fs.h	/^	u_char f_name[MAXNAMELEN];	\/\/ filename$/;"	m	struct:File
 f_pad	include/fs.h	/^	u_char f_pad[BY2FILE - MAXNAMELEN - 4 - 4 - NDIRECT * 4 - 4 - 4];$/;"	m	struct:File
+f_printcount	include/fs.h	/^	u_int f_printcount;$/;"	m	struct:File
 f_size	include/fs.h	/^	u_int f_size;			\/\/ file size in bytes$/;"	m	struct:File
 f_type	include/fs.h	/^	u_int f_type;			\/\/ file type$/;"	m	struct:File
 fault_va	lib/traps.c	/^    u_int fault_va;$/;"	m	struct:pgfault_trap_frame	file:
@@ -743,6 +749,7 @@ fwritef	user/fprintf.c	/^int fwritef(int fd, const char *fmt, ...)$/;"	f
 gp	include/asm-mips3k/regdef.h	44;"	d
 gp	include/asm/regdef.h	44;"	d
 halt	drivers/gxconsole/console.c	/^void halt(void)$/;"	f
+handle_cons_ir	lib/handle_cons_ir.c	/^void handle_cons_ir(char c, int status){$/;"	f
 hi	include/trap.h	/^	unsigned long hi;$/;"	m	struct:Trapframe
 ide_read	fs/ide.c	/^ide_read(u_int diskno, u_int secno, void *dst, u_int nsecs)$/;"	f
 ide_write	fs/ide.c	/^ide_write(u_int diskno, u_int secno, void *src, u_int nsecs)$/;"	f
@@ -1091,7 +1098,7 @@ unmap_block	fs/fs.c	/^unmap_block(u_int blockno)$/;"	f
 user_PrintChar	user/print.c	/^user_PrintChar(char *buf, char c, int length, int ladjust)$/;"	f
 user_PrintNum	user/print.c	/^user_PrintNum(char *buf, unsigned long u, int base, int negFlag,$/;"	f
 user_PrintString	user/print.c	/^user_PrintString(char *buf, char *s, int length, int ladjust)$/;"	f
-user_assert	user/lib.h	132;"	d
+user_assert	user/lib.h	136;"	d
 user_bcopy	user/fork.c	/^void user_bcopy(const void *src, void *dst, size_t len)$/;"	f
 user_bzero	user/fork.c	/^void user_bzero(void *v, u_int n)$/;"	f
 user_dir	Makefile	/^user_dir	  := user$/;"	m
