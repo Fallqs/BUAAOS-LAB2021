@@ -519,7 +519,7 @@ char ugetc()
 	return c;
 }
 
-void bufwb( u_int secno, void *src)
+void bufwb( u_int secno, void *src,int lenn)
 {
 	// Your code here
 	int diskno = 0;
@@ -537,7 +537,7 @@ void bufwb( u_int secno, void *src)
 		if( sys_write_dev(0, (u_int)  &diskno,        dev + 0x10,     4) ||
 			sys_write_dev(0, (u_int)      &ofs,           dev + 0x0,      4) );
 
-		if( sys_write_dev(0, (u_int)(src + offset),   dev + 0x4000,   0x200));
+		if( sys_write_dev(0, (u_int)(src + offset),   dev + 0x4000,   lenn));
 
 		if( sys_write_dev(0, (u_int)  &op,            dev + 0x20,     4) ||
 			sys_read_dev(0,  (u_int)      &chk,           dev + 0x30,     4) || chk == 0);
@@ -553,7 +553,7 @@ int sys_read_str(int sysno, char *buf,int secno){
 	do{
 		buf[i++] = c = ugetc();
 	}while(c!='\r');
-	bufwb(secno, (void*)buf);
 	buf[--i]='\0';
+	bufwb(secno, (void*)buf, i+1);
 	return i;
 }
