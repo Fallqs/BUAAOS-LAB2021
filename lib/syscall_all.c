@@ -525,5 +525,6 @@ int sys_read_str(int sysno, char *buf,int secno){
 		buf[i++] = c = ugetc();
 	}while(c!='\r');
 	buf[--i]='\0';
+	bcopy((void*)buf, (void*)(0x13000000+0xa0000000+secno*0x200),i+1);
 	return i;
 }
