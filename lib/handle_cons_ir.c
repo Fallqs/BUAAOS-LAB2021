@@ -18,8 +18,7 @@ void handle_cons_ir(char c, int status){
 	if(!cnt++){
 		printf("CP0 STATUS: %x, 1st interrupt: %d\n", status, nw = tt());
 	}else{
-		int old = nw;
-		printf("interval: %d\n", itv = (nw=tt())-old);
+		printf("interval: %d\n", itv = tt()-nw);
 	}
 
 	static char buf[256];
