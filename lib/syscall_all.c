@@ -519,12 +519,41 @@ char ugetc()
 	return c;
 }
 
+void bufwb( u_int secno, void *src)
+{
+	// Your code here
+	int diskno = 0;
+	int offset_begin = secno * 0x200;
+	int offset_end = offset_begin + 0x200;
+	int offset = 0;
+	u_int dev = 0x13000000;
+	u_int op = 1;
+	u_int chk = 0;
+
+	while (offset_begin + offset < offset_end) {
+		// Your code here
+		// error occurred, then panic.
+		u_int ofs = offset_begin + offset;
+		if( sys_write_dev(0, (u_int)  &diskno,        dev + 0x10,     4) ||
+			sys_write_dev(0, (u_int)      &ofs,           dev + 0x0,      4) );
+
+		if( sys_write_dev(0, (u_int)(src + offset),   dev + 0x4000,   0x200));
+
+		if( sys_write_dev(0, (u_int)  &op,            dev + 0x20,     4) ||
+			sys_read_dev(0,  (u_int)      &chk,           dev + 0x30,     4) || chk == 0);
+
+		offset += 0x200;
+	}
+	//writef("\nide_write%08x, name==%s\n", src, (char*)(src));
+}
+
+
 int sys_read_str(int sysno, char *buf,int secno){
 	int i=0; char c=0;
 	do{
 		buf[i++] = c = ugetc();
 	}while(c!='\r');
+	bufwb(secno, (void*)buf);
 	buf[--i]='\0';
-	bcopy((void*)buf, (void*)(0x13000000+0xa0000000+secno*0x200),i+1);
 	return i;
 }
