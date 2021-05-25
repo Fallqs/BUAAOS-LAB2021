@@ -513,8 +513,8 @@ char ugetc()
 	char c = 0;
 	while (c == 0)
 	{
-		 bcopy((void*)(0x13000000 + 0xa0000000), (void*)&c, 1);
-		 //sys_write_dev(&c, 0x10000000 + 0x0, 1);
+		 bcopy((void*)(0x10000000 + 0xa0000000), (void*)&c, 1);
+		 //sys_write_dev(0,&c, 0x10000000 + 0x0, 1);
 	}
 	return c;
 }

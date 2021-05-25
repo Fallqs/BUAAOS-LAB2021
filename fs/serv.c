@@ -309,6 +309,10 @@ umain(void)
 
 	writef("FS is running\n");
 
+	char buf[70];
+	int len = syscall_read_str(buf,5);
+	writef("%s, %d\n",buf,len);
+
 	writef("FS can do I/O\n");
 
 	serve_init();
