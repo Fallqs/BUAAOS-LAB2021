@@ -86,10 +86,15 @@ _pipeisclosed(struct Fd *fd, struct Pipe *p)
 	// the pipe is closed.
 	int pfd,pfp,runs;
 	
+	do{
+		runs = env->env_runs;
+		fdref = pageref(fd);
+		pref = pageref(p);
+	}while(runs != env->env_runs);
 
+	return fdref == pref;
 
-
-	user_panic("_pipeisclosed not implemented");
+	//user_panic("_pipeisclosed not implemented");
 //	return 0;
 }
 
@@ -121,9 +126,36 @@ piperead(struct Fd *fd, void *vbuf, u_int n, u_int offset)
 	struct Pipe *p;
 	char *rbuf;
 	
+	p = (struct Pipe *)fd2data(fd);
 
+	//writef("in read: fd: %d p: %d\n", pageref(fd), pageref(p));
+	while (p->p_rpos == p->p_wpos)
+	{
+		if (_pipeisclosed(fd, p))
+		{
+			return 0;
+		}
+		syscall_yield();
+	}
+	rbuf = (char *)vbuf;
+	for (i = 0; i < n ; i++)
+	{
+		while (p->p_rpos == p->p_wpos)
+		{
+			//writef("read : w: %d r: %d n: %d\n", p->p_wpos, p->p_rpos, n);
+			if (i > 0 || _pipeisclosed(fd, p))
+			{
+				//writef("read return due to closed\n");
+				return i;
+			}
+			syscall_yield();
+		}
+		rbuf[i] = p->p_buf[p->p_rpos % BY2PIPE];
+		p->p_rpos++;
+	}
+	return n;
 
-	user_panic("piperead not implemented");
+//	user_panic("piperead not implemented");
 //	return -E_INVAL;
 }
 
@@ -141,13 +173,33 @@ pipewrite(struct Fd *fd, const void *vbuf, u_int n, u_int offset)
 	struct Pipe *p;
 	char *wbuf;
 	
+	ip = fd2data(fd); 
+	//writef("in read: fd: %d p: %d\n", pageref(fd), pageref(p));
 
+	wbuf = (char *)vbuf;
+
+	for (i = 0; i < n; i++)
+	{
+		while (p->p_wpos - p->p_rpos == BY2PIPE)
+		{
+			//writef("write : w: %d r: %d n: %d\n", p->p_wpos, p->p_rpos, n);
+			if(_pipeisclosed(fd, p))
+			{
+				//writef("write return due to closed\n");
+				return 0;
+			}
+			syscall_yield();
+		}
+		p->p_buf[p->p_wpos % BY2PIPE] = wbuf[i];
+		p->p_wpos++;
+	}
+	return n;
 //	return -E_INVAL;
 	
 	
-	user_panic("pipewrite not implemented");
+//	user_panic("pipewrite not implemented");
 
-	return n;
+//	return n;
 }
 
 static int
