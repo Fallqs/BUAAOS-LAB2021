@@ -32,19 +32,24 @@ int dfs_create(char *path, int ind, int isdir){
 	struct Fsreq_open *req;
 	req = (struct Fsreq_open *)fsipcbuf;
 
-	strcpy((char *)req->req_path, path);
-	req->req_omode = 1;
 	
 	if(path[ind]=='\0'){
 		req->req_omode = isdir;
+		strcpy((char *)req->req_path, path);
+		//writef("dfsend:: path=%s, ind=%d\n",path, ind);
 		return fsipc(FSREQ_CREATE, req, 0,&perm);
 	}
-
-	path[ind]='\0';
-	int r = fsipc(FSREQ_CREATE, req, 0,&perm);
-	path[ind]='\\';
 	
-	int j=ind+1;while(path[j]!='\0'&&path[j]!='\\')++j;
+	if(ind){
+		path[ind]='\0';
+		strcpy((char *)req->req_path, path);
+		req->req_omode = 1;
+		int r = fsipc(FSREQ_CREATE, req, 0,&perm);
+		//writef("dfs:: path=%s, r=%d\n",path, r);
+		path[ind]='\\';
+	}
+	
+	int j=ind+1;while(path[j]!='\0'&&path[j]!='/')++j;
 	return dfs_create(path, j,isdir);
 }
 int fsipc_create(char *path, int isdir){

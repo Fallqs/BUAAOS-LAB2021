@@ -10,7 +10,7 @@ void umain()
         char buf[512];
         int n;
 
-		writef("create1: %d\n", user_create("/fl",0));
+		writef("create1: %d\n", user_create("/fl/fl/fl/fl",2));
 		writef("create2: %d\n", user_create("/fl",0));
 		writef("create3: %d\n", user_create("/fll",1));
 		writef("create3: %d\n", user_create("/fll/fl",0));
