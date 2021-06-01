@@ -102,6 +102,7 @@ void set_pgfault_handler(void (*fn)(u_int va));
 int fwritef(int fd, const char *fmt, ...);
 
 // fsipc.c
+int fsipc_create(char *, int);
 int	fsipc_open(const char *, u_int, struct Fd *);
 int	fsipc_map(u_int, u_int, u_int);
 int	fsipc_set_size(u_int, u_int);
@@ -112,6 +113,7 @@ int	fsipc_sync(void);
 int	fsipc_incref(u_int);
 
 // fd.c
+int user_create(char* path, int isdir);
 int	close(int fd);
 int	read(int fd, void *buf, u_int nbytes);
 int	write(int fd, const void *buf, u_int nbytes);

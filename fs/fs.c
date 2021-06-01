@@ -621,7 +621,6 @@ dir_alloc_file(struct File *dir, struct File **file)
 	// no free File structure in exists data block.
 	// new data block need to be created.
 	dir->f_size += BY2BLK;
-	//writef("___FJH____dir_alloc_file_2___");
 	if ((r = file_get_block(dir, i, &blk)) < 0) {
 		return r;
 	}
@@ -688,7 +687,7 @@ walk_path(char *path, struct File **pdir, struct File **pfile, char *lastelem)
 		path = skip_slash(path);
 
 		if (dir->f_type != FTYPE_DIR) {
-			return -E_NOT_FOUND;
+			return -E_DIR_NOT_EXIST;
 		}
 
 		if ((r = dir_lookup(dir, name, &file)) < 0) {
@@ -704,7 +703,7 @@ walk_path(char *path, struct File **pdir, struct File **pfile, char *lastelem)
 				*pfile = 0;
 			}
 
-			return r;
+			return E_DIR_NOT_EXIST;
 		}
 	}
 
@@ -746,7 +745,7 @@ file_create(char *path, struct File **file)
 	}
 
 	if (r != -E_NOT_FOUND || dir == 0) {
-		return r;
+		return -E_DIR_NOT_EXIST;
 	}
 
 	if (dir_alloc_file(dir, &f) < 0) {

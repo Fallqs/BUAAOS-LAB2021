@@ -195,6 +195,7 @@ E_BAD_ENV	include/error.h	8;"	d
 E_BAD_ENV	include/mmu.h	109;"	d
 E_BAD_PATH	include/error.h	20;"	d
 E_BAD_PATH	include/mmu.h	121;"	d
+E_DIR_NOT_EXIST	include/mmu.h	124;"	d
 E_FILE_EXISTS	include/error.h	21;"	d
 E_FILE_EXISTS	include/mmu.h	122;"	d
 E_INVAL	include/error.h	10;"	d
@@ -247,6 +248,7 @@ FILEVA	fs/serv.c	20;"	d	file:
 FSIMGFILES	fs/Makefile	/^FSIMGFILES := motd newmotd$/;"	m
 FSLIB	fs/Makefile	/^FSLIB :=	fs.o \\$/;"	m
 FSREQ_CLOSE	include/fs.h	61;"	d
+FSREQ_CREATE	include/fs.h	65;"	d
 FSREQ_DIRTY	include/fs.h	62;"	d
 FSREQ_MAP	include/fs.h	59;"	d
 FSREQ_OPEN	include/fs.h	58;"	d
@@ -281,7 +283,7 @@ IO_RTC	include/kclock.h	5;"	d
 IS_BD	lib/syscall.S	/^IS_BD:$/;"	l
 IsDigit	lib/print.c	15;"	d	file:
 IsDigit	user/print.c	15;"	d	file:
-KADDR	include/mmu.h	156;"	d
+KADDR	include/mmu.h	157;"	d
 KERNBASE	include/mmu.h	89;"	d
 KERNEL_SP	lib/env_asm.S	/^KERNEL_SP:$/;"	l
 KERNEL_STACK	boot/start.S	/^KERNEL_STACK:$/;"	l
@@ -307,7 +309,7 @@ LIST_REMOVE	include/queue.h	178;"	d
 LOG2NENV	include/env.h	11;"	d
 LP_MAX_BUF	include/print.h	18;"	d
 MAXERROR	include/error.h	24;"	d
-MAXERROR	include/mmu.h	125;"	d
+MAXERROR	include/mmu.h	126;"	d
 MAXFD	user/fd.h	9;"	d
 MAXFILESIZE	include/fs.h	24;"	d
 MAXNAMELEN	include/fs.h	15;"	d
@@ -328,16 +330,16 @@ NULL	readelf/types.h	8;"	d
 NoCOW	lib/genex.S	/^NoCOW:$/;"	l
 OUTPUT	lib/print.c	50;"	d	file:
 OUTPUT	user/print.c	36;"	d	file:
-O_ACCMODE	user/lib.h	139;"	d
-O_CREAT	user/lib.h	141;"	d
-O_EXCL	user/lib.h	143;"	d
-O_MKDIR	user/lib.h	144;"	d
-O_RDONLY	user/lib.h	136;"	d
-O_RDWR	user/lib.h	138;"	d
-O_TRUNC	user/lib.h	142;"	d
-O_WRONLY	user/lib.h	137;"	d
+O_ACCMODE	user/lib.h	141;"	d
+O_CREAT	user/lib.h	143;"	d
+O_EXCL	user/lib.h	145;"	d
+O_MKDIR	user/lib.h	146;"	d
+O_RDONLY	user/lib.h	138;"	d
+O_RDWR	user/lib.h	140;"	d
+O_TRUNC	user/lib.h	144;"	d
+O_WRONLY	user/lib.h	139;"	d
 Open	fs/serv.c	/^struct Open {$/;"	s	file:
-PADDR	include/mmu.h	147;"	d
+PADDR	include/mmu.h	148;"	d
 PDMAP	include/mmu.h	17;"	d
 PDSHIFT	include/mmu.h	19;"	d
 PDX	include/mmu.h	20;"	d
@@ -470,7 +472,7 @@ TF_REG9	include/trap.h	70;"	d
 TF_SIZE	include/trap.h	109;"	d
 TF_STATUS	include/trap.h	97;"	d
 TIMESTACK	include/mmu.h	102;"	d
-TRUP	include/mmu.h	167;"	d
+TRUP	include/mmu.h	168;"	d
 T_ALIGN	include/trap.h	22;"	d
 T_BOUND	include/trap.h	10;"	d
 T_BRKPT	include/trap.h	8;"	d
@@ -551,7 +553,7 @@ alloc_block_num	fs/fs.c	/^alloc_block_num(void)$/;"	f
 and	lib/genex.S	/^and	t0, t2$/;"	l
 andi	lib/genex.S	/^andi	t1, t0, STATUSF_IP4$/;"	l
 aoutcode	init/code.c	/^char aoutcode[]={0x7f,0x45,0x4c,0x46,0x1,0x2,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x0,0x8,0x0,0x0,0x0,0x1,0x0,0x40,0x0,0xb0,0x0,0x0,0x0,0x34,0x0,0x0,0xf,0xb0,0x50,0x0,0x10,0x1,0x0,$/;"	v
-assert	include/mmu.h	164;"	d
+assert	include/mmu.h	165;"	d
 basemem	mm/pmap.c	/^u_long basemem;          \/* Amount of base memory(in bytes) *\/$/;"	v
 bcopy	init/init.c	/^void bcopy(const void *src, void *dst, size_t len)$/;"	f
 binary_user_A_size	init/code_a.c	/^unsigned int binary_user_A_size = 5298;$/;"	v
@@ -730,6 +732,7 @@ fs_sync	fs/fs.c	/^fs_sync(void)$/;"	f
 fs_test	fs/test.c	/^fs_test(void)$/;"	f
 fsipc	user/fsipc.c	/^fsipc(u_int type, void *fsreq, u_int dstva, u_int *perm)$/;"	f	file:
 fsipc_close	user/fsipc.c	/^fsipc_close(u_int fileid)$/;"	f
+fsipc_create	user/fsipc.c	/^int fsipc_create(char *path, int isdir){$/;"	f
 fsipc_dirty	user/fsipc.c	/^fsipc_dirty(u_int fileid, u_int offset)$/;"	f
 fsipc_map	user/fsipc.c	/^fsipc_map(u_int fileid, u_int offset, u_int dstva)$/;"	f
 fsipc_open	user/fsipc.c	/^fsipc_open(const char *path, u_int omode, struct Fd *fd)$/;"	f
@@ -943,6 +946,7 @@ sched_yield	lib/sched.c	/^void sched_yield(void)$/;"	f
 seek	user/fd.c	/^seek(int fdnum, u_int offset)$/;"	f
 serve	fs/serv.c	/^serve(void)$/;"	f
 serve_close	fs/serv.c	/^serve_close(u_int envid, struct Fsreq_close *rq)$/;"	f
+serve_create	fs/serv.c	/^serve_create(u_int envid, struct Fsreq_open *rq)$/;"	f
 serve_dirty	fs/serv.c	/^serve_dirty(u_int envid, struct Fsreq_dirty *rq)$/;"	f
 serve_init	fs/serv.c	/^serve_init(void)$/;"	f
 serve_map	fs/serv.c	/^serve_map(u_int envid, struct Fsreq_map *rq)$/;"	f
@@ -1091,9 +1095,10 @@ unmap_block	fs/fs.c	/^unmap_block(u_int blockno)$/;"	f
 user_PrintChar	user/print.c	/^user_PrintChar(char *buf, char c, int length, int ladjust)$/;"	f
 user_PrintNum	user/print.c	/^user_PrintNum(char *buf, unsigned long u, int base, int negFlag,$/;"	f
 user_PrintString	user/print.c	/^user_PrintString(char *buf, char *s, int length, int ladjust)$/;"	f
-user_assert	user/lib.h	132;"	d
+user_assert	user/lib.h	134;"	d
 user_bcopy	user/fork.c	/^void user_bcopy(const void *src, void *dst, size_t len)$/;"	f
 user_bzero	user/fork.c	/^void user_bzero(void *v, u_int n)$/;"	f
+user_create	user/file.c	/^int user_create(char *path, int isdir){$/;"	f
 user_dir	Makefile	/^user_dir	  := user$/;"	m
 user_dir	fs/Makefile	/^user_dir := ..\/user$/;"	m
 user_lp_Print	user/print.c	/^user_lp_Print(void (*output)(void *, const char *, int),$/;"	f

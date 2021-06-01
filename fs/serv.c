@@ -87,6 +87,34 @@ open_lookup(u_int envid, u_int fileid, struct Open **po)
 	return 0;
 }
 
+void
+serve_create(u_int envid, struct Fsreq_open *rq)
+{
+	//writef("serve_open %08x %x 0x%x\n", envid, (int)rq->req_path, rq->req_omode);
+
+	u_char path[MAXPATHLEN];
+	struct File *f;
+	//struct Filefd *ff;
+	//int fileid;
+	int r;
+	//struct Open *o;
+
+	// Copy in the path, making sure it's null-terminated
+	user_bcopy(rq->req_path, path, MAXPATHLEN);
+	path[MAXPATHLEN - 1] = 0;
+
+	// Open the file.
+	if ((r = file_create((char *)path, &f)) < 0) {
+	//	user_panic("file_open failed: %d, invalid path: %s", r, path);
+		ipc_send(envid, r, 0, 0);
+		return ;
+	}
+
+	// Fill out the Filefd structure
+	f->f_type = rq->req_omode;
+	ipc_send(envid, 0, 0, 0);
+}
+
 // Serve requests, sending responses back to envid.
 // To send a result back, ipc_send(envid, r, 0, 0).
 // To include a page, ipc_send(envid, r, srcva, perm).
@@ -264,6 +292,10 @@ serve(void)
 		}
 
 		switch (req) {
+			case FSREQ_CREATE:
+				serve_create(whom, (struct Fsreq_open *)REQVA);
+				break;
+
 			case FSREQ_OPEN:
 				serve_open(whom, (struct Fsreq_open *)REQVA);
 				break;
