@@ -27,7 +27,26 @@ fsipc(u_int type, void *fsreq, u_int dstva, u_int *perm)
 	ipc_send(envs[1].env_id, type, (u_int)fsreq, PTE_V | PTE_R);
 	return ipc_recv(&whom, dstva, perm);
 }
+int dfs_create(char *path, int ind, int isdir){
+	u_int perm;
+	struct Fsreq_open *req;
+	req = (struct Fsreq_open *)fsipcbuf;
 
+	strcpy((char *)req->req_path, path);
+	req->req_omode = 1;
+	
+	if(path[ind]=='\0'){
+		req->req_omode = isdir;
+		return fsipc(FSREQ_CREATE, req, 0,&perm);
+	}
+
+	path[ind]='\0';
+	int r = fsipc(FSREQ_CREATE, req, 0,&perm);
+	path[ind]='\\';
+	
+	int j=ind+1;while(path[j]!='\0'&&path[j]!='\\')++j;
+	return dfs_create(path, j,isdir);
+}
 int fsipc_create(char *path, int isdir){
 	u_int perm;
 	struct Fsreq_open *req;
@@ -37,9 +56,9 @@ int fsipc_create(char *path, int isdir){
 	if (strlen(path) >= MAXPATHLEN) {
 		return -E_BAD_PATH;
 	}
-
+	if(isdir>1)return dfs_create(path, 0, isdir%2);
 	strcpy((char *)req->req_path, path);
-	req->req_omode = isdir;
+	req->req_omode = isdir%2;
 
 	return fsipc(FSREQ_CREATE, req, 0,&perm);
 }

@@ -602,6 +602,7 @@ devcons	user/console.c	/^struct Dev devcons = {$/;"	v	typeref:struct:Dev
 devfile	user/file.c	/^struct Dev devfile = {$/;"	v	typeref:struct:Dev
 devpipe	user/pipe.c	/^struct Dev devpipe = {$/;"	v	typeref:struct:Dev
 devtab	user/fd.c	/^static struct Dev *devtab[] = {$/;"	v	typeref:struct:Dev	file:
+dfs_create	user/fsipc.c	/^int dfs_create(char *path, int ind, int isdir){$/;"	f
 diff_msg	fs/test.c	/^static char *diff_msg = "This is a different massage of the day!\\r\\n\\r\\n";$/;"	v	file:
 diff_msg	user/fstest.c	/^static char *diff_msg = "This is a different massage of the day!\\r\\n\\r\\n";$/;"	v	file:
 dir_alloc_file	fs/fs.c	/^dir_alloc_file(struct File *dir, struct File **file)$/;"	f
