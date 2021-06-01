@@ -46,7 +46,7 @@ int dfs_create(char *path, int ind, int isdir){
 		req->req_omode = 1;
 		int r = fsipc(FSREQ_CREATE, req, 0,&perm);
 		//writef("dfs:: path=%s, r=%d\n",path, r);
-		path[ind]='\\';
+		path[ind]='/';
 	}
 	
 	int j=ind+1;while(path[j]!='\0'&&path[j]!='/')++j;

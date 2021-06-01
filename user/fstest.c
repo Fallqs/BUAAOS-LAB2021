@@ -13,9 +13,9 @@ void umain()
 		writef("create1: %d\n", user_create("/fl/fl/fl/fl",2));
 		writef("create2: %d\n", user_create("/fl",0));
 		writef("create3: %d\n", user_create("/fll",1));
-		writef("create3: %d\n", user_create("/fll/fl",0));
-		writef("create3: %d\n", user_create("/fll/fll",1));
-		writef("create3: %d\n", user_create("/fll/fll2/fl",0));
+		writef("create3: %d\n", user_create("/fll/fll",2));
+		writef("create3: %d\n", user_create("/fll/fll",2));
+		writef("create3: %d\n", user_create("/fll/fll2/fl",3));
 
 
 
