@@ -607,6 +607,7 @@ diff_msg	fs/test.c	/^static char *diff_msg = "This is a different massage of the
 diff_msg	user/fstest.c	/^static char *diff_msg = "This is a different massage of the day!\\r\\n\\r\\n";$/;"	v	file:
 dir_alloc_file	fs/fs.c	/^dir_alloc_file(struct File *dir, struct File **file)$/;"	f
 dir_lookup	fs/fs.c	/^dir_lookup(struct File *dir, char *name, struct File **file)$/;"	f
+dir_lookupdir	fs/fs.c	/^dir_lookupdir(struct File *dir, char *name, struct File **file)$/;"	f
 disk	fs/fsformat.c	/^} disk[NBLOCK];$/;"	v	typeref:struct:Block
 diskaddr	fs/fs.c	/^diskaddr(u_int blockno)$/;"	f
 drivers	drivers/Makefile	/^drivers		  := gxconsole$/;"	m
@@ -708,7 +709,7 @@ file_block_walk	fs/fs.c	/^file_block_walk(struct File *f, u_int filebno, u_int *
 file_clear_block	fs/fs.c	/^file_clear_block(struct File *f, u_int filebno)$/;"	f
 file_close	fs/fs.c	/^file_close(struct File *f)$/;"	f
 file_close	user/file.c	/^file_close(struct Fd *fd)$/;"	f
-file_create	fs/fs.c	/^file_create(char *path, struct File **file)$/;"	f
+file_create	fs/fs.c	/^file_create(char *path, struct File **file, int isdir)$/;"	f
 file_dirty	fs/fs.c	/^file_dirty(struct File *f, u_int offset)$/;"	f
 file_flush	fs/fs.c	/^file_flush(struct File *f)$/;"	f
 file_get_block	fs/fs.c	/^file_get_block(struct File *f, u_int filebno, void **blk)$/;"	f
@@ -1138,6 +1139,7 @@ vmlinux_elf	Makefile	/^vmlinux_elf	  := gxemul\/vmlinux$/;"	m
 vpd	user/entry.S	/^vpd:$/;"	l
 vpt	user/entry.S	/^vpt:$/;"	l
 walk_path	fs/fs.c	/^walk_path(char *path, struct File **pdir, struct File **pfile, char *lastelem)$/;"	f
+walk_pathd	fs/fs.c	/^walk_pathd(char *path, struct File **pdir, struct File **pfile, char *lastelem)$/;"	f
 write	user/fd.c	/^write(int fdnum, const void *buf, u_int n)$/;"	f
 write_block	fs/fs.c	/^write_block(u_int blockno)$/;"	f
 write_directory	fs/fsformat.c	/^void write_directory(struct File *dirf, char *name) {$/;"	f

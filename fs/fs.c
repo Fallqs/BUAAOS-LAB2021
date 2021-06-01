@@ -587,6 +587,42 @@ dir_lookup(struct File *dir, char *name, struct File **file)
 	return -E_NOT_FOUND;
 }
 
+int
+dir_lookupdir(struct File *dir, char *name, struct File **file)
+{
+	int r;
+	u_int i, j, nblock, cnt;
+	void *blk;
+	struct File *f;
+	*file = NULL;
+
+	// Step 1: Calculate nblock: how many blocks this dir have.
+	nblock = ROUND(dir->f_size, BY2BLK) / BY2BLK;
+	cnt = dir->f_size / sizeof(struct File);
+
+	for (i = 0; i < nblock; i++, cnt -= BY2BLK/ sizeof(struct File)) {
+		// Step 2: Read the i'th block of the dir.
+		// Hint: Use file_get_block.
+		//writef("___FJH____dir_lookup___");
+		if(r = file_get_block(dir, i, &blk))return r;
+
+		// Step 3: Find target file by file name in all files on this block.
+		// If we find the target file, set the result to *file and set f_dir field.
+		for(j = 0; j < FILE2BLK; ++j){
+			f = (struct File*)blk + j;
+			if(!strcmp(f->f_name, name)&&f->f_type==FTYPE_DIR){
+				f->f_dir = dir;
+				*file = f;
+				return 0;
+			}
+		}
+		
+	}
+
+	return -E_NOT_FOUND;
+}
+
+
 
 // Overview:
 //	Alloc a new File structure under specified directory. Set *file 
@@ -690,7 +726,8 @@ walk_path(char *path, struct File **pdir, struct File **pfile, char *lastelem)
 			return -E_DIR_NOT_EXIST;
 		}
 
-		if ((r = dir_lookup(dir, name, &file)) < 0) {
+		if ((r = dir_lookupd(dir, name, &file)) < 0) {
+			r = dir_lookup(dir, name, &file);
 			if (r == -E_NOT_FOUND && *path == '\0') {
 				if (pdir) {
 					*pdir = dir;
@@ -703,8 +740,7 @@ walk_path(char *path, struct File **pdir, struct File **pfile, char *lastelem)
 				*pfile = 0;
 				return r;
 			}
-
-			return -E_DIR_NOT_EXIST;
+			if(r<0)	return -E_DIR_NOT_EXIST;
 		}
 	}
 
@@ -715,6 +751,73 @@ walk_path(char *path, struct File **pdir, struct File **pfile, char *lastelem)
 	*pfile = file;
 	return 0;
 }
+
+int
+walk_pathd(char *path, struct File **pdir, struct File **pfile, char *lastelem)
+{
+	char *p;
+	char name[MAXNAMELEN];
+	struct File *dir, *file;
+	int r;
+
+	// start at the root.
+	path = skip_slash(path);
+	file = &super->s_root;
+	dir = 0;
+	name[0] = 0;
+
+	if (pdir) {
+		*pdir = 0;
+	}
+
+	*pfile = 0;
+
+	// find the target file by name recursively.
+	while (*path != '\0') {
+		dir = file;
+		p = path;
+
+		while (*path != '/' && *path != '\0') {
+			path++;
+		}
+
+		if (path - p >= MAXNAMELEN) {
+			return -E_BAD_PATH;
+		}
+
+		user_bcopy(p, name, path - p);
+		name[path - p] = '\0';
+		path = skip_slash(path);
+
+		if (dir->f_type != FTYPE_DIR) {
+			return -E_DIR_NOT_EXIST;
+		}
+
+		if ((r = dir_lookupd(dir, name, &file)) < 0) {
+			if (r == -E_NOT_FOUND && *path == '\0') {
+				if (pdir) {
+					*pdir = dir;
+				}
+
+				if (lastelem) {
+					strcpy(lastelem, name);
+				}
+
+				*pfile = 0;
+				return r;
+			}
+			if(r<0)	return -E_DIR_NOT_EXIST;
+		}
+	}
+
+	if (pdir) {
+		*pdir = dir;
+	}
+
+	*pfile = file;
+	return 0;
+}
+
 
 // Overview:
 //	Open "path".
@@ -735,11 +838,19 @@ file_open(char *path, struct File **file)
 //	On success set *file to point at the file and return 0.
 // 	On error return < 0.
 int
-file_create(char *path, struct File **file)
+file_create(char *path, struct File **file, int isdir)
 {
 	char name[MAXNAMELEN];
 	int r;
 	struct File *dir, *f;
+
+	if(isdir){
+	
+		if ((r = walk_path(path, &dir, &f, name)) == 0) {
+			return -E_FILE_EXISTS;
+		}
+
+	}
 
 	if ((r = walk_path(path, &dir, &f, name)) == 0) {
 		return -E_FILE_EXISTS;
