@@ -701,9 +701,10 @@ walk_path(char *path, struct File **pdir, struct File **pfile, char *lastelem)
 				}
 
 				*pfile = 0;
+				return r;
 			}
 
-			return E_DIR_NOT_EXIST;
+			return -E_DIR_NOT_EXIST;
 		}
 	}
 

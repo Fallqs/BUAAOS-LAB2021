@@ -10,6 +10,15 @@ void umain()
         char buf[512];
         int n;
 
+		writef("create1: %d\n", user_create("/fl",0));
+		writef("create2: %d\n", user_create("/fl",0));
+		writef("create3: %d\n", user_create("/fll",1));
+		writef("create3: %d\n", user_create("/fll/fl",0));
+		writef("create3: %d\n", user_create("/fll/fll",1));
+		writef("create3: %d\n", user_create("/fll/fll2/fl",0));
+
+
+
         if ((r = open("/newmotd", O_RDWR)) < 0) {
                 user_panic("open /newmotd: %d", r);
         }
