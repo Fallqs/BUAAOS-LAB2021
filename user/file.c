@@ -22,7 +22,7 @@ struct Dev devfile = {
 
 int user_create(char *path, int isdir){
 	int r= fsipc_create(path,isdir);
-	return r>0? 0 : r;
+	return 0;
 }
 
 // Overview:
