@@ -35,7 +35,7 @@ all: $(modules) vmlinux
 push: clean
 	git add .
 	git commit --allow-empty -m "auto lab6"
-	git push lab6:lab6
+	git push -origin lab6:lab6
 
 vmlinux: $(modules)
 	$(LD) -o $(vmlinux_elf) -N -T $(link_script) $(objects)
