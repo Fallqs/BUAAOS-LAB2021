@@ -7,7 +7,7 @@
 #define TMPPAGE		(BY2PG)
 #define TMPPAGETOP	(TMPPAGE+BY2PG)
 
-int
+	int
 init_stack(u_int child, char **argv, u_int *init_esp)
 {
 	int argc, i, r, tot;
@@ -72,7 +72,7 @@ init_stack(u_int child, char **argv, u_int *init_esp)
 	//	- set *init_esp to the initial stack pointer for the child
 	//
 	*init_esp = USTACKTOP - TMPPAGETOP + (u_int)pargv_ptr;
-//	*init_esp = USTACKTOP;	// Change this!
+	//	*init_esp = USTACKTOP;	// Change this!
 
 	if ((r = syscall_mem_map(0, TMPPAGE, child, USTACKTOP-BY2PG, PTE_V|PTE_R)) < 0)
 		goto error;
@@ -89,19 +89,68 @@ error:
 int usr_is_elf_format(u_char *binary){
 	Elf32_Ehdr *ehdr = (Elf32_Ehdr *)binary;
 	if (ehdr->e_ident[0] == ELFMAG0 &&
-        ehdr->e_ident[1] == ELFMAG1 &&
-        ehdr->e_ident[2] == ELFMAG2 &&
-        ehdr->e_ident[3] == ELFMAG3) {
-        return 1;
-    }   
+			ehdr->e_ident[1] == ELFMAG1 &&
+			ehdr->e_ident[2] == ELFMAG2 &&
+			ehdr->e_ident[3] == ELFMAG3) {
+		return 1;
+	}   
 
-    return 0;
+	return 0;
 }
 
 int 
 usr_load_elf(int fd , Elf32_Phdr *ph, int child_envid){
 	//Hint: maybe this function is useful 
 	//      If you want to use this func, you should fill it ,it's not hard
+	int r, i;
+	u_char *blk = NULL;
+	static u_int TempPage = USTACKTOP;
+	r = read_map(fd, ph -> p_offset, &blk);
+	if(r < 0) {
+		return r;
+	}
+	u_char *bin = blk;
+	u_int va = ph -> p_vaddr;
+	u_int sgsize = ph -> p_memsz;
+	u_int bin_size = ph -> p_filesz; 
+	u_int offset = va - ROUNDDOWN(va, BY2PG);
+	u_int size = 0;
+	if(offset > 0) {
+		size = BY2PG - offset; 
+		r = syscall_mem_alloc(child_envid, va - offset, PTE_V | PTE_R);
+		if(r < 0) return r;
+		r = syscall_mem_map(child_envid, va - offset, 0, TempPage, PTE_V|PTE_R);
+		if(r < 0) return r;
+		int min;
+		if (bin_size > size) {
+			min = size;
+		} else {
+			min = bin_size;
+		}
+		user_bcopy((void *)bin, (void *)(TempPage + offset), min);
+		r = syscall_mem_unmap(0, TempPage);
+		if(r < 0) return r;
+	}
+	for (i = size; i < bin_size; i += BY2PG) {
+		r = syscall_mem_alloc(child_envid, va + i, PTE_V | PTE_R);
+		if(r < 0) return r;
+		r = syscall_mem_map(child_envid, va + i, 0, TempPage, PTE_V|PTE_R);
+		if(r < 0) return r;
+		int min;
+		if (bin_size - i > BY2PG) {
+			min = BY2PG;
+		} else {
+			min = bin_size - i;
+		}		
+		user_bcopy((void * )(bin + i), (void *)TempPage, min ); 
+		r = syscall_mem_unmap(0, TempPage);
+		if(r < 0) return r;
+	}	
+	while (i < sgsize) {
+		r = syscall_mem_alloc(child_envid, va + i, PTE_V | PTE_R);
+		if(r < 0) return r;
+		i += BY2PG;
+	}
 	return 0;
 }
 
@@ -136,6 +185,47 @@ int spawn(char *prog, char **argv)
 	// Note2: You can achieve this func in any way ，remember to ensure the correctness
 	//        Maybe you can review lab3 
 	// Your code ends here
+	fd = r;
+	r = read_map(fd,0,&blk);
+	if(r < 0) {
+		writef("spawn failed 1\n");
+		return r;
+	}
+	elf = (Elf32_Ehdr *)blk;
+	size = ((struct Filefd *)num2fd(fd)) ->f_file.f_size;
+	if (size < 4 || !usr_is_elf_format(elf)) {
+		writef("spawn failed 2\n");
+		return -1;
+	}
+	child_envid = syscall_env_alloc();
+	if(child_envid < 0) {
+		writef("spawn failed 3\n");
+		return child_envid;
+	}
+	r = init_stack(child_envid,argv,&esp);
+	if(r < 0){
+		writef("spawn failed 3\n");
+		return r;
+	}
+
+	u_char *ptr_ph_table = NULL;
+	Elf32_Half ph_entry_count;
+	Elf32_Half ph_entry_size;
+	ptr_ph_table = (u_char *)elf + elf ->e_phoff;
+	ph_entry_count = elf -> e_phnum;
+	ph_entry_size = elf -> e_phentsize;
+	for( i = 0; i < ph_entry_count; ++ i){
+		ph = (Elf32_Phdr *)ptr_ph_table;
+		if(ph -> p_type == PT_LOAD){
+			r = usr_load_elf(fd, ph, child_envid);
+			if( r < 0){
+				writef("spawn.c/spawn: usr_load_elf failed\n");
+				return r;
+			}
+		}
+		ptr_ph_table += ph_entry_size;
+	}
+
 
 	struct Trapframe *tf;
 	writef("\n::::::::::spawn size : %x  sp : %x::::::::\n",size,esp);
@@ -181,10 +271,12 @@ int spawn(char *prog, char **argv)
 
 }
 
-int
+	int
 spawnl(char *prog, char *args, ...)
 {
 	return spawn(prog, &args);
 }
+
+
 
 
