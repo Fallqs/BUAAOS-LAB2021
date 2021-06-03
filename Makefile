@@ -13,6 +13,7 @@ fs_dir		  := fs
 mm_dir		  := mm
 tools_dir	  := tools
 vmlinux_elf	  := gxemul/vmlinux
+user_disk     := gxemul/fs.img
 
 link_script   := $(tools_dir)/scse0_3.lds
 
@@ -31,17 +32,6 @@ objects		  := $(boot_dir)/start.o			  \
 
 all: $(modules) vmlinux
 
-push: clean
-	git add .
-	git commit --allow-empty -m "auto lab5"
-	git push origin lab5:lab5
-
-test: all
-	/OSLAB/gxemul -E testmips -C R3000 -M 64 -V -d gxemul/fs.img $(vmlinux_elf)
-		
-run: all
-	/OSLAB/gxemul -E testmips -C R3000 -M 64 -d gxemul/fs.img $(vmlinux_elf)
-
 vmlinux: $(modules)
 	$(LD) -o $(vmlinux_elf) -N -T $(link_script) $(objects)
 
@@ -53,6 +43,6 @@ clean:
 		do					\
 			$(MAKE) --directory=$$d clean; \
 		done; \
-	rm -rf *.o *~ $(vmlinux_elf)
+	rm -rf *.o *~ $(vmlinux_elf)  $(user_disk)
 
 include include.mk
