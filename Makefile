@@ -32,6 +32,20 @@ objects		  := $(boot_dir)/start.o			  \
 
 all: $(modules) vmlinux
 
+push: clean
+	git add --all
+	git commit --allow-empty -m "auto lab5"
+	git push -f origin lab6:lab6
+			
+test: all
+	/OSLAB/gxemul -E testmips -C R3000 -M 64 -V -d gxemul/fs.img $(vmlinux_elf)
+	make clean
+						
+run: all
+	/OSLAB/gxemul -E testmips -C R3000 -M 64 -d gxemul/fs.img $(vmlinux_elf)
+	make clean
+
+
 vmlinux: $(modules)
 	$(LD) -o $(vmlinux_elf) -N -T $(link_script) $(objects)
 
