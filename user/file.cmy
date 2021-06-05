@@ -27,7 +27,7 @@ struct Dev devfile = {
 // Returns:
 //	the file descriptor onsuccess,
 //	< 0 on failure.
-	int
+int
 open(const char *path, int mode)
 {
 	struct Fd *fd;
@@ -39,42 +39,40 @@ open(const char *path, int mode)
 
 	// Step 1: Alloc a new Fd, return error code when fail to alloc.
 	// Hint: Please use fd_alloc.
-	r = fd_alloc(&fd);
-	if (r < 0) {
-		return r;
-	}
-	ffd = fd;
+	if(r = fd_alloc(&fd))return r;
+
 
 	// Step 2: Get the file descriptor of the file to open.
 	// Hint: Read fsipc.c, and choose a function.
-	r = fsipc_open(path,mode,fd);
-	if (r < 0) {
-		return r;
-	}
+	//writef("___FJH____open___");
+	if(r = fsipc_open(path, mode, fd))return r;
+	//writef("___FJH____open_2___");
+
 
 	// Step 3: Set the start address storing the file's content. Set size and fileid correctly.
 	// Hint: Use fd2data to get the start address.
 	va = fd2data(fd);
-	ffd = (struct Filefd *)fd;
-	fileid = ffd -> f_fileid;
-	size = ffd -> f_file.f_size;
+	ffd = (struct Filefd*)fd;
+	fileid = ffd->f_fileid;
+	size = ffd->f_file.f_size;
+
+	//writef("___FJH____size=%d___",size);
+
 
 	// Step 4: Alloc memory, map the file content into memory.
-	for (i = 0;i < size;i += BY2PG) {
-		r = fsipc_map(fileid,i,va+i);
-		if (r < 0) {
-			return r;
-		}
-	}
+	for(i = 0; i < size; i += BY2BLK)
+		if(r = fsipc_map(fileid, i, va + i))return r;
+	
 
 	// Step 5: Return the number of file descriptor.
 	return fd2num(fd);
+
 
 }
 
 // Overview:
 //	Close a file descriptor
-	int
+int
 file_close(struct Fd *fd)
 {
 	int r;
@@ -117,7 +115,7 @@ file_close(struct Fd *fd)
 //	Read 'n' bytes from 'fd' at the current seek position into 'buf'. Since files
 //	are memory-mapped, this amounts to a user_bcopy() surrounded by a little red
 //	tape to handle the file size and seek pointer.
-	static int
+static int
 file_read(struct Fd *fd, void *buf, u_int n, u_int offset)
 {
 	u_int size;
@@ -142,7 +140,7 @@ file_read(struct Fd *fd, void *buf, u_int n, u_int offset)
 // Overview:
 //	Find the virtual address of the page that maps the file block
 //	starting at 'offset'.
-	int
+int
 read_map(int fdnum, u_int offset, void **blk)
 {
 	int r;
@@ -173,7 +171,7 @@ read_map(int fdnum, u_int offset, void **blk)
 
 // Overview:
 //	Write 'n' bytes from 'buf' to 'fd' at the current seek position.
-	static int
+static int
 file_write(struct Fd *fd, const void *buf, u_int n, u_int offset)
 {
 	int r;
@@ -201,7 +199,7 @@ file_write(struct Fd *fd, const void *buf, u_int n, u_int offset)
 	return n;
 }
 
-	static int
+static int
 file_stat(struct Fd *fd, struct Stat *st)
 {
 	struct Filefd *f;
@@ -216,7 +214,7 @@ file_stat(struct Fd *fd, struct Stat *st)
 
 // Overview:
 //	Truncate or extend an open file to 'size' bytes
-	int
+int
 ftruncate(int fdnum, u_int size)
 {
 	int i, r;
@@ -266,17 +264,18 @@ ftruncate(int fdnum, u_int size)
 
 // Overview:
 //	Delete a file or directory.
-	int
+int
 remove(const char *path)
 {
 	// Your code here.
 	// Call fsipc_remove.
 	return fsipc_remove(path);
+	
 }
 
 // Overview:
 //	Synchronize disk with buffer cache
-	int
+int
 sync(void)
 {
 	return fsipc_sync();
