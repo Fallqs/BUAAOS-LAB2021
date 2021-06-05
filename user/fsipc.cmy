@@ -19,7 +19,7 @@ extern u_char fsipcbuf[BY2PG];		// page-aligned, declared in entry.S
 // Returns:
 //	0 if successful,
 //	< 0 on failure.
-	static int
+static int
 fsipc(u_int type, void *fsreq, u_int dstva, u_int *perm)
 {
 	u_int whom;
@@ -35,7 +35,7 @@ fsipc(u_int type, void *fsreq, u_int dstva, u_int *perm)
 // Returns:
 //	0 on success,
 //	< 0 on failure.
-	int
+int
 fsipc_open(const char *path, u_int omode, struct Fd *fd)
 {
 	u_int perm;
@@ -49,6 +49,10 @@ fsipc_open(const char *path, u_int omode, struct Fd *fd)
 	}
 
 	strcpy((char *)req->req_path, path);
+
+	//writef("fsipc_open:: name==%s\n",path);
+	//writef("___FJH____fsipc_open___");
+
 	req->req_omode = omode;
 	return fsipc(FSREQ_OPEN, req, (u_int)fd, &perm);
 }
@@ -61,7 +65,7 @@ fsipc_open(const char *path, u_int omode, struct Fd *fd)
 // Returns:
 //	0 on success,
 //	< 0 on failure.
-	int
+int
 fsipc_map(u_int fileid, u_int offset, u_int dstva)
 {
 	int r;
@@ -78,7 +82,7 @@ fsipc_map(u_int fileid, u_int offset, u_int dstva)
 
 	if ((perm & ~(PTE_R | PTE_LIBRARY)) != (PTE_V)) {
 		user_panic("fsipc_map: unexpected permissions %08x for dstva %08x", perm,
-				dstva);
+				   dstva);
 	}
 
 	return 0;
@@ -86,7 +90,7 @@ fsipc_map(u_int fileid, u_int offset, u_int dstva)
 
 // Overview:
 //	Make a set-file-size request to the file server.
-	int
+int
 fsipc_set_size(u_int fileid, u_int size)
 {
 	struct Fsreq_set_size *req;
@@ -99,7 +103,7 @@ fsipc_set_size(u_int fileid, u_int size)
 
 // Overview:
 //	Make a file-close request to the file server. After this the fileid is invalid.
-	int
+int
 fsipc_close(u_int fileid)
 {
 	struct Fsreq_close *req;
@@ -111,7 +115,7 @@ fsipc_close(u_int fileid)
 
 // Overview:
 //	Ask the file server to mark a particular file block dirty.
-	int
+int
 fsipc_dirty(u_int fileid, u_int offset)
 {
 	struct Fsreq_dirty *req;
@@ -124,26 +128,26 @@ fsipc_dirty(u_int fileid, u_int offset)
 
 // Overview:
 //	Ask the file server to delete a file, given its pathname.
-	int
+int
 fsipc_remove(const char *path)
 {
 	// Step 1: Check the length of path, decide if the path is valid.
-	if (strlen(path) >= MAXPATHLEN || strlen(path) == 0) {
-		return -E_BAD_PATH;
-	}
+	if (strlen(path) >= MAXPATHLEN) return -E_BAD_PATH;
+
 	// Step 2: Transform fsipcbuf to struct Fsreq_remove*
-	struct Fsreq_remove *req;
-	req = (struct Fsreq_remove *)fsipcbuf;
+	struct Fsreq_remove *req = (struct Fsreq_map *)fsipcbuf;
+	
 	// Step 3: Copy path to path in req.
-	strcpy(req->req_path,path);
+	strcpy((char *)req->req_path, path);
+
 	// Step 4: Send request to fs server with IPC.
-	return fsipc(FSREQ_REMOVE,req,0,0);
+	return fsipc(FSREQ_REMOVE, req, 0, 0);
 }
 
 // Overview:
 //	Ask the file server to update the disk by writing any dirty
 //	blocks in the buffer cache.
-	int
+int
 fsipc_sync(void)
 {
 	return fsipc(FSREQ_SYNC, fsipcbuf, 0, 0);
