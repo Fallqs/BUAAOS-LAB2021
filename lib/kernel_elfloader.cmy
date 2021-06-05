@@ -23,9 +23,9 @@ int is_elf_format(u_char *binary)
 	Elf32_Ehdr *ehdr = (Elf32_Ehdr *)binary;
 
 	if (ehdr->e_ident[0] == EI_MAG0 &&
-			ehdr->e_ident[1] == EI_MAG1 &&
-			ehdr->e_ident[2] == EI_MAG2 &&
-			ehdr->e_ident[3] == EI_MAG3) {
+		ehdr->e_ident[1] == EI_MAG1 &&
+		ehdr->e_ident[2] == EI_MAG2 &&
+		ehdr->e_ident[3] == EI_MAG3) {
 		return 0;
 	}
 
@@ -45,8 +45,8 @@ int is_elf_format(u_char *binary)
  */
 /*** exercise 3.7 ***/
 int load_elf(u_char *binary, int size, u_long *entry_point, void *user_data,
-		int (*map)(u_long va, u_int32_t sgsize,
-			u_char *bin, u_int32_t bin_size, void *user_data))
+			 int (*map)(u_long va, u_int32_t sgsize,
+						u_char *bin, u_int32_t bin_size, void *user_data))
 {
 	Elf32_Ehdr *ehdr = (Elf32_Ehdr *)binary;
 	Elf32_Phdr *phdr = NULL;
@@ -74,10 +74,9 @@ int load_elf(u_char *binary, int size, u_long *entry_point, void *user_data,
 			/* Your task here!  */
 			/* Real map all section at correct virtual address.Return < 0 if error. */
 			/* Hint: Call the callback function you have achieved before. */
-			r = map(phdr->p_vaddr,phdr->p_memsz,binary + phdr->p_offset,phdr->p_filesz,user_data);
-			if (r != 0) {
-				return r;
-			}
+			r = map(phdr->p_vaddr, phdr->p_memsz, binary + phdr->p_offset, phdr->p_filesz, user_data);
+			if(r)return r;
+
 		}
 
 		ptr_ph_table += ph_entry_size;
@@ -86,4 +85,3 @@ int load_elf(u_char *binary, int size, u_long *entry_point, void *user_data,
 	*entry_point = ehdr->e_entry;
 	return 0;
 }
-
