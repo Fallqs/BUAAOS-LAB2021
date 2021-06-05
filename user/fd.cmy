@@ -11,7 +11,7 @@ static struct Dev *devtab[] = {
 	0
 };
 
-	int
+int
 dev_lookup(int dev_id, struct Dev **dev)
 {
 	int i;
@@ -26,7 +26,7 @@ dev_lookup(int dev_id, struct Dev **dev)
 	return -E_INVAL;
 }
 
-	int
+int
 fd_alloc(struct Fd **fd)
 {
 	// Find the smallest i from 0 to MAXFD-1 that doesn't have
@@ -56,13 +56,13 @@ fd_alloc(struct Fd **fd)
 	return -E_MAX_OPEN;
 }
 
-	void
+void
 fd_close(struct Fd *fd)
 {
 	syscall_mem_unmap(0, (u_int)fd);
 }
 
-	int
+int
 fd_lookup(int fdnum, struct Fd **fd)
 {
 	// Check that fdnum is in range and mapped.  If not, return -E_INVAL.
@@ -83,25 +83,25 @@ fd_lookup(int fdnum, struct Fd **fd)
 	return -E_INVAL;
 }
 
-	u_int
+u_int
 fd2data(struct Fd *fd)
 {
 	return INDEX2DATA(fd2num(fd));
 }
 
-	int
+int
 fd2num(struct Fd *fd)
 {
 	return ((u_int)fd - FDTABLE) / BY2PG;
 }
 
-	int
+int
 num2fd(int fd)
 {
 	return fd * BY2PG + FDTABLE;
 }
 
-	int
+int
 close(int fdnum)
 {
 	int r;
@@ -109,16 +109,16 @@ close(int fdnum)
 	struct Fd *fd;
 
 	if ((r = fd_lookup(fdnum, &fd)) < 0
-			||  (r = dev_lookup(fd->fd_dev_id, &dev)) < 0) {
+		||  (r = dev_lookup(fd->fd_dev_id, &dev)) < 0) {
 		return r;
 	}
 
-	r = (*dev->dev_close)(fd);
 	fd_close(fd);
+	r = (*dev->dev_close)(fd);
 	return r;
 }
 
-	void
+void
 close_all(void)
 {
 	int i;
@@ -128,7 +128,7 @@ close_all(void)
 	}
 }
 
-	int
+int
 dup(int oldfdnum, int newfdnum)
 {
 	int i, r;
@@ -144,11 +144,6 @@ dup(int oldfdnum, int newfdnum)
 	ova = fd2data(oldfd);
 	nva = fd2data(newfd);
 
-	/*if ((r = syscall_mem_map(0, (u_int)oldfd, 0, (u_int)newfd,
-	  ((*vpt)[VPN(oldfd)]) & (PTE_V | PTE_R | PTE_LIBRARY))) < 0) {
-	  goto err;
-	  }*/
-
 	if ((* vpd)[PDX(ova)]) {
 		for (i = 0; i < PDMAP; i += BY2PG) {
 			pte = (* vpt)[VPN(ova + i)];
@@ -156,15 +151,18 @@ dup(int oldfdnum, int newfdnum)
 			if (pte & PTE_V) {
 				// should be no error here -- pd is already allocated
 				if ((r = syscall_mem_map(0, ova + i, 0, nva + i,
-								pte & (PTE_V | PTE_R | PTE_LIBRARY))) < 0) {
+										 pte & (PTE_V | PTE_R | PTE_LIBRARY))) < 0) {
 					goto err;
 				}
 			}
 		}
 	}
-	if ((r = syscall_mem_map(0, (u_int)oldfd, 0, (u_int)newfd, ((*vpt)[VPN(oldfd)])&(PTE_V|PTE_R|PTE_LIBRARY))) < 0){
+	
+	if ((r = syscall_mem_map(0, (u_int)oldfd, 0, (u_int)newfd,
+							 ((*vpt)[VPN(oldfd)]) & (PTE_V | PTE_R | PTE_LIBRARY))) < 0) {
 		goto err;
 	}
+
 
 	return newfdnum;
 
@@ -185,7 +183,7 @@ err:
 //	Update seek position.
 //	Return the number of bytes read successfully.
 //		< 0 on error
-	int
+int
 read(int fdnum, void *buf, u_int n)
 {
 	int r;
@@ -194,27 +192,36 @@ read(int fdnum, void *buf, u_int n)
 
 	// Similar to 'write' function.
 	// Step 1: Get fd and dev.
-	if (((r = fd_lookup(fdnum,&fd)) < 0) || 
-			(((r = dev_lookup(fd->fd_dev_id,&dev)) < 0))) {
+	if ((r = fd_lookup(fdnum, &fd)) < 0
+		||  (r = dev_lookup(fd->fd_dev_id, &dev)) < 0) {
 		return r;
 	}
+
+
 	// Step 2: Check open mode.
 	if ((fd->fd_omode & O_ACCMODE) == O_WRONLY) {
 		writef("[%08x] read %d -- bad mode\n", env->env_id, fdnum);
 		return -E_INVAL;
 	}
 
+	if (debug) writef("read %d %p %d via dev %s\n",
+						  fdnum, buf, n, dev->dev_name);
+
+
 	// Step 3: Read starting from seek position.
-	r = (*dev->dev_read)(fd,buf,n,fd->fd_offset);
+	r = (*dev->dev_read)(fd, buf, n, fd->fd_offset);
+
 	// Step 4: Update seek position and set '\0' at the end of buf.
 	if (r > 0) {
 		fd->fd_offset += r;
-		((char *)buf)[r] = '\0';
 	}
+	((char *)buf)[r] = '\0';
+
+
 	return r;
 }
 
-	int
+int
 readn(int fdnum, void *buf, u_int n)
 {
 	int m, tot;
@@ -234,7 +241,7 @@ readn(int fdnum, void *buf, u_int n)
 	return tot;
 }
 
-	int
+int
 write(int fdnum, const void *buf, u_int n)
 {
 	int r;
@@ -242,7 +249,7 @@ write(int fdnum, const void *buf, u_int n)
 	struct Fd *fd;
 
 	if ((r = fd_lookup(fdnum, &fd)) < 0
-			||  (r = dev_lookup(fd->fd_dev_id, &dev)) < 0) {
+		||  (r = dev_lookup(fd->fd_dev_id, &dev)) < 0) {
 		return r;
 	}
 
@@ -252,7 +259,7 @@ write(int fdnum, const void *buf, u_int n)
 	}
 
 	if (debug) writef("write %d %p %d via dev %s\n",
-			fdnum, buf, n, dev->dev_name);
+						  fdnum, buf, n, dev->dev_name);
 
 	r = (*dev->dev_write)(fd, buf, n, fd->fd_offset);
 
@@ -263,7 +270,7 @@ write(int fdnum, const void *buf, u_int n)
 	return r;
 }
 
-	int
+int
 seek(int fdnum, u_int offset)
 {
 	int r;
@@ -285,7 +292,7 @@ int fstat(int fdnum, struct Stat *stat)
 	struct Fd *fd;
 
 	if ((r = fd_lookup(fdnum, &fd)) < 0
-			||  (r = dev_lookup(fd->fd_dev_id, &dev)) < 0) {
+		||  (r = dev_lookup(fd->fd_dev_id, &dev)) < 0) {
 		return r;
 	}
 
@@ -296,7 +303,7 @@ int fstat(int fdnum, struct Stat *stat)
 	return (*dev->dev_stat)(fd, stat);
 }
 
-	int
+int
 stat(const char *path, struct Stat *stat)
 {
 	int fd, r;
