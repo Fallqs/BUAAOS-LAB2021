@@ -1,0 +1,33 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+INCLUDES	Makefile	/^INCLUDES	:= -I.\/ -I..\/ -I..\/include\/$/;"	m
+NOFOUND	tlb_asm.S	/^	NOFOUND:$/;"	l
+alloc	pmap.c	/^static void *alloc(u_int n, u_int align, int clear)$/;"	f	file:
+basemem	pmap.c	/^u_long basemem;          \/* Amount of base memory(in bytes) *\/$/;"	v
+boot_map_segment	pmap.c	/^void boot_map_segment(Pde *pgdir, u_long va, u_long size, u_long pa, int perm)$/;"	f
+boot_pgdir	pmap.c	/^Pde *boot_pgdir;$/;"	v
+boot_pgdir_walk	pmap.c	/^static Pte *boot_pgdir_walk(Pde *pgdir, u_long va, int create)$/;"	f	file:
+extmem	pmap.c	/^u_long extmem;           \/* Amount of extended memory(in bytes) *\/$/;"	v
+freemem	pmap.c	/^static u_long freemem;$/;"	v	file:
+maxpa	pmap.c	/^u_long maxpa;            \/* Maximum physical address *\/$/;"	v
+mips_detect_memory	pmap.c	/^void mips_detect_memory()$/;"	f
+mips_vm_init	pmap.c	/^void mips_vm_init()$/;"	f
+npage	pmap.c	/^u_long npage;            \/* Amount of memory(in pages) *\/$/;"	v
+page_alloc	pmap.c	/^page_alloc(struct Page **pp)$/;"	f
+page_check	pmap.c	/^page_check(void)$/;"	f
+page_decref	pmap.c	/^void page_decref(struct Page *pp) {$/;"	f
+page_free	pmap.c	/^page_free(struct Page *pp)$/;"	f
+page_free_list	pmap.c	/^static struct Page_list page_free_list;	\/* Free list of physical pages *\/$/;"	v	typeref:struct:Page_list	file:
+page_init	pmap.c	/^page_init(void)$/;"	f
+page_insert	pmap.c	/^page_insert(Pde *pgdir, struct Page *pp, u_long va, u_int perm)$/;"	f
+page_lookup	pmap.c	/^page_lookup(Pde *pgdir, u_long va, Pte **ppte)$/;"	f
+page_remove	pmap.c	/^page_remove(Pde *pgdir, u_long va)$/;"	f
+pageout	pmap.c	/^void pageout(int va, int context)$/;"	f
+pages	pmap.c	/^struct Page *pages;$/;"	v	typeref:struct:Page
+pgdir_walk	pmap.c	/^pgdir_walk(Pde *pgdir, u_long va, int create, Pte **ppte)$/;"	f
+physical_memory_manage_check	pmap.c	/^physical_memory_manage_check(void)$/;"	f
+tlb_invalidate	pmap.c	/^tlb_invalidate(Pde *pgdir, u_long va)$/;"	f

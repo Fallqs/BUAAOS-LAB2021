@@ -3,12 +3,11 @@
 #include <asm/asm.h>
 
 LEAF(tlb_out)
-	//1: j 1b
-	nop
+//1: j 1b
+nop
 	mfc0	k1,CP0_ENTRYHI
 	mtc0	a0,CP0_ENTRYHI
 	nop
-	// insert tlbp or tlbwi
 	tlbp
 	nop
 	nop
@@ -20,13 +19,11 @@ LEAF(tlb_out)
 	mtc0	zero,CP0_ENTRYHI
 	mtc0	zero,CP0_ENTRYLO0
 	nop
-	// insert tlbp or tlbwi
 	tlbwi
-	NOFOUND:
+NOFOUND:
 
 	mtc0	k1,CP0_ENTRYHI
-
+	
 	j	ra
 	nop
 END(tlb_out)
-
