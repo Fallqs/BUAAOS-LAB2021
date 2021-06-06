@@ -38,11 +38,11 @@ USED	lib.h	18;"	d
 USERLIB	Makefile	/^USERLIB := printf.o \\$/;"	m
 WHITESPACE	sh.c	18;"	d	file:
 _USER_FD_H_	fd.h	2;"	d
-__asm_pgfault_handler	entry.S	/^__asm_pgfault_handler:$/;"	l
+__asm_pgfault_handler	entry.S	/^	__asm_pgfault_handler:$/;"	l
 __pgfault_handler	entry.S	/^	__pgfault_handler:$/;"	l
 _gettoken	sh.c	/^_gettoken(char *s, char **p1, char **p2)$/;"	f
 _pipeisclosed	pipe.c	/^_pipeisclosed(struct Fd *fd, struct Pipe *p)$/;"	f	file:
-_start	entry.S	/^_start:$/;"	l
+_start	entry.S	/^	_start:$/;"	l
 _user_panic	printf.c	/^_user_panic(const char *file, int line, const char *fmt,...)$/;"	f
 bol	num.c	/^int bol = 1;$/;"	v
 bss	init.c	/^char bss[6000];$/;"	v
@@ -123,6 +123,12 @@ line	num.c	/^int line = 0;$/;"	v
 ls	ls.c	/^ls(char *path, char *prefix)$/;"	f
 ls1	ls.c	/^ls1(char *prefix, u_int isdir, u_int size, char *name)$/;"	f
 lsdir	ls.c	/^lsdir(char *path, char *prefix)$/;"	f
+lw	entry.S	/^lw	a0, TF_BADVADDR(sp)$/;"	l
+lw	entry.S	/^lw	a1, 4(sp)$/;"	l
+lw	entry.S	/^lw	k0,TF_EPC(sp) 	\/\/atomic operation needed $/;"	l
+lw	entry.S	/^lw	sp,TF_REG29(sp)  \/* Deallocate stack *\/  $/;"	l
+lw	entry.S	/^lw	v1,TF_EPC(sp)                    $/;"	l
+lw	entry.S	/^lw	v1,TF_LO(sp)                                       $/;"	l
 memcmp	testfdsharing.c	/^memcmp(char *a, char *b, int n)$/;"	f
 memcpy	string.c	/^memcpy(void *destaddr,void const *srcaddr,u_int len)$/;"	f
 msg	fstest.c	/^static char *msg = "This is the NEW message of the day!\\r\\n\\r\\n";$/;"	v	file:
@@ -131,7 +137,6 @@ msg	testptelibrary.c	/^const char *msg = "hello world!\\n";$/;"	v
 msg1	init.c	/^	char msg1[5000];$/;"	m	struct:__anon1	file:
 msg2	init.c	/^	char msg2[1000];$/;"	m	struct:__anon1	file:
 msg2	testptelibrary.c	/^const char *msg2 = "goodbye ,world!\\n";$/;"	v
-nop	entry.S	/^nop$/;"	l
 num	num.c	/^num(int f, const char *s)$/;"	f
 num2fd	fd.c	/^num2fd(int fd)$/;"	f
 open	file.c	/^open(const char *path, int mode)$/;"	f
