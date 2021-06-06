@@ -1,6 +1,6 @@
 #include "lib.h"
 
-	int
+int
 pageref(void *v)
 {
 	u_int pte;
@@ -12,4 +12,3 @@ pageref(void *v)
 		return 0;
 	return pages[PPN(pte)].pp_ref;
 }
-
