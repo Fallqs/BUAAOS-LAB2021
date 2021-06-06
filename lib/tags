@@ -65,7 +65,6 @@ lw	syscall.S	/^lw      t4, 20(t0)                  \/\/ t4 <- the 6th argument o
 memcpy	syscall_all.c	/^void *memcpy(void *destaddr, void const *srcaddr, u_int len)$/;"	f
 mkenvid	env.c	/^u_int mkenvid(struct Env *e)$/;"	f
 myoutput	printf.c	/^static void myoutput(void *arg, char *s, int l)$/;"	f	file:
-nclude	genex.S	/^nclude <asm\/regdef.h>$/;"	l
 nop	genex.S	/^nop$/;"	l
 ov_do	handle_ov.c	/^void ov_do(char* sp)$/;"	f
 page_fault_handler	traps.c	/^page_fault_handler(struct Trapframe *tf)$/;"	f
