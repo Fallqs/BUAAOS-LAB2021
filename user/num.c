@@ -3,7 +3,7 @@
 int bol = 1;
 int line = 0;
 
-	void
+void
 num(int f, const char *s)
 {
 	long n;
@@ -24,7 +24,7 @@ num(int f, const char *s)
 		user_panic("error reading %s: %e", s, n);
 }
 
-	void
+void
 umain(int argc, char **argv)
 {
 	int f, i;
