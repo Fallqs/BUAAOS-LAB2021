@@ -1,7 +1,7 @@
 #include "fs.h"
 #include "lib.h"
 
-int
+	int
 strecmp(char *a, char *b)
 {
 	while (*b)
@@ -12,7 +12,7 @@ strecmp(char *a, char *b)
 
 static char *msg = "This is the NEW message of the day!\r\n\r\n";
 
-void
+	void
 fs_test(void)
 {
 	struct File *f;
@@ -33,7 +33,7 @@ fs_test(void)
 	// and is not free any more
 	user_assert(!(bitmap[r/32]&(1<<(r%32))));
 	writef("alloc_block is good\n");
-	
+
 	if ((r = file_open("/not-found", &f)) < 0 && r != -E_NOT_FOUND)
 		user_panic("file_open /not-found: %e", r);
 	else if (r == 0)
@@ -73,3 +73,4 @@ fs_test(void)
 	//^^^user_assert(!((* vpt)[VPN(f)]&PTE_D));	
 	writef("file rewrite is good\n");
 }
+

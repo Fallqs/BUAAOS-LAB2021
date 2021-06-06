@@ -74,7 +74,6 @@ nbitmap	fs.c	/^u_int nbitmap;		\/\/ number of bitmap blocks$/;"	v
 nelem	fsformat.c	18;"	d	file:
 next_block	fsformat.c	/^int next_block(int type) {$/;"	f
 nextbno	fsformat.c	/^uint32_t nextbno;   \/\/ next availiable block.$/;"	v
-nop	ide_asm.S	/^nop$/;"	l
 o_ff	serv.c	/^	struct Filefd *o_ff;	\/\/ va of filefd page$/;"	m	struct:Open	typeref:struct:Open::Filefd	file:
 o_file	serv.c	/^	struct File *o_file;	\/\/ mapped descriptor for open file$/;"	m	struct:Open	typeref:struct:Open::File	file:
 o_fileid	serv.c	/^	u_int o_fileid;			\/\/ file id$/;"	m	struct:Open	file:
