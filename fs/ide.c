@@ -21,45 +21,34 @@
 // 	If error occurred during read the IDE disk, panic. 
 // 	
 // Hint: use syscalls to access device registers and buffers
-	void
+void
 ide_read(u_int diskno, u_int secno, void *dst, u_int nsecs)
 {
 	// 0x200: the size of a sector: 512 bytes.
 	int offset_begin = secno * 0x200;
 	int offset_end = offset_begin + nsecs * 0x200;
 	int offset = 0;
-	int current;
+	u_int dev = 0x13000000;
+	u_int op = 0;
+	u_int chk = 0;
+
 	while (offset_begin + offset < offset_end) {
-		// Your code here
-		// error occurred, then panic.
-		current = offset_begin + offset;
-		//write diskno
-		if (syscall_write_dev(&diskno,0x13000010,4) < 0) {
-			user_panic("panic in ide_read 1");
-		}
-		//write offset
-		if (syscall_write_dev(&current,0x13000000,4) < 0) {
-			user_panic("panic in ide_read 2");
-		}
-		//write ready to read
-		int ready = 0;
-		if (syscall_write_dev(&ready,0x13000020,4) < 0) {
-			user_panic("panic in ide_read 3");
-		}
-		//read result error on 0
-		int ret;
-		if (syscall_read_dev(&ret,0x13000030,4) < 0) {
-			user_panic("panic in ide_read 4");
-		}
-		if (!ret) {
-			user_panic("panic in ide_read 5");
-		}
-		//read from buffer
-		if (syscall_read_dev(dst,0x13004000,512) < 0) {
-			user_panic("panic in ide_read 6");
-		}
-		offset += 512;
-		dst += 512;	}
+            // Your code here
+            // error occurred, then panic.
+		u_int ofs = offset_begin + offset;
+		if( syscall_write_dev( (u_int)	&diskno, 	dev + 0x10, 	4) ||
+			syscall_write_dev( (u_int)	&ofs, 		dev + 0x0,  	4) ||
+			syscall_write_dev( (u_int)	&op,  		dev + 0x20, 	4) )
+			user_panic("ide_read COMMAND error");
+
+		if( syscall_read_dev(  (u_int)	&chk,  		dev + 0x30, 	4) || chk == 0)
+			user_panic("ide_read FAILED");
+
+		if( syscall_read_dev(  (u_int)(dst + offset),	dev + 0x4000, 	0x200))
+			user_panic("ide_read CONTENT error");
+
+		offset += 0x200;
+	}
 }
 
 
@@ -76,54 +65,37 @@ ide_read(u_int diskno, u_int secno, void *dst, u_int nsecs)
 //	If error occurred during read the IDE disk, panic.
 //	
 // Hint: use syscalls to access device registers and buffers
-	void
+void
 ide_write(u_int diskno, u_int secno, void *src, u_int nsecs)
 {
-	// Your code here
-	// int offset_begin = ;
-	// int offset_end = ;
-	// int offset = ;
+        // Your code here
 	int offset_begin = secno * 0x200;
 	int offset_end = offset_begin + nsecs * 0x200;
 	int offset = 0;
-	int current;	// DO NOT DELETE WRITEF !!!
+	u_int dev = 0x13000000;
+	u_int op = 1;
+	u_int chk = 0;
+
+		// DO NOT DELETE WRITEF !!!
 	writef("diskno: %d\n", diskno);
 
-	// while ( < ) {
-	// copy data from source array to disk buffer.
+	while (offset_begin + offset < offset_end) {
+            // Your code here
+            // error occurred, then panic.
+		u_int ofs = offset_begin + offset;
+		if( syscall_write_dev( (u_int)	&diskno, 	dev + 0x10, 	4) ||
+			syscall_write_dev( (u_int)	&ofs, 		dev + 0x0,  	4) )
+					user_panic("ide_write COMMAND error");
 
-	// if error occur, then panic.
-	// }
-	while(offset_begin + offset < offset_end) {
-		// copy data from source array to disk buffer.
-		// if error occur, then panic.
-		current = offset_begin + offset;
-		//write data to buffer
-		if (syscall_write_dev(src,0x13004000,512) < 0) {
-			user_panic("panic in ide_write 1");
-		}
-		//write diskno
-		if (syscall_write_dev(&diskno,0x13000010,4) < 0) {
-			user_panic("panic in ide_write 2");
-		}
-		//write offset
-		if (syscall_write_dev(&current,0x13000000,4) < 0) {
-			user_panic("panic in ide_write 3");
-		}
-		//ready to write buffer to disk
-		int ask = 1;
-		if (syscall_write_dev(&ask,0x13000020,4) < 0) {
-			user_panic("panic in ide_write 4");
-		}
-		int ret;
-		if (syscall_read_dev(&ret,0x13000030,4) < 0) {
-			user_panic("panic in ide_write 5");
-		}
-		if (!ret) {
-			user_panic("panic in ide_write 6");
-		}
-		src += 512;
-		offset += 512;
+		if( syscall_write_dev( (u_int)(src + offset),	dev + 0x4000, 	0x200))
+			user_panic("ide_read CONTENT error");
+
+		if( syscall_write_dev( (u_int)	&op,  		dev + 0x20, 	4) ||
+			syscall_read_dev(  (u_int)	&chk,  		dev + 0x30, 	4) || chk == 0)
+			user_panic("ide_write FAILED");
+
+		offset += 0x200;
 	}
+	//writef("\nide_write%08x, name==%s\n", src, (char*)(src));
 }
 

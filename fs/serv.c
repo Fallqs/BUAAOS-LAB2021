@@ -27,7 +27,7 @@ struct Open opentab[MAXOPEN] = { { 0, 0, 1 } };
 
 // Overview:
 //	Initialize file system server process.
-	void
+void
 serve_init(void)
 {
 	int i;
@@ -46,7 +46,7 @@ serve_init(void)
 
 // Overview:
 //	Allocate an open file.
-	int
+int
 open_alloc(struct Open **o)
 {
 	int i, r;
@@ -56,7 +56,7 @@ open_alloc(struct Open **o)
 		switch (pageref(opentab[i].o_ff)) {
 			case 0:
 				if ((r = syscall_mem_alloc(0, (u_int)opentab[i].o_ff,
-								PTE_V | PTE_R | PTE_LIBRARY)) < 0) {
+										   PTE_V | PTE_R | PTE_LIBRARY)) < 0) {
 					return r;
 				}
 			case 1:
@@ -72,7 +72,7 @@ open_alloc(struct Open **o)
 
 // Overview:
 //	Look up an open file for envid.
-	int
+int
 open_lookup(u_int envid, u_int fileid, struct Open **po)
 {
 	struct Open *o;
@@ -91,7 +91,7 @@ open_lookup(u_int envid, u_int fileid, struct Open **po)
 // To send a result back, ipc_send(envid, r, 0, 0).
 // To include a page, ipc_send(envid, r, srcva, perm).
 
-	void
+void
 serve_open(u_int envid, struct Fsreq_open *rq)
 {
 	writef("serve_open %08x %x 0x%x\n", envid, (int)rq->req_path, rq->req_omode);
@@ -117,7 +117,7 @@ serve_open(u_int envid, struct Fsreq_open *rq)
 
 	// Open the file.
 	if ((r = file_open((char *)path, &f)) < 0) {
-		//	user_panic("file_open failed: %d, invalid path: %s", r, path);
+	//	user_panic("file_open failed: %d, invalid path: %s", r, path);
 		ipc_send(envid, r, 0, 0);
 		return ;
 	}
@@ -136,7 +136,7 @@ serve_open(u_int envid, struct Fsreq_open *rq)
 	ipc_send(envid, 0, (u_int)o->o_ff, PTE_V | PTE_R | PTE_LIBRARY);
 }
 
-	void
+void
 serve_map(u_int envid, struct Fsreq_map *rq)
 {
 
@@ -155,6 +155,7 @@ serve_map(u_int envid, struct Fsreq_map *rq)
 
 	filebno = rq->req_offset / BY2BLK;
 
+	//writef("___FJH______serve_map___");
 	if ((r = file_get_block(pOpen->o_file, filebno, &blk)) < 0) {
 		ipc_send(envid, r, 0, 0);
 		return;
@@ -163,7 +164,7 @@ serve_map(u_int envid, struct Fsreq_map *rq)
 	ipc_send(envid, 0, (u_int)blk, PTE_V | PTE_R | PTE_LIBRARY);
 }
 
-	void
+void
 serve_set_size(u_int envid, struct Fsreq_set_size *rq)
 {
 	struct Open *pOpen;
@@ -177,11 +178,11 @@ serve_set_size(u_int envid, struct Fsreq_set_size *rq)
 		ipc_send(envid, r, 0, 0);
 		return;
 	}
-
+	
 	ipc_send(envid, 0, 0, 0);
 }
 
-	void
+void
 serve_close(u_int envid, struct Fsreq_close *rq)
 {
 	struct Open *pOpen;
@@ -192,14 +193,14 @@ serve_close(u_int envid, struct Fsreq_close *rq)
 		ipc_send(envid, r, 0, 0);
 		return;
 	}
-
+	
 	file_close(pOpen->o_file);
 	ipc_send(envid, 0, 0, 0);
 }
 
 // Overview:
 //	fs service used to delete a file according path in `rq`.
-	void
+void
 serve_remove(u_int envid, struct Fsreq_remove *rq)
 {
 	int r;
@@ -207,18 +208,17 @@ serve_remove(u_int envid, struct Fsreq_remove *rq)
 
 	// Step 1: Copy in the path, making sure it's terminated.
 	// Notice: add \0 to the tail of the path
-	strcpy(path,rq->req_path);
+	user_bcopy(rq->req_path, path, MAXPATHLEN);
 	path[MAXPATHLEN - 1] = '\0';
+
+	//writef("REMOVING::%s\n",path);
 	// Step 2: Remove file from file system and response to user-level process.
 	// Call file_remove and ipc_send an approprite value to corresponding env.
-	if ((r = file_remove(path)) < 0) {
-		ipc_send(envid,r,0,0);
-		return;
-	}
-	ipc_send(envid,0,0,0);
+	r = file_remove(path);
+	ipc_send(envid, r, 0, 0);
 }
 
-	void
+void
 serve_dirty(u_int envid, struct Fsreq_dirty *rq)
 {
 
@@ -239,14 +239,14 @@ serve_dirty(u_int envid, struct Fsreq_dirty *rq)
 	ipc_send(envid, 0, 0, 0);
 }
 
-	void
+void
 serve_sync(u_int envid)
 {
 	fs_sync();
 	ipc_send(envid, 0, 0, 0);
 }
 
-	void
+void
 serve(void)
 {
 	u_int req, whom, perm;
@@ -301,7 +301,7 @@ serve(void)
 	}
 }
 
-	void
+void
 umain(void)
 {
 	user_assert(sizeof(struct File) == BY2FILE);
