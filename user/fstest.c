@@ -1,4 +1,4 @@
-nclude "lib.h"
+#include "lib.h"
 
 static char *msg = "This is the NEW message of the day!\r\n\r\n";
 static char *diff_msg = "This is a different massage of the day!\r\n\r\n";

@@ -324,7 +324,7 @@ NO_ADD	lib/syscall.S	/^	NO_ADD:$/;"	l
 NULL	include/types.h	8;"	d
 NULL	readelf/types.h	8;"	d
 NoCOW	lib/genex.S	/^	NoCOW:$/;"	l
-OUTPUT	lib/print.c	50;"	d	file:
+OUTPUT	lib/print.c	36;"	d	file:
 OUTPUT	user/print.c	36;"	d	file:
 O_ACCMODE	user/lib.h	137;"	d
 O_CREAT	user/lib.h	139;"	d
@@ -393,7 +393,6 @@ PrintChar	lib/print.c	/^PrintChar(char * buf, char c, int length, int ladjust)$/
 PrintNum	lib/print.c	/^PrintNum(char * buf, unsigned long u, int base, int negFlag, $/;"	f
 PrintString	lib/print.c	/^PrintString(char * buf, char* s, int length, int ladjust)$/;"	f
 Pte	include/mmu.h	/^typedef u_long Pte;$/;"	t
-RD	lib/print.c	38;"	d	file:
 REQVA	fs/serv.c	26;"	d	file:
 ROUND	include/types.h	47;"	d
 ROUND	readelf/types.h	46;"	d
@@ -528,7 +527,7 @@ __ASM_MIPS_REGDEF_H	include/asm/regdef.h	10;"	d
 __NR_SYSCALLS	include/unistd.h	5;"	d
 __SCHED_H__	include/sched.h	4;"	d
 __SYSCALL_BASE	include/unistd.h	4;"	d
-__asm_pgfault_handler	user/entry.S	/^__asm_pgfault_handler:$/;"	l
+__asm_pgfault_handler	user/entry.S	/^	__asm_pgfault_handler:$/;"	l
 __pgfault_handler	user/entry.S	/^	__pgfault_handler:$/;"	l
 _cp0regdef_h_	include/asm-mips3k/cp0regdef.h	8;"	d
 _cp0regdef_h_	include/asm/cp0regdef.h	8;"	d
@@ -537,7 +536,7 @@ _panic	lib/printf.c	/^_panic(const char *file, int line, const char *fmt,...)$/;
 _pipeisclosed	user/pipe.c	/^_pipeisclosed(struct Fd *fd, struct Pipe *p)$/;"	f	file:
 _print_h_	include/print.h	13;"	d
 _printf_h_	include/printf.h	13;"	d
-_start	user/entry.S	/^_start:$/;"	l
+_start	user/entry.S	/^	_start:$/;"	l
 _user_panic	user/printf.c	/^_user_panic(const char *file, int line, const char *fmt,...)$/;"	f
 a0	include/asm-mips3k/regdef.h	19;"	d
 a0	include/asm/regdef.h	19;"	d
@@ -814,6 +813,12 @@ lw	lib/syscall.S	/^lw	a3, TF_REG7(sp)$/;"	l
 lw	lib/syscall.S	/^lw	t1, TF_CAUSE(sp)$/;"	l
 lw	lib/syscall.S	/^lw      t2, 0(t1)                   \/\/ t2 <- function entry of specific syscall$/;"	l
 lw	lib/syscall.S	/^lw      t4, 20(t0)                  \/\/ t4 <- the 6th argument of msyscall$/;"	l
+lw	user/entry.S	/^lw	a0, TF_BADVADDR(sp)$/;"	l
+lw	user/entry.S	/^lw	a1, 4(sp)$/;"	l
+lw	user/entry.S	/^lw	k0,TF_EPC(sp) 	\/\/atomic operation needed $/;"	l
+lw	user/entry.S	/^lw	sp,TF_REG29(sp)  \/* Deallocate stack *\/  $/;"	l
+lw	user/entry.S	/^lw	v1,TF_EPC(sp)                    $/;"	l
+lw	user/entry.S	/^lw	v1,TF_LO(sp)                                       $/;"	l
 mCONTEXT	boot/start.S	/^	mCONTEXT:$/;"	l
 main	fs/fsformat.c	/^int main(int argc, char **argv) {$/;"	f
 main	init/main.c	/^int main()$/;"	f
@@ -824,6 +829,7 @@ maxpa	mm/pmap.c	/^u_long maxpa;            \/* Maximum physical address *\/$/;"	
 memcmp	user/testfdsharing.c	/^memcmp(char *a, char *b, int n)$/;"	f
 memcpy	lib/syscall_all.c	/^void *memcpy(void *destaddr, void const *srcaddr, u_int len)$/;"	f
 memcpy	user/string.c	/^memcpy(void *destaddr,void const *srcaddr,u_int len)$/;"	f
+mfc0	lib/kclock_asm.S	/^mfc0	t0, CP0_STATUS$/;"	l
 mips_detect_memory	mm/pmap.c	/^void mips_detect_memory()$/;"	f
 mips_init	init/init.c	/^void mips_init()$/;"	f
 mips_vm_init	mm/pmap.c	/^void mips_vm_init()$/;"	f
@@ -837,15 +843,14 @@ msg	user/testptelibrary.c	/^const char *msg = "hello world!\\n";$/;"	v
 msg1	user/init.c	/^	char msg1[5000];$/;"	m	struct:__anon7	file:
 msg2	user/init.c	/^	char msg2[1000];$/;"	m	struct:__anon7	file:
 msg2	user/testptelibrary.c	/^const char *msg2 = "goodbye ,world!\\n";$/;"	v
+mtc0	lib/kclock_asm.S	/^mtc0	t0, CP0_STATUS			$/;"	l
 myoutput	lib/printf.c	/^static void myoutput(void *arg, char *s, int l)$/;"	f	file:
 nbitblock	fs/fsformat.c	/^uint32_t nbitblock; \/\/ the number of bitmap blocks.$/;"	v
 nbitmap	fs/fs.c	/^u_int nbitmap;		\/\/ number of bitmap blocks$/;"	v
 nelem	fs/fsformat.c	18;"	d	file:
 next_block	fs/fsformat.c	/^int next_block(int type) {$/;"	f
 nextbno	fs/fsformat.c	/^uint32_t nextbno;   \/\/ next availiable block.$/;"	v
-nop	fs/ide_asm.S	/^nop$/;"	l
 nop	lib/genex.S	/^nop$/;"	l
-nop	user/entry.S	/^nop$/;"	l
 npage	mm/pmap.c	/^u_long npage;            \/* Amount of memory(in pages) *\/$/;"	v
 num	user/num.c	/^num(int f, const char *s)$/;"	f
 num2fd	user/fd.c	/^num2fd(int fd)$/;"	f
@@ -861,7 +866,7 @@ open_alloc	fs/serv.c	/^open_alloc(struct Open **o)$/;"	f
 open_lookup	fs/serv.c	/^open_lookup(u_int envid, u_int fileid, struct Open **po)$/;"	f
 opencons	user/console.c	/^opencons(void)$/;"	f
 opentab	fs/serv.c	/^struct Open opentab[MAXOPEN] = { { 0, 0, 1 } };$/;"	v	typeref:struct:Open
-ov_do	lib/handle_ov.c	/^void ov_do(char* sp)$/;"	f
+or	lib/kclock_asm.S	/^or	t0, \\set|\\clr$/;"	l
 p_align	include/kerelf.h	/^	Elf32_Word	p_align;		\/* Segment alignment *\/$/;"	m	struct:__anon3
 p_align	readelf/kerelf.h	/^        Elf32_Word      p_align;                \/* Segment alignment *\/$/;"	m	struct:__anon6
 p_buf	user/pipe.c	/^	u_char p_buf[BY2PIPE];  \/\/ data buffer$/;"	m	struct:Pipe	file:
@@ -923,7 +928,6 @@ quad_t	include/types.h	/^typedef	int64_t		quad_t;$/;"	t
 quad_t	readelf/types.h	/^typedef	int64_t		quad_t;$/;"	t
 ra	include/asm-mips3k/regdef.h	48;"	d
 ra	include/asm/regdef.h	48;"	d
-rd	lib/print.c	/^char* rd(int *ans,char *fmt ){$/;"	f
 read	user/fd.c	/^read(int fdnum, void *buf, u_int n)$/;"	f
 read_bitmap	fs/fs.c	/^read_bitmap(void)$/;"	f
 read_block	fs/fs.c	/^read_block(u_int blockno, void **blk, u_int *isnew)$/;"	f
@@ -984,7 +988,6 @@ serve_set_size	fs/serv.c	/^serve_set_size(u_int envid, struct Fsreq_set_size *rq
 serve_sync	fs/serv.c	/^serve_sync(u_int envid)$/;"	f
 set_except_vector	lib/traps.c	/^void *set_except_vector(int n, void *addr)$/;"	f
 set_pgfault_handler	user/pgfault.c	/^set_pgfault_handler(void (*fn)(u_int va))$/;"	f
-setup_c0_status	lib/kclock_asm.S	/^setup_c0_status STATUS_CU0|0x1001 0$/;"	l
 sfork	user/fork.c	/^sfork(void)$/;"	f
 sh_addr	readelf/kerelf.h	/^        Elf32_Addr sh_addr;                 \/* Section addr *\/$/;"	m	struct:__anon5
 sh_addralign	readelf/kerelf.h	/^        Elf32_Word sh_addralign;            \/* Section alignment *\/$/;"	m	struct:__anon5
@@ -1194,5 +1197,6 @@ write_block	fs/fs.c	/^write_block(u_int blockno)$/;"	f
 write_directory	fs/fsformat.c	/^void write_directory(struct File *dirf, char *name) {$/;"	f
 write_file	fs/fsformat.c	/^void write_file(struct File *dirf, const char *path) {$/;"	f
 writef	user/printf.c	/^void writef(char *fmt, ...)$/;"	f
+xor	lib/kclock_asm.S	/^xor	t0, \\clr$/;"	l
 zero	include/asm-mips3k/regdef.h	15;"	d
 zero	include/asm/regdef.h	15;"	d
