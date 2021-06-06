@@ -1,4 +1,4 @@
-nclude "lib.h"
+#include "lib.h"
 #include <mmu.h>
 #include <env.h>
 #include <kerelf.h>
