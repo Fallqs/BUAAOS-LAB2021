@@ -13,11 +13,10 @@ KERNEL_SP	env_asm.S	/^KERNEL_SP:$/;"	l
 NOPAGE	genex.S	/^	NOPAGE:$/;"	l
 NO_ADD	syscall.S	/^	NO_ADD:$/;"	l
 NoCOW	genex.S	/^	NoCOW:$/;"	l
-OUTPUT	print.c	50;"	d	file:
+OUTPUT	print.c	36;"	d	file:
 PrintChar	print.c	/^PrintChar(char * buf, char c, int length, int ladjust)$/;"	f
 PrintNum	print.c	/^PrintNum(char * buf, unsigned long u, int base, int negFlag, $/;"	f
 PrintString	print.c	/^PrintString(char * buf, char* s, int length, int ladjust)$/;"	f
-RD	print.c	38;"	d	file:
 STI	genex.S	/^STI$/;"	l
 _panic	printf.c	/^_panic(const char *file, int line, const char *fmt,...)$/;"	f
 curenv	env.c	/^struct Env *curenv = NULL;            \/\/ the current env$/;"	v	typeref:struct:Env
@@ -63,18 +62,18 @@ lw	syscall.S	/^lw	t1, TF_CAUSE(sp)$/;"	l
 lw	syscall.S	/^lw      t2, 0(t1)                   \/\/ t2 <- function entry of specific syscall$/;"	l
 lw	syscall.S	/^lw      t4, 20(t0)                  \/\/ t4 <- the 6th argument of msyscall$/;"	l
 memcpy	syscall_all.c	/^void *memcpy(void *destaddr, void const *srcaddr, u_int len)$/;"	f
+mfc0	kclock_asm.S	/^mfc0	t0, CP0_STATUS$/;"	l
 mkenvid	env.c	/^u_int mkenvid(struct Env *e)$/;"	f
+mtc0	kclock_asm.S	/^mtc0	t0, CP0_STATUS			$/;"	l
 myoutput	printf.c	/^static void myoutput(void *arg, char *s, int l)$/;"	f	file:
 nop	genex.S	/^nop$/;"	l
-ov_do	handle_ov.c	/^void ov_do(char* sp)$/;"	f
+or	kclock_asm.S	/^or	t0, \\set|\\clr$/;"	l
 page_fault_handler	traps.c	/^page_fault_handler(struct Trapframe *tf)$/;"	f
 pc	traps.c	/^	u_int pc;$/;"	m	struct:pgfault_trap_frame	file:
 pgfault_trap_frame	traps.c	/^struct pgfault_trap_frame {$/;"	s	file:
 printf	printf.c	/^void printf(char *fmt, ...)$/;"	f
-rd	print.c	/^char* rd(int *ans,char *fmt ){$/;"	f
 sched_yield	sched.c	/^void sched_yield(void)$/;"	f
 set_except_vector	traps.c	/^void *set_except_vector(int n, void *addr)$/;"	f
-setup_c0_status	kclock_asm.S	/^setup_c0_status STATUS_CU0|0x1001 0$/;"	l
 sp	traps.c	/^	u_int sp;$/;"	m	struct:pgfault_trap_frame	file:
 sw	syscall.S	/^sw	t0, TF_EPC(sp)$/;"	l
 sw	syscall.S	/^sw	t4, 20(sp)$/;"	l
@@ -99,3 +98,4 @@ sys_yield	syscall_all.c	/^void sys_yield(void)$/;"	f
 theFatalMsg	print.c	/^static const char theFatalMsg[] = "fatal error in lp_Print!";$/;"	v	file:
 timer_irq	genex.S	/^	timer_irq:$/;"	l
 trap_init	traps.c	/^void trap_init()$/;"	f
+xor	kclock_asm.S	/^xor	t0, \\clr$/;"	l
