@@ -5,27 +5,21 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 ADD_END	syscall.S	/^ADD_END:$/;"	l
-BUILD_HANDLER	genex.S	/^BUILD_HANDLER mod	page_fault_handler cli$/;"	l
-BUILD_HANDLER	genex.S	/^BUILD_HANDLER reserved do_reserved cli$/;"	l
-BUILD_HANDLER	genex.S	/^BUILD_HANDLER tlb	do_refill	cli$/;"	l
 CLI	genex.S	/^CLI$/;"	l
 Ctod	print.c	16;"	d	file:
 INCLUDES	Makefile	/^INCLUDES := -I.\/ -I..\/ -I..\/include\/$/;"	m
 IsDigit	print.c	15;"	d	file:
 KERNEL_SP	env_asm.S	/^KERNEL_SP:$/;"	l
-NOPAGE	genex.S	/^NOPAGE:$/;"	l
+NOPAGE	genex.S	/^	NOPAGE:$/;"	l
 NO_ADD	syscall.S	/^	NO_ADD:$/;"	l
-NoCOW	genex.S	/^NoCOW:$/;"	l
+NoCOW	genex.S	/^	NoCOW:$/;"	l
 OUTPUT	print.c	50;"	d	file:
 PrintChar	print.c	/^PrintChar(char * buf, char c, int length, int ladjust)$/;"	f
 PrintNum	print.c	/^PrintNum(char * buf, unsigned long u, int base, int negFlag, $/;"	f
 PrintString	print.c	/^PrintString(char * buf, char* s, int length, int ladjust)$/;"	f
 RD	print.c	38;"	d	file:
-SAVE_ALL	genex.S	/^SAVE_ALL$/;"	l
+STI	genex.S	/^STI$/;"	l
 _panic	printf.c	/^_panic(const char *file, int line, const char *fmt,...)$/;"	f
-and	genex.S	/^and	t0, t2$/;"	l
-andi	genex.S	/^andi	t1, t0, STATUSF_IP4$/;"	l
-bnez	genex.S	/^bnez	t1, timer_irq$/;"	l
 curenv	env.c	/^struct Env *curenv = NULL;            \/\/ the current env$/;"	v	typeref:struct:Env
 eflags	traps.c	/^	u_int eflags;$/;"	m	struct:pgfault_trap_frame	file:
 empty1	traps.c	/^	u_int empty1;$/;"	m	struct:pgfault_trap_frame	file:
@@ -50,6 +44,7 @@ err	traps.c	/^	u_int err;$/;"	m	struct:pgfault_trap_frame	file:
 exception_handlers	traps.c	/^unsigned long exception_handlers[32];$/;"	v
 fault_va	traps.c	/^	u_int fault_va;$/;"	m	struct:pgfault_trap_frame	file:
 is_elf_format	kernel_elfloader.c	/^int is_elf_format(u_char *binary)$/;"	f
+j	genex.S	/^j	ret_from_exception$/;"	l
 kclock_init	kclock.c	/^kclock_init(void)$/;"	f
 load_elf	kernel_elfloader.c	/^int load_elf(u_char *binary, int size, u_long *entry_point, void *user_data,$/;"	f
 load_icode	env.c	/^load_icode(struct Env *e, u_char *binary, u_int size)$/;"	f	file:
@@ -60,16 +55,17 @@ lw	env_asm.S	/^lw	k0,TF_STATUS(k0)                 $/;"	l
 lw	env_asm.S	/^lw	k1,TF_PC(k0)$/;"	l
 lw	env_asm.S	/^lw	v1,TF_EPC(k0)                    $/;"	l
 lw	env_asm.S	/^lw	v1,TF_LO(k0)                                       $/;"	l
+lw	genex.S	/^lw		k1,0(k0)$/;"	l
+lw	genex.S	/^lw	sp,TF_REG29(sp) \/* Deallocate stack *\/  $/;"	l
 lw	syscall.S	/^lw	a0, TF_REG4(sp)$/;"	l
 lw	syscall.S	/^lw	a3, TF_REG7(sp)$/;"	l
 lw	syscall.S	/^lw	t1, TF_CAUSE(sp)$/;"	l
 lw	syscall.S	/^lw      t2, 0(t1)                   \/\/ t2 <- function entry of specific syscall$/;"	l
 lw	syscall.S	/^lw      t4, 20(t0)                  \/\/ t4 <- the 6th argument of msyscall$/;"	l
 memcpy	syscall_all.c	/^void *memcpy(void *destaddr, void const *srcaddr, u_int len)$/;"	f
-mfc0	genex.S	/^mfc0	t0, CP0_CAUSE$/;"	l
-mfc0	genex.S	/^mfc0	t2, CP0_STATUS$/;"	l
 mkenvid	env.c	/^u_int mkenvid(struct Env *e)$/;"	f
 myoutput	printf.c	/^static void myoutput(void *arg, char *s, int l)$/;"	f	file:
+nclude	genex.S	/^nclude <asm\/regdef.h>$/;"	l
 nop	genex.S	/^nop$/;"	l
 ov_do	handle_ov.c	/^void ov_do(char* sp)$/;"	f
 page_fault_handler	traps.c	/^page_fault_handler(struct Trapframe *tf)$/;"	f
@@ -102,5 +98,5 @@ sys_set_trapframe	syscall_all.c	/^int sys_set_trapframe(int sysno, u_int envid, 
 sys_write_dev	syscall_all.c	/^int sys_write_dev(int sysno, u_int va, u_int dev, u_int len)$/;"	f
 sys_yield	syscall_all.c	/^void sys_yield(void)$/;"	f
 theFatalMsg	print.c	/^static const char theFatalMsg[] = "fatal error in lp_Print!";$/;"	v	file:
-timer_irq	genex.S	/^timer_irq:$/;"	l
+timer_irq	genex.S	/^	timer_irq:$/;"	l
 trap_init	traps.c	/^void trap_init()$/;"	f
