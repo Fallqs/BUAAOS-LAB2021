@@ -21,26 +21,26 @@ void halt(void);
 
 static void myoutput(void *arg, char *s, int l)
 {
-	int i;
+    int i;
 
-	// special termination call
-	if ((l==1) && (s[0] == '\0')) return;
-
-	for (i=0; i< l; i++) {
-		printcharc(s[i]);
-		if (s[i] == '\n') printcharc('\n');
-	}
+    // special termination call
+    if ((l==1) && (s[0] == '\0')) return;
+    
+    for (i=0; i< l; i++) {
+	printcharc(s[i]);
+	if (s[i] == '\n') printcharc('\n');
+    }
 }
 
 void printf(char *fmt, ...)
 {
-	va_list ap;
-	va_start(ap, fmt);
-	lp_Print(myoutput, 0, fmt, ap);
-	va_end(ap);
+    va_list ap;
+    va_start(ap, fmt);
+    lp_Print(myoutput, 0, fmt, ap);
+    va_end(ap);
 }
 
-	void
+void
 _panic(const char *file, int line, const char *fmt,...)
 {
 	va_list ap;
@@ -55,4 +55,3 @@ _panic(const char *file, int line, const char *fmt,...)
 
 	for(;;);
 }
-
