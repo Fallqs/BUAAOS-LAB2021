@@ -15,69 +15,69 @@
 .section .text.exc_vec3
 /*** exercise 3.11 ***/
 NESTED(except_vec3, 0, sp)
-	.set noat 
+	.set noat
 	.set noreorder
-1:
+	1:
 	mfc0 k1,CP0_CAUSE
 	la k0,exception_handlers
 	andi k1,0x7c
 	addu k0,k1
-	lw k0,(k0)
+lw k0,(k0)
 	nop
 	jr k0
 	nop
 END(except_vec3)
-.set at
+	.set at
+
+	.data
+	.globl mCONTEXT
+	mCONTEXT:
+	.word 0
+
+	.globl delay
+	delay:
+	.word 0
+
+	.globl tlbra
+	tlbra:
+	.word 0
+
+	.section .data.stk
+	KERNEL_STACK:
+	.space 0x8000
 
 
-.data
-            .globl mCONTEXT
-mCONTEXT:
-            .word 0
-
-            .globl delay
-delay:
-            .word 0
-
-            .globl tlbra
-tlbra:
-            .word 0
-
-            .section .data.stk
-KERNEL_STACK:
-            .space 0x8000
-
-
-            .text
+	.text
 LEAF(_start)
-    
-    .set    mips2
-    .set    reorder
 
-    /* Disable interrupts */
-    mtc0    zero, CP0_STATUS
+	.set    mips2
+	.set    reorder
 
-    /* Disable watch exception. */
-    mtc0    zero, CP0_WATCHLO
-    mtc0    zero, CP0_WATCHHI
+	/* Disable interrupts */
+	mtc0    zero, CP0_STATUS
 
-    /* disable kernel mode cache */
-    mfc0    t0, CP0_CONFIG
-    and    t0, ~0x7
-    ori    t0, 0x2
-    mtc0    t0, CP0_CONFIG
+	/* Disable watch exception. */
+	mtc0    zero, CP0_WATCHLO
+	mtc0    zero, CP0_WATCHHI
 
-    /* set up stack */
-    li    sp, 0x80400000
+	/* disable kernel mode cache */
+	mfc0    t0, CP0_CONFIG
+	and    t0, ~0x7
+	ori    t0, 0x2
+	mtc0    t0, CP0_CONFIG
 
-    li    t0,0x80400000
-    sw    t0,mCONTEXT
-    
-    /* jump to main */
-    jal    main
-            
-loop:
-    j    loop
-    nop
+	/* set up stack */
+	li    sp, 0x80400000
+
+	li    t0,0x80400000
+	sw    t0,mCONTEXT
+
+	/* jump to main */
+	jal    main
+
+	loop:
+	j    loop
+	nop
 END(_start)
+
 
