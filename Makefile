@@ -34,8 +34,8 @@ all: $(modules) vmlinux
 
 push: clean
 	git add --all
-	git commit --allow-empty -m "auto lab6-ret"
-	git push -f origin lab6-ret:lab6
+	git commit --allow-empty -m "auto lab6"
+	git push -f origin lab6:lab6
 			
 test: all
 	/OSLAB/gxemul -E testmips -C R3000 -M 64 -V -d gxemul/fs.img $(vmlinux_elf)

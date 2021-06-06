@@ -64,7 +64,6 @@ $8	include/stackframe.h	/^		lw	$8,TF_REG8(sp)                   $/;"	v
 $8	include/stackframe.h	/^		sw	$8,TF_REG8(sp)                   $/;"	v
 $9	include/stackframe.h	/^		lw	$9,TF_REG9(sp)                   $/;"	v
 $9	include/stackframe.h	/^		sw	$9,TF_REG9(sp)                   $/;"	v
-ADD_END	lib/syscall.S	/^ADD_END:$/;"	l
 ARGBEGIN	include/args.h	8;"	d
 ARGC	include/args.h	27;"	d
 ARGEND	include/args.h	21;"	d
@@ -279,6 +278,7 @@ INCLUDES	user/Makefile	/^INCLUDES = -I..\/include\/$/;"	m
 INDEX2DATA	user/fd.h	62;"	d
 INDEX2FD	user/fd.h	61;"	d
 IO_RTC	include/kclock.h	5;"	d
+IS_BD	lib/syscall.S	/^IS_BD:$/;"	l
 IsDigit	lib/print.c	15;"	d	file:
 IsDigit	user/print.c	15;"	d	file:
 KADDR	include/mmu.h	156;"	d
@@ -323,9 +323,8 @@ NENV	include/env.h	12;"	d
 NESTED	include/asm-mips3k/asm.h	24;"	d
 NESTED	include/asm/asm.h	24;"	d
 NINDIRECT	include/fs.h	22;"	d
-NOFOUND	mm/tlb_asm.S	/^	NOFOUND:$/;"	l
+NOFOUND	mm/tlb_asm.S	/^NOFOUND:$/;"	l
 NOPAGE	lib/genex.S	/^NOPAGE:$/;"	l
-NO_ADD	lib/syscall.S	/^	NO_ADD:$/;"	l
 NULL	include/types.h	8;"	d
 NULL	readelf/types.h	8;"	d
 NoCOW	lib/genex.S	/^NoCOW:$/;"	l
@@ -534,7 +533,7 @@ __ASM_MIPS_REGDEF_H	include/asm/regdef.h	10;"	d
 __NR_SYSCALLS	include/unistd.h	5;"	d
 __SCHED_H__	include/sched.h	4;"	d
 __SYSCALL_BASE	include/unistd.h	4;"	d
-__asm_pgfault_handler	user/entry.S	/^	__asm_pgfault_handler:$/;"	l
+__asm_pgfault_handler	user/entry.S	/^__asm_pgfault_handler:$/;"	l
 __pgfault_handler	user/entry.S	/^	__pgfault_handler:$/;"	l
 _cp0regdef_h_	include/asm-mips3k/cp0regdef.h	8;"	d
 _cp0regdef_h_	include/asm/cp0regdef.h	8;"	d
@@ -543,7 +542,7 @@ _panic	lib/printf.c	/^_panic(const char *file, int line, const char *fmt,...)$/;
 _pipeisclosed	user/pipe.c	/^_pipeisclosed(struct Fd *fd, struct Pipe *p)$/;"	f	file:
 _print_h_	include/print.h	13;"	d
 _printf_h_	include/printf.h	13;"	d
-_start	user/entry.S	/^	_start:$/;"	l
+_start	user/entry.S	/^_start:$/;"	l
 _user_panic	user/printf.c	/^_user_panic(const char *file, int line, const char *fmt,...)$/;"	f
 a0	include/asm-mips3k/regdef.h	19;"	d
 a0	include/asm/regdef.h	19;"	d
@@ -656,12 +655,12 @@ e_type	include/kerelf.h	/^	Elf32_Half	e_type;			\/* Object file type *\/$/;"	m	s
 e_type	readelf/kerelf.h	/^        Elf32_Half      e_type;                 \/* Object file type *\/$/;"	m	struct:__anon4
 e_version	include/kerelf.h	/^	Elf32_Word	e_version;		\/* Object file version *\/$/;"	m	struct:__anon2
 e_version	readelf/kerelf.h	/^        Elf32_Word      e_version;              \/* Object file version *\/$/;"	m	struct:__anon4
-eflags	lib/traps.c	/^	u_int eflags;$/;"	m	struct:pgfault_trap_frame	file:
-empty1	lib/traps.c	/^	u_int empty1;$/;"	m	struct:pgfault_trap_frame	file:
-empty2	lib/traps.c	/^	u_int empty2;$/;"	m	struct:pgfault_trap_frame	file:
-empty3	lib/traps.c	/^	u_int empty3;$/;"	m	struct:pgfault_trap_frame	file:
-empty4	lib/traps.c	/^	u_int empty4;$/;"	m	struct:pgfault_trap_frame	file:
-empty5	lib/traps.c	/^	u_int empty5;$/;"	m	struct:pgfault_trap_frame	file:
+eflags	lib/traps.c	/^    u_int eflags;$/;"	m	struct:pgfault_trap_frame	file:
+empty1	lib/traps.c	/^    u_int empty1;$/;"	m	struct:pgfault_trap_frame	file:
+empty2	lib/traps.c	/^    u_int empty2;$/;"	m	struct:pgfault_trap_frame	file:
+empty3	lib/traps.c	/^    u_int empty3;$/;"	m	struct:pgfault_trap_frame	file:
+empty4	lib/traps.c	/^    u_int empty4;$/;"	m	struct:pgfault_trap_frame	file:
+empty5	lib/traps.c	/^    u_int empty5;$/;"	m	struct:pgfault_trap_frame	file:
 env	user/libos.c	/^struct Env *env;$/;"	v	typeref:struct:Env
 env_alloc	lib/env.c	/^env_alloc(struct Env **new, u_int parent_id)$/;"	f
 env_check	lib/env.c	/^void env_check()$/;"	f
@@ -695,7 +694,7 @@ env_xstacktop	include/env.h	/^	u_int env_xstacktop;            \/\/ top of excep
 envid2env	lib/env.c	/^int envid2env(u_int envid, struct Env **penv, int checkperm)$/;"	f
 envs	lib/env.c	/^struct Env *envs = NULL;        \/\/ All environments$/;"	v	typeref:struct:Env
 envs	user/entry.S	/^envs:$/;"	l
-err	lib/traps.c	/^	u_int err;$/;"	m	struct:pgfault_trap_frame	file:
+err	lib/traps.c	/^    u_int err;$/;"	m	struct:pgfault_trap_frame	file:
 exception_handlers	lib/traps.c	/^unsigned long exception_handlers[32];$/;"	v
 exit	user/libos.c	/^exit(void)$/;"	f
 extmem	mm/pmap.c	/^u_long extmem;           \/* Amount of extended memory(in bytes) *\/$/;"	v
@@ -709,7 +708,7 @@ f_name	include/fs.h	/^	u_char f_name[MAXNAMELEN];	\/\/ filename$/;"	m	struct:Fil
 f_pad	include/fs.h	/^	u_char f_pad[256-MAXNAMELEN-4-4-NDIRECT*4-4-4];$/;"	m	struct:File
 f_size	include/fs.h	/^	u_int f_size;			\/\/ file size in bytes$/;"	m	struct:File
 f_type	include/fs.h	/^	u_int f_type;			\/\/ file type$/;"	m	struct:File
-fault_va	lib/traps.c	/^	u_int fault_va;$/;"	m	struct:pgfault_trap_frame	file:
+fault_va	lib/traps.c	/^    u_int fault_va;$/;"	m	struct:pgfault_trap_frame	file:
 fd2data	user/fd.c	/^fd2data(struct Fd *fd)$/;"	f
 fd2num	user/fd.c	/^fd2num(struct Fd *fd)$/;"	f
 fd_alloc	user/fd.c	/^fd_alloc(struct Fd **fd)$/;"	f
@@ -809,17 +808,6 @@ lp_Print	lib/print.c	/^lp_Print(void (*output)(void *, char *, int), $/;"	f
 ls	user/ls.c	/^ls(char *path, char *prefix)$/;"	f
 ls1	user/ls.c	/^ls1(char *prefix, u_int isdir, u_int size, char *name)$/;"	f
 lsdir	user/ls.c	/^lsdir(char *path, char *prefix)$/;"	f
-lw	lib/syscall.S	/^lw	a0, TF_REG4(sp)$/;"	l
-lw	lib/syscall.S	/^lw	a3, TF_REG7(sp)$/;"	l
-lw	lib/syscall.S	/^lw	t1, TF_CAUSE(sp)$/;"	l
-lw	lib/syscall.S	/^lw      t2, 0(t1)                   \/\/ t2 <- function entry of specific syscall$/;"	l
-lw	lib/syscall.S	/^lw      t4, 20(t0)                  \/\/ t4 <- the 6th argument of msyscall$/;"	l
-lw	user/entry.S	/^lw	a0, TF_BADVADDR(sp)$/;"	l
-lw	user/entry.S	/^lw	a1, 4(sp)$/;"	l
-lw	user/entry.S	/^lw	k0,TF_EPC(sp) 	\/\/atomic operation needed $/;"	l
-lw	user/entry.S	/^lw	sp,TF_REG29(sp)  \/* Deallocate stack *\/  $/;"	l
-lw	user/entry.S	/^lw	v1,TF_EPC(sp)                    $/;"	l
-lw	user/entry.S	/^lw	v1,TF_LO(sp)                                       $/;"	l
 mCONTEXT	boot/start.S	/^mCONTEXT:$/;"	l
 main	fs/fsformat.c	/^int main(int argc, char **argv) {$/;"	f
 main	init/main.c	/^int main()$/;"	f
@@ -851,7 +839,10 @@ nbitmap	fs/fs.c	/^u_int nbitmap;		\/\/ number of bitmap blocks$/;"	v
 nelem	fs/fsformat.c	18;"	d	file:
 next_block	fs/fsformat.c	/^int next_block(int type) {$/;"	f
 nextbno	fs/fsformat.c	/^uint32_t nextbno;   \/\/ next availiable block.$/;"	v
+nop	fs/ide_asm.S	/^nop$/;"	l
 nop	lib/genex.S	/^nop$/;"	l
+nop	mm/tlb_asm.S	/^nop$/;"	l
+nop	user/entry.S	/^nop$/;"	l
 npage	mm/pmap.c	/^u_long npage;            \/* Amount of memory(in pages) *\/$/;"	v
 num	user/num.c	/^num(int f, const char *s)$/;"	f
 num2fd	user/fd.c	/^num2fd(int fd)$/;"	f
@@ -906,7 +897,7 @@ pages	mm/pmap.c	/^struct Page *pages;$/;"	v	typeref:struct:Page
 pages	user/entry.S	/^pages:$/;"	l
 panic	include/printf.h	21;"	d
 pc	include/trap.h	/^	unsigned long pc;$/;"	m	struct:Trapframe
-pc	lib/traps.c	/^	u_int pc;$/;"	m	struct:pgfault_trap_frame	file:
+pc	lib/traps.c	/^    u_int pc;$/;"	m	struct:pgfault_trap_frame	file:
 pgdir_walk	mm/pmap.c	/^pgdir_walk(Pde *pgdir, u_long va, int create, Pte **ppte)$/;"	f
 pgfault	user/fork.c	/^pgfault(u_int va)$/;"	f	file:
 pgfault_trap_frame	lib/traps.c	/^struct pgfault_trap_frame {$/;"	s	file:
@@ -1009,7 +1000,7 @@ sp	include/stackframe.h	/^		subu	sp,k1,TF_SIZE                    $/;"	v
 sp	include/stackframe.h	/^	bltz	sp, 2f$/;"	v
 sp	include/stackframe.h	/^	li	sp, 0x82000000$/;"	v
 sp	include/stackframe.h	/^	lw	sp, KERNEL_SP$/;"	v
-sp	lib/traps.c	/^	u_int sp;$/;"	m	struct:pgfault_trap_frame	file:
+sp	lib/traps.c	/^    u_int sp;$/;"	m	struct:pgfault_trap_frame	file:
 spawn	user/spawn.c	/^int spawn(char *prog, char **argv)$/;"	f
 spawnl	user/spawn.c	/^spawnl(char *prog, char *args, ...)$/;"	f
 st_dev	user/fd.h	/^	struct Dev *st_dev;$/;"	m	struct:Stat	typeref:struct:Stat::Dev
@@ -1027,11 +1018,8 @@ strlen	user/string.c	/^strlen(const char *s)$/;"	f
 sum	user/init.c	/^sum(char *s, int n)$/;"	f
 super	fs/fs.c	/^struct Super *super;$/;"	v	typeref:struct:Super
 super	fs/fsformat.c	/^struct Super super; \/\/ super block.$/;"	v	typeref:struct:Super
-sw	lib/syscall.S	/^sw	t0, TF_EPC(sp)$/;"	l
-sw	lib/syscall.S	/^sw	t4, 20(sp)$/;"	l
-sw	lib/syscall.S	/^sw      v0, TF_REG2(sp)             \/\/ Store return value of function sys_* (in $v0) into trapframe$/;"	l
 sync	user/file.c	/^sync(void)$/;"	f
-sys_call_table	lib/syscall.S	/^	sys_call_table:                         \/\/ Syscall Table$/;"	l
+sys_call_table	lib/syscall.S	/^sys_call_table:                         \/\/ Syscall Table$/;"	l
 sys_env_alloc	lib/syscall_all.c	/^int sys_env_alloc(void)$/;"	f
 sys_env_destroy	lib/syscall_all.c	/^int sys_env_destroy(int sysno, u_int envid)$/;"	f
 sys_getenvid	lib/syscall_all.c	/^u_int sys_getenvid(void)$/;"	f
@@ -1042,7 +1030,7 @@ sys_mem_map	lib/syscall_all.c	/^int sys_mem_map(int sysno, u_int srcid, u_int sr
 sys_mem_unmap	lib/syscall_all.c	/^int sys_mem_unmap(int sysno, u_int envid, u_int va)$/;"	f
 sys_panic	lib/syscall_all.c	/^void sys_panic(int sysno, char *msg)$/;"	f
 sys_putchar	lib/syscall_all.c	/^void sys_putchar(int sysno, int c, int a2, int a3, int a4, int a5)$/;"	f
-sys_read_dev	lib/syscall_all.c	/^int sys_read_dev(int sysno, u_int va, u_int dev, u_int len)$/;"	f
+sys_read_dev	lib/syscall_all.c	/^int sys_read_dev(int sysno, const u_int va, u_int dev, u_int len)$/;"	f
 sys_set_env_status	lib/syscall_all.c	/^int sys_set_env_status(int sysno, u_int envid, u_int status)$/;"	f
 sys_set_pgfault_handler	lib/syscall_all.c	/^int sys_set_pgfault_handler(int sysno, u_int envid, u_int func, u_int xstacktop)$/;"	f
 sys_set_trapframe	lib/syscall_all.c	/^int sys_set_trapframe(int sysno, u_int envid, struct Trapframe *tf)$/;"	f
