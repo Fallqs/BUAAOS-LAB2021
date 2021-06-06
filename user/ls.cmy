@@ -5,7 +5,7 @@ int flag[256];
 void lsdir(char*, char*);
 void ls1(char*, u_int, u_int, char*);
 
-	void
+void
 ls(char *path, char *prefix)
 {
 	int r;
@@ -19,7 +19,7 @@ ls(char *path, char *prefix)
 		ls1(0, st.st_isdir, st.st_size, path);
 }
 
-	void
+void
 lsdir(char *path, char *prefix)
 {
 	int fd, n;
@@ -36,7 +36,7 @@ lsdir(char *path, char *prefix)
 		user_panic("error reading directory %s: %e", path, n);
 }
 
-	void
+void
 ls1(char *prefix, u_int isdir, u_int size, char *name)
 {
 	char *sep;
@@ -56,26 +56,26 @@ ls1(char *prefix, u_int isdir, u_int size, char *name)
 	fwritef(1, " ");
 }
 
-	void
+void
 usage(void)
 {
 	fwritef(1, "usage: ls [-dFl] [file...]\n");
 	exit();
 }
 
-	void
+void
 umain(int argc, char **argv)
 {
 	int i;
 
 	ARGBEGIN{
-		default:
-			usage();
-		case 'd':
-		case 'F':
-		case 'l':
-			flag[(u_char)ARGC()]++;
-			break;
+	default:
+		usage();
+	case 'd':
+	case 'F':
+	case 'l':
+		flag[(u_char)ARGC()]++;
+		break;
 	}ARGEND
 
 	if (argc == 0)

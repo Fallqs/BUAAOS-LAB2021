@@ -18,7 +18,7 @@ int debug_ = 0;
 #define WHITESPACE " \t\r\n"
 #define SYMBOLS "<|>&;()"
 
-	int
+int
 _gettoken(char *s, char **p1, char **p2)
 {
 	int t;
@@ -36,7 +36,7 @@ _gettoken(char *s, char **p1, char **p2)
 	while(strchr(WHITESPACE, *s))
 		*s++ = 0;
 	if(*s == 0) {
-		//	if (debug_ > 1) writef("EOL\n");
+	//	if (debug_ > 1) writef("EOL\n");
 		return 0;
 	}
 	if(strchr(SYMBOLS, *s)){
@@ -44,7 +44,7 @@ _gettoken(char *s, char **p1, char **p2)
 		*p1 = s;
 		*s++ = 0;
 		*p2 = s;
-		//		if (debug_ > 1) writef("TOK %c\n", t);
+//		if (debug_ > 1) writef("TOK %c\n", t);
 		return t;
 	}
 	*p1 = s;
@@ -54,13 +54,13 @@ _gettoken(char *s, char **p1, char **p2)
 	if (debug_ > 1) {
 		t = **p2;
 		**p2 = 0;
-		//		writef("WORD: %s\n", *p1);
+//		writef("WORD: %s\n", *p1);
 		**p2 = t;
 	}
 	return 'w';
 }
 
-	int
+int
 gettoken(char *s, char **p1)
 {
 	static int c, nc;
@@ -77,7 +77,7 @@ gettoken(char *s, char **p1)
 }
 
 #define MAXARGS 16
-	void
+void
 runcmd(char *s)
 {
 	char *argv[MAXARGS], *t;
@@ -90,89 +90,47 @@ again:
 	for(;;){
 		c = gettoken(0, &t);
 		switch(c){
-			case 0:
-				goto runit;
-			case 'w':
-				if(argc == MAXARGS){
-					writef("too many arguments\n");
-					exit();
-				}
-				argv[argc++] = t;
-				break;
-			case '<':
-				if(gettoken(0, &t) != 'w'){
-					writef("syntax error: < not followed by word\n");
-					exit();
-				}
-				// Your code here -- open t for reading,
-				// dup it onto fd 0, and then close the fd you got.
-				r = open(t, O_RDONLY);
-				if(r < 0) {
-					writef("case '<' : open t failed\n");
-					exit();
-				}
-				fd = r;
-				dup(fd, 0);
-				close(fd);
-				//user_panic("< redirection not implemented");
-				break;
-			case '>':
-				// Your code here -- open t for writing,
-				// dup it onto fd 1, and then close the fd you got.
-				if(gettoken(0, &t) != 'w'){
-					writef("syntax error: > not followed by word\n");
-					exit();
-				}
-				r = open(t, O_WRONLY);
-				if(r < 0) {
-					writef("case '>' : open t failed\n");
-					exit();
-				}
-				fd = r;
-				dup(fd, 1);
-				close(fd);
-				//user_panic("> redirection not implemented");
-				break;
-			case '|':
-				// Your code here.
-				// 	First, allocate a pipe.
-				//	Then fork.
-				//	the child runs the right side of the pipe:
-				//		dup the read end of the pipe onto 0
-				//		close the read end of the pipe
-				//		close the write end of the pipe
-				//		goto again, to parse the rest of the command line
-				//	the parent runs the left side of the pipe:
-				//		dup the write end of the pipe onto 1
-				//		close the write end of the pipe
-				//		close the read end of the pipe
-				//		set "rightpipe" to the child envid
-				//		goto runit, to execute this piece of the pipeline
-				//			and then wait for the right side to finish
-				r = pipe(p);
-				if(r < 0) {
-					writef("| not implemented (pipe)\n");
-					exit();
-				}
-				r = fork();
-				if(r < 0){
-					writef("| not implemented (fork)\n");
-					exit();
-				}
-				if(r == 0){
-					dup(p[0], 0);
-					close(p[0]);
-					close(p[1]);
-					goto again;
-				}else{
-					dup(p[1], 1);
-					close(p[0]);
-					close(p[1]);
-					rightpipe = r ;
-					goto runit;
-				}
-				//user_panic("| not implemented");
-				break;
+		case 0:
+			goto runit;
+		case 'w':
+			if(argc == MAXARGS){
+				writef("too many arguments\n");
+				exit();
+			}
+			argv[argc++] = t;
+			break;
+		case '<':
+			if(gettoken(0, &t) != 'w'){
+				writef("syntax error: < not followed by word\n");
+				exit();
+			}
+			// Your code here -- open t for reading,
+			// dup it onto fd 0, and then close the fd you got.
+			user_panic("< redirection not implemented");
+			break;
+		case '>':
+			// Your code here -- open t for writing,
+			// dup it onto fd 1, and then close the fd you got.
+			user_panic("> redirection not implemented");
+			break;
+		case '|':
+			// Your code here.
+			// 	First, allocate a pipe.
+			//	Then fork.
+			//	the child runs the right side of the pipe:
+			//		dup the read end of the pipe onto 0
+			//		close the read end of the pipe
+			//		close the write end of the pipe
+			//		goto again, to parse the rest of the command line
+			//	the parent runs the left side of the pipe:
+			//		dup the write end of the pipe onto 1
+			//		close the write end of the pipe
+			//		close the read end of the pipe
+			//		set "rightpipe" to the child envid
+			//		goto runit, to execute this piece of the pipeline
+			//			and then wait for the right side to finish
+			user_panic("| not implemented");
+			break;
 		}
 	}
 
@@ -204,7 +162,7 @@ runit:
 	exit();
 }
 
-	void
+void
 readline(char *buf, u_int n)
 {
 	int i, r;
@@ -235,14 +193,14 @@ readline(char *buf, u_int n)
 
 char buf[1024];
 
-	void
+void
 usage(void)
 {
 	writef("usage: sh [-dix] [command-file]\n");
 	exit();
 }
 
-	void
+void
 umain(int argc, char **argv)
 {
 	int r, interactive, echocmds;
@@ -254,17 +212,17 @@ umain(int argc, char **argv)
 	writef("::                                                         ::\n");
 	writef(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
 	ARGBEGIN{
-		case 'd':
-			debug_++;
-			break;
-		case 'i':
-			interactive = 1;
-			break;
-		case 'x':
-			echocmds = 1;
-			break;
-		default:
-			usage();
+	case 'd':
+		debug_++;
+		break;
+	case 'i':
+		interactive = 1;
+		break;
+	case 'x':
+		echocmds = 1;
+		break;
+	default:
+		usage();
 	}ARGEND
 
 	if(argc > 1)
@@ -281,7 +239,7 @@ umain(int argc, char **argv)
 		if (interactive)
 			fwritef(1, "\n$ ");
 		readline(buf, sizeof buf);
-
+		
 		if (buf[0] == '#')
 			continue;
 		if (echocmds)
