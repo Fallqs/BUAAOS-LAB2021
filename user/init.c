@@ -18,7 +18,7 @@ inline int MY_MUL(int a,int b)
 	return sum;
 }
 
-	int
+int
 sum(char *s, int n)
 {
 	int i, tot;
@@ -28,8 +28,8 @@ sum(char *s, int n)
 		tot ^= MY_MUL(i,s[i]);
 	return tot;
 }
-
-	void
+		
+void
 umain(int argc, char **argv)
 {
 	int i, r, x, want;
@@ -39,7 +39,7 @@ umain(int argc, char **argv)
 	want = 0xf989e;
 	if ((x=sum((char*)&data, sizeof data)) != want)
 		writef("init: data is not initialized: got sum %08x wanted %08x\n",
-				x, want);
+			x, want);
 	else
 		writef("init: data seems okay\n");
 	if ((x=sum(bss, sizeof bss)) != 0)
@@ -63,7 +63,7 @@ umain(int argc, char **argv)
 	if ((r = dup(0, 1)) < 0)
 		user_panic("dup: %d", r);
 
-	write(1,"LALA",4);
+write(1,"LALA",4);
 
 	for (;;) {
 		writef("init: starting sh\n");
@@ -73,7 +73,6 @@ umain(int argc, char **argv)
 			continue;
 		}
 		wait(r);
-
+	
 	}
 }
-

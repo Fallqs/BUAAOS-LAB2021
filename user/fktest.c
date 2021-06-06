@@ -19,4 +19,3 @@ void umain()
 	a++;
 	for(;;) writef("this is father: a:%d\n",a);
 }
-

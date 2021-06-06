@@ -3,7 +3,7 @@
 
 #include "lib.h"
 
-	void
+void
 umain(void)
 {
 	u_int who, i;
@@ -18,9 +18,9 @@ umain(void)
 	for (;;) {
 		writef("%x am waiting.....\n",syscall_getenvid());
 		i = ipc_recv(&who, 0, 0);
-
+		
 		writef("%x got %d from %x\n", syscall_getenvid(), i, who);
-
+	
 		//user_panic("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
 		if (i == 10)
 			return;
@@ -30,6 +30,6 @@ umain(void)
 		if (i == 10)
 			return;
 	}
-
+		
 }
 
