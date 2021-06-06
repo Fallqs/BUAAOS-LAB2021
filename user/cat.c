@@ -2,7 +2,7 @@
 
 char buf[8192];
 
-	void
+void
 cat(int f, char *s)
 {
 	long n;
@@ -15,7 +15,7 @@ cat(int f, char *s)
 		user_panic("error reading %s: %e", s, n);
 }
 
-	void
+void
 umain(int argc, char **argv)
 {
 	int f, i;

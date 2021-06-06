@@ -8,15 +8,15 @@ static int cons_stat(struct Fd*, struct Stat*);
 
 struct Dev devcons =
 {
-	.dev_id=	'c',
-	.dev_name=	"cons",
-	.dev_read=	cons_read,
-	.dev_write=	cons_write,
-	.dev_close=	cons_close,
-	.dev_stat=	cons_stat,
+.dev_id=	'c',
+.dev_name=	"cons",
+.dev_read=	cons_read,
+.dev_write=	cons_write,
+.dev_close=	cons_close,
+.dev_stat=	cons_stat,
 };
 
-	int
+int
 iscons(int fdnum)
 {
 	int r;
@@ -27,7 +27,7 @@ iscons(int fdnum)
 	return fd->fd_dev_id == devcons.dev_id;
 }
 
-	int
+int
 opencons(void)
 {
 	int r;
@@ -42,13 +42,13 @@ opencons(void)
 	return fd2num(fd);
 }
 
-	int
+int
 cons_read(struct Fd *fd, void *vbuf, u_int n, u_int offset)
 {
 	int c;
 
 	USED(offset);
-	//	printf("got into cons_read");
+//	printf("got into cons_read");
 	if (n == 0)
 		return 0;
 
@@ -67,7 +67,7 @@ cons_read(struct Fd *fd, void *vbuf, u_int n, u_int offset)
 	return 1;
 }
 
-	int
+int
 cons_write(struct Fd *fd, const void *vbuf, u_int n, u_int offset)
 {
 	int tot, m;
@@ -88,7 +88,7 @@ cons_write(struct Fd *fd, const void *vbuf, u_int n, u_int offset)
 	return tot;
 }
 
-	int
+int
 cons_close(struct Fd *fd)
 {
 	USED(fd);
@@ -96,10 +96,9 @@ cons_close(struct Fd *fd)
 	return 0;
 }
 
-	int
+int
 cons_stat(struct Fd *fd, struct Stat *stat)
 {
 	strcpy(stat->st_name, "<cons>");
 	return 0;
 }
-
